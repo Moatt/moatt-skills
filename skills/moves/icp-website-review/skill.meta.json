@@ -1,0 +1,15 @@
+{
+  "slug": "icp-website-review",
+  "category": "moves",
+  "tags": [
+    "research"
+  ],
+  "installation": {
+    "base_command": "npx moatt install icp-website-review",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

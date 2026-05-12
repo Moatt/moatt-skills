@@ -1,0 +1,16 @@
+{
+  "slug": "customer-discovery",
+  "category": "moves",
+  "tags": [
+    "competitive-intel",
+    "research"
+  ],
+  "installation": {
+    "base_command": "npx moatt install customer-discovery",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
