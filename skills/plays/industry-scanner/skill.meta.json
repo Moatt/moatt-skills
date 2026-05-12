@@ -1,0 +1,27 @@
+{
+  "slug": "industry-scanner",
+  "category": "plays",
+  "tags": [
+    "competitive-intel"
+  ],
+  "installation": {
+    "base_command": "npx moatt install industry-scanner",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "blog-feed-monitor",
+    "company-contact-finder",
+    "conference-speaker-scraper",
+    "hacker-news-scraper",
+    "linkedin-post-research",
+    "luma-event-attendees",
+    "reddit-post-finder",
+    "review-site-scraper",
+    "twitter-mention-tracker",
+    "web-archive-scraper"
+  ]
+}

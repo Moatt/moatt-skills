@@ -1,0 +1,15 @@
+{
+  "slug": "newsletter-signal-scanner",
+  "category": "plays",
+  "tags": [
+    "monitoring"
+  ],
+  "installation": {
+    "base_command": "npx moatt install newsletter-signal-scanner",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

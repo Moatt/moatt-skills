@@ -1,0 +1,18 @@
+{
+  "slug": "newsletter-monitor",
+  "category": "plays",
+  "tags": [
+    "monitoring"
+  ],
+  "installation": {
+    "base_command": "npx moatt install newsletter-monitor",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "company-contact-finder"
+  ]
+}

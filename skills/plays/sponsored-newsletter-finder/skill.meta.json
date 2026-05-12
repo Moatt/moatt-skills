@@ -1,0 +1,15 @@
+{
+  "slug": "sponsored-newsletter-finder",
+  "category": "plays",
+  "tags": [
+    "ads"
+  ],
+  "installation": {
+    "base_command": "npx moatt install sponsored-newsletter-finder",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

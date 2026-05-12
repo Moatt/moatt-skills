@@ -1,0 +1,22 @@
+{
+  "slug": "ai-account-brief-generator",
+  "category": "plays",
+  "tags": [
+    "research"
+  ],
+  "installation": {
+    "base_command": "npx moatt install ai-account-brief-generator",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "company-intel",
+    "linkedin-profile-post-scraper",
+    "company-funding-search",
+    "linkedin-job-scraper",
+    "tech-stack-teardown"
+  ]
+}
