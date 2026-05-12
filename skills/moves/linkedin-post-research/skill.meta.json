@@ -1,0 +1,15 @@
+{
+  "slug": "linkedin-post-research",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install linkedin-post-research",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

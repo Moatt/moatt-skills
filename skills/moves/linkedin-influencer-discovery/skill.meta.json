@@ -1,0 +1,15 @@
+{
+  "slug": "linkedin-influencer-discovery",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install linkedin-influencer-discovery",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

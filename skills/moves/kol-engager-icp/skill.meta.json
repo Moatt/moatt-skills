@@ -1,0 +1,16 @@
+{
+  "slug": "kol-engager-icp",
+  "category": "moves",
+  "tags": [
+    "lead-generation"
+  ],
+  "requires_tools": ["apify_guard"],
+  "installation": {
+    "base_command": "npx moatt install kol-engager-icp",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

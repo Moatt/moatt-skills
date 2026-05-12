@@ -1,0 +1,15 @@
+{
+  "slug": "linkedin-outreach",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install linkedin-outreach",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

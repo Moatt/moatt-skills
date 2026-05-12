@@ -1,0 +1,14 @@
+{
+  "slug": "team-linkedin-profiles",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install team-linkedin-profiles",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

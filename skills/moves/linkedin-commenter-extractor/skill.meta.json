@@ -1,0 +1,15 @@
+{
+  "slug": "linkedin-commenter-extractor",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install linkedin-commenter-extractor",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

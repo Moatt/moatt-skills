@@ -1,0 +1,16 @@
+{
+  "slug": "kol-discovery",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "requires_tools": ["apify_guard"],
+  "installation": {
+    "base_command": "npx moatt install kol-discovery",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
