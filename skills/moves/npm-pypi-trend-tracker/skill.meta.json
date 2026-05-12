@@ -1,0 +1,16 @@
+{
+  "slug": "npm-pypi-trend-tracker",
+  "category": "moves",
+  "tags": [
+    "research",
+    "competitive-intel"
+  ],
+  "installation": {
+    "base_command": "npx moatt install npm-pypi-trend-tracker",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

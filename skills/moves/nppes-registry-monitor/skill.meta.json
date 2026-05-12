@@ -1,0 +1,15 @@
+{
+  "slug": "nppes-registry-monitor",
+  "category": "moves",
+  "tags": [
+    "research"
+  ],
+  "installation": {
+    "base_command": "npx moatt install nppes-registry-monitor",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

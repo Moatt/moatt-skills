@@ -1,0 +1,15 @@
+{
+  "slug": "hugging-face-model-monitor",
+  "category": "moves",
+  "tags": [
+    "research"
+  ],
+  "installation": {
+    "base_command": "npx moatt install hugging-face-model-monitor",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "slug": "mxtoolbox-domain-audit",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install mxtoolbox-domain-audit",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

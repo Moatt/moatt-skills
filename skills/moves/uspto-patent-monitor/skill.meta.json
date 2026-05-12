@@ -1,0 +1,16 @@
+{
+  "slug": "uspto-patent-monitor",
+  "category": "moves",
+  "tags": [
+    "research",
+    "competitive-intel"
+  ],
+  "installation": {
+    "base_command": "npx moatt install uspto-patent-monitor",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
