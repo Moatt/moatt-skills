@@ -1,0 +1,19 @@
+{
+  "slug": "qbr-deck-generator",
+  "category": "plays",
+  "tags": [
+    "research"
+  ],
+  "installation": {
+    "base_command": "npx moatt install qbr-deck-generator",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "create-html-slides",
+    "data-charts-tako"
+  ]
+}

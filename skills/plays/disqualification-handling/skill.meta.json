@@ -1,0 +1,19 @@
+{
+  "slug": "disqualification-handling",
+  "category": "plays",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install disqualification-handling",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "cold-email-outreach",
+    "email-drafting"
+  ]
+}

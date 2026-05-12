@@ -1,0 +1,19 @@
+{
+  "slug": "sequence-performance",
+  "category": "plays",
+  "tags": [
+    "research"
+  ],
+  "installation": {
+    "base_command": "npx moatt install sequence-performance",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "cold-email-outreach",
+    "email-drafting"
+  ]
+}

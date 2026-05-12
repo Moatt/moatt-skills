@@ -1,0 +1,15 @@
+{
+  "slug": "mutual-action-plan-builder",
+  "category": "plays",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install mutual-action-plan-builder",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

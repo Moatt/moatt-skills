@@ -1,0 +1,18 @@
+{
+  "slug": "pipeline-review",
+  "category": "plays",
+  "tags": [
+    "research"
+  ],
+  "installation": {
+    "base_command": "npx moatt install pipeline-review",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "cold-email-outreach"
+  ]
+}

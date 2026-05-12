@@ -1,0 +1,18 @@
+{
+  "slug": "sales-coaching",
+  "category": "plays",
+  "tags": [
+    "research"
+  ],
+  "installation": {
+    "base_command": "npx moatt install sales-coaching",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "email-drafting"
+  ]
+}

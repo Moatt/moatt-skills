@@ -1,0 +1,20 @@
+{
+  "slug": "multichannel-cadence-runner",
+  "category": "plays",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install multichannel-cadence-runner",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "linkedin-message-writer",
+    "email-drafting",
+    "persona-on-the-fly-emailer"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "slug": "sales-call-prep",
+  "category": "plays",
+  "tags": [
+    "research"
+  ],
+  "installation": {
+    "base_command": "npx moatt install sales-call-prep",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

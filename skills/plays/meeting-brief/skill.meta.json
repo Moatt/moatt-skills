@@ -1,0 +1,15 @@
+{
+  "slug": "meeting-brief",
+  "category": "plays",
+  "tags": [
+    "research"
+  ],
+  "installation": {
+    "base_command": "npx moatt install meeting-brief",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

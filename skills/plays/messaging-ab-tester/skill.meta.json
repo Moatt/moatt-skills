@@ -1,0 +1,15 @@
+{
+  "slug": "messaging-ab-tester",
+  "category": "plays",
+  "tags": [
+    "brand"
+  ],
+  "installation": {
+    "base_command": "npx moatt install messaging-ab-tester",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
