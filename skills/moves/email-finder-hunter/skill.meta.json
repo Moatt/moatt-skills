@@ -1,0 +1,14 @@
+{
+  "slug": "email-finder-hunter",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install email-finder-hunter",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

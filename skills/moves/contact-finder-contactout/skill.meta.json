@@ -1,0 +1,14 @@
+{
+  "slug": "contact-finder-contactout",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install contact-finder-contactout",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "slug": "company-contact-finder",
+  "category": "moves",
+  "tags": [
+    "lead-generation"
+  ],
+  "installation": {
+    "base_command": "npx moatt install company-contact-finder",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

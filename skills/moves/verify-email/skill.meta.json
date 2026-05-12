@@ -1,0 +1,14 @@
+{
+  "slug": "verify-email",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install verify-email",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

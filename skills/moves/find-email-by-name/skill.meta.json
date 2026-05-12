@@ -1,0 +1,14 @@
+{
+  "slug": "find-email-by-name",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install find-email-by-name",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "send-sms-textbelt",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install send-sms-textbelt",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
