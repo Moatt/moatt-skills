@@ -1,0 +1,15 @@
+{
+  "slug": "campaign-brief-generator",
+  "category": "plays",
+  "tags": [
+    "content"
+  ],
+  "installation": {
+    "base_command": "npx moatt install campaign-brief-generator",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

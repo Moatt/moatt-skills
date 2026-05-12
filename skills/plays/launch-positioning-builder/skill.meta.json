@@ -1,0 +1,18 @@
+{
+  "slug": "launch-positioning-builder",
+  "category": "plays",
+  "tags": [
+    "brand"
+  ],
+  "installation": {
+    "base_command": "npx moatt install launch-positioning-builder",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "review-site-scraper"
+  ]
+}
