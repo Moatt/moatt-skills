@@ -1,0 +1,16 @@
+{
+  "slug": "job-posting-intent",
+  "category": "moves",
+  "tags": [
+    "lead-generation",
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install job-posting-intent",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
