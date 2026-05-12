@@ -1,0 +1,15 @@
+{
+  "slug": "usage-drop-csm-trigger",
+  "category": "moves",
+  "tags": [
+    "research"
+  ],
+  "installation": {
+    "base_command": "npx moatt install usage-drop-csm-trigger",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "slug": "single-thread-risk-flag",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install single-thread-risk-flag",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

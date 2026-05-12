@@ -1,0 +1,15 @@
+{
+  "slug": "lead-to-account-matcher",
+  "category": "moves",
+  "tags": [
+    "lead-generation"
+  ],
+  "installation": {
+    "base_command": "npx moatt install lead-to-account-matcher",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

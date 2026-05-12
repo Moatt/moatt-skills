@@ -1,0 +1,15 @@
+{
+  "slug": "triple-signal-prioritizer",
+  "category": "moves",
+  "tags": [
+    "lead-generation"
+  ],
+  "installation": {
+    "base_command": "npx moatt install triple-signal-prioritizer",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

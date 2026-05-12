@@ -1,0 +1,15 @@
+{
+  "slug": "stalled-deal-detector",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install stalled-deal-detector",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

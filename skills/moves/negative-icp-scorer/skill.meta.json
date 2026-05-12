@@ -1,0 +1,15 @@
+{
+  "slug": "negative-icp-scorer",
+  "category": "moves",
+  "tags": [
+    "lead-generation"
+  ],
+  "installation": {
+    "base_command": "npx moatt install negative-icp-scorer",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

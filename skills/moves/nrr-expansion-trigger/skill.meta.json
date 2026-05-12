@@ -1,0 +1,15 @@
+{
+  "slug": "nrr-expansion-trigger",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install nrr-expansion-trigger",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

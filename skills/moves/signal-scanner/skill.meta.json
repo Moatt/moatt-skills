@@ -1,0 +1,16 @@
+{
+  "slug": "signal-scanner",
+  "category": "moves",
+  "tags": [
+    "lead-generation"
+  ],
+  "requires_tools": ["apify_guard", "supabase"],
+  "installation": {
+    "base_command": "npx moatt install signal-scanner",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

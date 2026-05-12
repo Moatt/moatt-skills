@@ -1,0 +1,15 @@
+{
+  "slug": "intent-fit-matrix-router",
+  "category": "moves",
+  "tags": [
+    "lead-generation"
+  ],
+  "installation": {
+    "base_command": "npx moatt install intent-fit-matrix-router",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

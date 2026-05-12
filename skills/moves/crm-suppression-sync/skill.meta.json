@@ -1,0 +1,15 @@
+{
+  "slug": "crm-suppression-sync",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install crm-suppression-sync",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
