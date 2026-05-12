@@ -1,0 +1,15 @@
+{
+  "slug": "blog-feed-monitor",
+  "category": "moves",
+  "tags": [
+    "content"
+  ],
+  "installation": {
+    "base_command": "npx moatt install blog-feed-monitor",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

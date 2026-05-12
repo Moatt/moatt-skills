@@ -1,0 +1,15 @@
+{
+  "slug": "reddit-post-finder",
+  "category": "moves",
+  "tags": [
+    "monitoring"
+  ],
+  "installation": {
+    "base_command": "npx moatt install reddit-post-finder",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

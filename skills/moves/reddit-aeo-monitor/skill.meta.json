@@ -1,0 +1,16 @@
+{
+  "slug": "reddit-aeo-monitor",
+  "category": "moves",
+  "tags": [
+    "seo",
+    "research"
+  ],
+  "installation": {
+    "base_command": "npx moatt install reddit-aeo-monitor",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
