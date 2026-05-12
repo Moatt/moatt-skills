@@ -1,0 +1,15 @@
+{
+  "slug": "linkedin-voicenote-pre-warm",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install linkedin-voicenote-pre-warm",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
