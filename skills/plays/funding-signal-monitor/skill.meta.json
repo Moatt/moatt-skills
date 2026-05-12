@@ -1,0 +1,22 @@
+{
+  "slug": "funding-signal-monitor",
+  "category": "plays",
+  "tags": [
+    "lead-generation"
+  ],
+  "installation": {
+    "base_command": "npx moatt install funding-signal-monitor",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "company-contact-finder",
+    "contact-cache",
+    "hacker-news-scraper",
+    "reddit-post-finder",
+    "twitter-mention-tracker"
+  ]
+}

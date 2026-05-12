@@ -1,0 +1,20 @@
+{
+  "slug": "funding-signal-outreach",
+  "category": "plays",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install funding-signal-outreach",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "cold-email-outreach",
+    "email-drafting",
+    "linkedin-outreach"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "slug": "champion-departure-trigger",
+  "category": "plays",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install champion-departure-trigger",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "linkedin-profile-post-scraper",
+    "company-contact-finder",
+    "company-intel"
+  ]
+}

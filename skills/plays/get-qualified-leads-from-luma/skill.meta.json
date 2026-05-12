@@ -1,0 +1,19 @@
+{
+  "slug": "get-qualified-leads-from-luma",
+  "category": "plays",
+  "tags": [
+    "lead-generation"
+  ],
+  "installation": {
+    "base_command": "npx moatt install get-qualified-leads-from-luma",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "lead-qualification",
+    "luma-event-attendees"
+  ]
+}
