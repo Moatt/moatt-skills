@@ -1,0 +1,16 @@
+{
+  "slug": "youtube-watcher",
+  "category": "moves",
+  "tags": [
+    "content"
+  ],
+  "installation": {
+    "base_command": "npx moatt install youtube-watcher",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "author": "michael gathara"
+}

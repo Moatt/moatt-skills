@@ -1,0 +1,15 @@
+{
+  "slug": "review-site-scraper",
+  "category": "moves",
+  "tags": [
+    "monitoring"
+  ],
+  "installation": {
+    "base_command": "npx moatt install review-site-scraper",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

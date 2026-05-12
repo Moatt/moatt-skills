@@ -1,0 +1,15 @@
+{
+  "slug": "conference-speaker-scraper",
+  "category": "moves",
+  "tags": [
+    "lead-generation"
+  ],
+  "installation": {
+    "base_command": "npx moatt install conference-speaker-scraper",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

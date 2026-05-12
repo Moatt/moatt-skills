@@ -1,0 +1,15 @@
+{
+  "slug": "newsletter-sponsorship-finder",
+  "category": "moves",
+  "tags": [
+    "monitoring"
+  ],
+  "installation": {
+    "base_command": "npx moatt install newsletter-sponsorship-finder",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

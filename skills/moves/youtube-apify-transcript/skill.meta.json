@@ -1,0 +1,15 @@
+{
+  "slug": "youtube-apify-transcript",
+  "category": "moves",
+  "tags": [
+    "research"
+  ],
+  "installation": {
+    "base_command": "npx moatt install youtube-apify-transcript",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

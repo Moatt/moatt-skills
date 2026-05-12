@@ -1,0 +1,15 @@
+{
+  "slug": "luma-event-attendees",
+  "category": "moves",
+  "tags": [
+    "lead-generation"
+  ],
+  "installation": {
+    "base_command": "npx moatt install luma-event-attendees",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

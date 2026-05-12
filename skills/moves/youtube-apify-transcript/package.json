@@ -1,0 +1,40 @@
+{
+  "name": "moatt-skill-youtube-apify-transcript",
+  "version": "0.1.0",
+  "description": "Fetch YouTube transcripts via Apify. Works from cloud IPs (Hetzner, AWS, etc.) by bypassing YouTube's bot detection.",
+  "license": "MIT",
+  "keywords": [
+    "moatt",
+    "skill",
+    "youtube",
+    "transcript",
+    "apify"
+  ],
+  "openclaw": {
+    "skill": true,
+    "triggers": [
+      "youtube transcript",
+      "get transcript",
+      "video transcript"
+    ],
+    "capabilities": [
+      "transcript-extraction",
+      "cloud-ip-bypass",
+      "multi-language"
+    ],
+    "requirements": {
+      "bins": [
+        "python3"
+      ],
+      "env": {
+        "APIFY_API_TOKEN": "required"
+      }
+    }
+  },
+  "files": [
+    "SKILL.md",
+    "README.md",
+    ".env.example",
+    "scripts/"
+  ]
+}
