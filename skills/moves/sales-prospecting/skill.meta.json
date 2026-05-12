@@ -1,0 +1,14 @@
+{
+  "slug": "sales-prospecting",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install sales-prospecting",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

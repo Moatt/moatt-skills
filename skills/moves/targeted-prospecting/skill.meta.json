@@ -1,0 +1,14 @@
+{
+  "slug": "targeted-prospecting",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install targeted-prospecting",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

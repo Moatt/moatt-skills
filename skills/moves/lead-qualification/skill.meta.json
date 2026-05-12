@@ -1,0 +1,15 @@
+{
+  "slug": "lead-qualification",
+  "category": "moves",
+  "tags": [
+    "lead-generation"
+  ],
+  "installation": {
+    "base_command": "npx moatt install lead-qualification",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
