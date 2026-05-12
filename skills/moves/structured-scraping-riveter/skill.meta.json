@@ -1,0 +1,14 @@
+{
+  "slug": "structured-scraping-riveter",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install structured-scraping-riveter",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

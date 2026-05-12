@@ -1,0 +1,14 @@
+{
+  "slug": "web-scraping-olostep",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install web-scraping-olostep",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

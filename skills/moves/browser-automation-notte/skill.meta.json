@@ -1,0 +1,14 @@
+{
+  "slug": "browser-automation-notte",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install browser-automation-notte",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

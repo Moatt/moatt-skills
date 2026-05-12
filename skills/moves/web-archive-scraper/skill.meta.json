@@ -1,0 +1,15 @@
+{
+  "slug": "web-archive-scraper",
+  "category": "moves",
+  "tags": [
+    "monitoring"
+  ],
+  "installation": {
+    "base_command": "npx moatt install web-archive-scraper",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
