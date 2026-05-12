@@ -1,0 +1,14 @@
+{
+  "slug": "social-media-scraping-scrapecreators",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install social-media-scraping-scrapecreators",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

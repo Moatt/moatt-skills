@@ -1,0 +1,14 @@
+{
+  "slug": "social-listening",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install social-listening",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "slug": "twitter-mention-tracker",
+  "category": "moves",
+  "tags": [
+    "monitoring"
+  ],
+  "installation": {
+    "base_command": "npx moatt install twitter-mention-tracker",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

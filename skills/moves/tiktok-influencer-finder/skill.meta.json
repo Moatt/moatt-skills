@@ -1,0 +1,15 @@
+{
+  "slug": "tiktok-influencer-finder",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install tiktok-influencer-finder",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

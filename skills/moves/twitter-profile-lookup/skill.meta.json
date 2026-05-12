@@ -1,0 +1,14 @@
+{
+  "slug": "twitter-profile-lookup",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install twitter-profile-lookup",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "find-twitter-influencers",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install find-twitter-influencers",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

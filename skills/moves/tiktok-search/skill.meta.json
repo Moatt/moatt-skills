@@ -1,0 +1,14 @@
+{
+  "slug": "tiktok-search",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install tiktok-search",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
