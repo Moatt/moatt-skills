@@ -1,0 +1,20 @@
+{
+  "slug": "boomerang-90day-reengage",
+  "category": "plays",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install boomerang-90day-reengage",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "company-funding-search",
+    "linkedin-profile-post-scraper",
+    "company-intel"
+  ]
+}

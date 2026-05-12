@@ -1,0 +1,18 @@
+{
+  "slug": "inbound-lead-qualification",
+  "category": "plays",
+  "tags": [
+    "lead-generation"
+  ],
+  "installation": {
+    "base_command": "npx moatt install inbound-lead-qualification",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "lead-qualification"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "slug": "inbound-lead-enrichment",
+  "category": "plays",
+  "tags": [
+    "lead-generation"
+  ],
+  "installation": {
+    "base_command": "npx moatt install inbound-lead-enrichment",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "company-contact-finder"
+  ]
+}

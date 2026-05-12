@@ -1,0 +1,19 @@
+{
+  "slug": "expansion-signal-spotter",
+  "category": "plays",
+  "tags": [
+    "lead-generation"
+  ],
+  "installation": {
+    "base_command": "npx moatt install expansion-signal-spotter",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "job-posting-intent",
+    "linkedin-profile-post-scraper"
+  ]
+}

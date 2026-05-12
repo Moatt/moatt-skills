@@ -1,0 +1,15 @@
+{
+  "slug": "churn-risk-detector",
+  "category": "plays",
+  "tags": [
+    "research"
+  ],
+  "installation": {
+    "base_command": "npx moatt install churn-risk-detector",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

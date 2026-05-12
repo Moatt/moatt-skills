@@ -1,0 +1,20 @@
+{
+  "slug": "voice-of-customer-synthesizer",
+  "category": "plays",
+  "tags": [
+    "research"
+  ],
+  "installation": {
+    "base_command": "npx moatt install voice-of-customer-synthesizer",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "reddit-post-finder",
+    "review-site-scraper",
+    "twitter-mention-tracker"
+  ]
+}
