@@ -1,0 +1,23 @@
+{
+  "slug": "seo-content-audit",
+  "category": "plays",
+  "tags": [
+    "seo"
+  ],
+  "installation": {
+    "base_command": "npx moatt install seo-content-audit",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "brand-voice-extractor",
+    "seo-domain-analyzer",
+    "site-content-catalog"
+  ],
+  "requires_tools": [
+    "dataforseo_proxy"
+  ]
+}

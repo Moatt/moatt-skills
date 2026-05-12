@@ -1,0 +1,18 @@
+{
+  "slug": "icp-website-audit",
+  "category": "plays",
+  "tags": [
+    "research"
+  ],
+  "installation": {
+    "base_command": "npx moatt install icp-website-audit",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "content-asset-creator"
+  ]
+}

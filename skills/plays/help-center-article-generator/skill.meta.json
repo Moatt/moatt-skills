@@ -1,0 +1,15 @@
+{
+  "slug": "help-center-article-generator",
+  "category": "plays",
+  "tags": [
+    "content"
+  ],
+  "installation": {
+    "base_command": "npx moatt install help-center-article-generator",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

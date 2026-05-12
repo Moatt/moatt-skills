@@ -1,0 +1,23 @@
+{
+  "slug": "seo-opportunity-finder",
+  "category": "plays",
+  "tags": [
+    "seo"
+  ],
+  "installation": {
+    "base_command": "npx moatt install seo-opportunity-finder",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "seo-domain-analyzer",
+    "seo-traffic-analyzer",
+    "site-content-catalog"
+  ],
+  "requires_tools": [
+    "dataforseo_proxy"
+  ]
+}

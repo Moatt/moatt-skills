@@ -1,0 +1,23 @@
+{
+  "slug": "programmatic-seo-planner",
+  "category": "plays",
+  "tags": [
+    "seo"
+  ],
+  "installation": {
+    "base_command": "npx moatt install programmatic-seo-planner",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "reddit-post-finder",
+    "seo-domain-analyzer",
+    "site-content-catalog"
+  ],
+  "requires_tools": [
+    "dataforseo_proxy"
+  ]
+}

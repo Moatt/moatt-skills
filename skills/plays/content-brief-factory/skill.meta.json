@@ -1,0 +1,24 @@
+{
+  "slug": "content-brief-factory",
+  "category": "plays",
+  "tags": [
+    "content"
+  ],
+  "installation": {
+    "base_command": "npx moatt install content-brief-factory",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "reddit-post-finder",
+    "review-site-scraper",
+    "seo-domain-analyzer",
+    "site-content-catalog"
+  ],
+  "requires_tools": [
+    "dataforseo_proxy"
+  ]
+}
