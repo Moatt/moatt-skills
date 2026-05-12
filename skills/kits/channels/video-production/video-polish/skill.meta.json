@@ -1,0 +1,16 @@
+{
+  "slug": "video-polish",
+  "category": "moves",
+  "tags": [
+    "content",
+    "video"
+  ],
+  "installation": {
+    "base_command": "npx moatt install video-production",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
