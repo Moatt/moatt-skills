@@ -1,0 +1,15 @@
+{
+  "slug": "meta-ad-scraper",
+  "category": "moves",
+  "tags": [
+    "ads"
+  ],
+  "installation": {
+    "base_command": "npx moatt install meta-ad-scraper",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

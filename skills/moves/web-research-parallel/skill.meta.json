@@ -1,0 +1,14 @@
+{
+  "slug": "web-research-parallel",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install web-research-parallel",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
