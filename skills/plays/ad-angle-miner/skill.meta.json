@@ -1,0 +1,20 @@
+{
+  "slug": "ad-angle-miner",
+  "category": "plays",
+  "tags": [
+    "ads"
+  ],
+  "installation": {
+    "base_command": "npx moatt install ad-angle-miner",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "reddit-post-finder",
+    "review-site-scraper",
+    "twitter-mention-tracker"
+  ]
+}

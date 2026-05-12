@@ -1,0 +1,18 @@
+{
+  "slug": "paid-channel-prioritizer",
+  "category": "plays",
+  "tags": [
+    "ads"
+  ],
+  "installation": {
+    "base_command": "npx moatt install paid-channel-prioritizer",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "google-ad-scraper"
+  ]
+}

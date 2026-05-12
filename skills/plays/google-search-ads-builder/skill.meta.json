@@ -1,0 +1,21 @@
+{
+  "slug": "google-search-ads-builder",
+  "category": "plays",
+  "tags": [
+    "ads"
+  ],
+  "installation": {
+    "base_command": "npx moatt install google-search-ads-builder",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "seo-domain-analyzer"
+  ],
+  "requires_tools": [
+    "dataforseo_proxy"
+  ]
+}

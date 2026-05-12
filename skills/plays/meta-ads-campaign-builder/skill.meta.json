@@ -1,0 +1,15 @@
+{
+  "slug": "meta-ads-campaign-builder",
+  "category": "plays",
+  "tags": [
+    "ads"
+  ],
+  "installation": {
+    "base_command": "npx moatt install meta-ads-campaign-builder",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

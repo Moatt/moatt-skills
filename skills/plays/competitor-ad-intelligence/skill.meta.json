@@ -1,0 +1,15 @@
+{
+  "slug": "competitor-ad-intelligence",
+  "category": "plays",
+  "tags": [
+    "ads"
+  ],
+  "installation": {
+    "base_command": "npx moatt install competitor-ad-intelligence",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
