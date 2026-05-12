@@ -1,0 +1,15 @@
+{
+  "slug": "cold-email-outreach",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install cold-email-outreach",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

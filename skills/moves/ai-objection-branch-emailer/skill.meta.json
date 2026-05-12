@@ -1,0 +1,15 @@
+{
+  "slug": "ai-objection-branch-emailer",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install ai-objection-branch-emailer",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

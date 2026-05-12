@@ -1,0 +1,14 @@
+{
+  "slug": "email-campaign",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install email-campaign",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

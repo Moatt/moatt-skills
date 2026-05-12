@@ -1,0 +1,15 @@
+{
+  "slug": "email-drafting",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install email-drafting",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

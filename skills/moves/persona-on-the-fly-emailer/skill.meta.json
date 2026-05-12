@@ -1,0 +1,15 @@
+{
+  "slug": "persona-on-the-fly-emailer",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install persona-on-the-fly-emailer",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
