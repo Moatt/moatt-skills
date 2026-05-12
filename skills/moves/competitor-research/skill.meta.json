@@ -1,0 +1,14 @@
+{
+  "slug": "competitor-research",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install competitor-research",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

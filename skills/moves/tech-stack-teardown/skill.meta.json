@@ -1,0 +1,15 @@
+{
+  "slug": "tech-stack-teardown",
+  "category": "moves",
+  "tags": [
+    "competitive-intel"
+  ],
+  "installation": {
+    "base_command": "npx moatt install tech-stack-teardown",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

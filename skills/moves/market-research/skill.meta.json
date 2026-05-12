@@ -1,0 +1,14 @@
+{
+  "slug": "market-research",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install market-research",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

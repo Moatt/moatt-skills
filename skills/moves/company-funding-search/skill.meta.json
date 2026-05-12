@@ -1,0 +1,14 @@
+{
+  "slug": "company-funding-search",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install company-funding-search",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
