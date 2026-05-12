@@ -1,0 +1,4515 @@
+{
+  "version": "1",
+  "updatedAt": "2026-05-12T07:24:26Z",
+  "skills": [
+    {
+      "slug": "ad-angle-miner",
+      "name": "Ad Angle Miner",
+      "description": "Mine the highest-converting ad angles from customer reviews, Reddit complaints, support tickets, and competitor ads. Pulls the actual pain language, competitor weaknesses, and outcome phrases that real buyers use. Outputs a ranked angle bank with proof quotes and recommended ad formats per angle.",
+      "category": "plays",
+      "tags": [
+        "ads"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/ad-angle-miner",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Ad Angle Miner",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "reddit-post-finder",
+        "review-site-scraper",
+        "twitter-mention-tracker"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "ad-campaign-analyzer",
+      "name": "Ad Campaign Analyzer",
+      "description": "Turn raw ad-campaign performance data (Google, Meta, LinkedIn) into clear-cut decisions about what's working, what's burning budget, and what to cut/scale/test next. Runs statistical analysis, funnel diagnostics, and multi-channel budget reallocation with specific dollar-shift recommendations and scenario modeling.",
+      "category": "plays",
+      "tags": [
+        "ads"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/ad-campaign-analyzer",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Ad Campaign Analyzer",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "ad-to-landing-page-auditor",
+      "name": "Ad To Landing Page Auditor",
+      "description": "Inspect the message match between your ads and landing pages. Confirms whether the promise from the ad copy carries into the landing page headline, body, and CTA. Flags every disconnect that's costing you conversions. Works across Google, Meta, and LinkedIn ads.",
+      "category": "plays",
+      "tags": [
+        "ads"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/ad-to-landing-page-auditor",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Ad To Landing Page Auditor",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "google-ad-scraper"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "aeo",
+      "name": "Aeo",
+      "description": "Check and improve your brand's visibility across AI search engines (ChatGPT, Perplexity, Gemini, Grok, Claude, DeepSeek). Set up tracking, run visibility analyses, audit your website for AI readability, and get actionable recommendations. Uses the npx moatt-aeo@latest CLI.",
+      "category": "moves",
+      "tags": [
+        "seo"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/aeo",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Aeo",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "ai-account-brief-generator",
+      "name": "Ai Account Brief Generator",
+      "description": "Pre-call account brief that orchestrates company research, leadership lookup, recent news, hiring signals, tech stack detection, and competitor presence into a 200-word brief plus a recommended trap question per stakeholder. Designed to land in the AE's inbox 24 hours before any sales call so they walk in informed without spending 45 minutes prepping.",
+      "category": "plays",
+      "tags": [
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/ai-account-brief-generator",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Ai Account Brief Generator",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "company-intel",
+        "linkedin-profile-post-scraper",
+        "company-funding-search",
+        "linkedin-job-scraper",
+        "tech-stack-teardown"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "ai-cold-call-script-ab",
+      "name": "Ai Cold Call Script Ab",
+      "description": "Generate three opener variants for a cold call segment, run them through real call transcripts to identify the highest-conversion opener (measured by talk-time-after-opener as proxy), and ship the winning variant as the default for that segment. Replaces hunch-based opener choice with measured A/B/C comparison grounded in actual Gong/Chorus call data.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/ai-cold-call-script-ab",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Ai Cold Call Script Ab",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "ai-objection-branch-emailer",
+      "name": "Ai Objection Branch Emailer",
+      "description": "Detect the objection type in an inbound reply (price, feature gap, timing, no need, competitor, security, authority) and draft a tailored response that acknowledges the objection, offers grounded evidence from your win library, and asks for a specific micro-commitment. Pairs with reply-classifier as the second step in inbound triage.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/ai-objection-branch-emailer",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Ai Objection Branch Emailer",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "ai-video-calls-tavus",
+      "name": "Ai Video Calls Tavus",
+      "description": "AI video conversations - create real-time video calls with AI personas",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/ai-video-calls-tavus",
+      "argumentHint": "",
+      "domain": "tavus.io",
+      "appName": "Tavus",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "ai-web-scraping-scrapegraph",
+      "name": "Ai Web Scraping Scrapegraph",
+      "description": "AI-powered web scraping - extract data using natural language prompts",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/ai-web-scraping-scrapegraph",
+      "argumentHint": "",
+      "domain": "scrapegraphai.com",
+      "appName": "ScrapeGraph",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "alternatives-to-page-builder",
+      "name": "Alternatives To Page Builder",
+      "description": "Build \"Best alternatives to {Competitor}\" pages — separate from one-on-one comparisons. Targets the search intent of users actively shopping for replacements, lists 5-7 alternatives (positioning your product as one), gives an honest comparison matrix, and ranks alternatives by best-fit-by-buyer-profile. Critical SEO play for competitors much larger than you, where 1-on-1 comparisons can't compete on brand-keyword authority, grounded in DataForSEO SERP and Labs data.",
+      "category": "plays",
+      "tags": [
+        "seo",
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/alternatives-to-page-builder",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Alternatives To Page Builder",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "competitor-research",
+        "review-site-scraper",
+        "competitor-vs-page-builder"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "apollo-lead-finder",
+      "name": "Apollo Lead Finder",
+      "description": "Apollo.io prospecting in two stages: a no-cost People Search that uncovers ICP-aligned prospects, followed by targeted enrichment to surface emails and phone numbers (consuming credits per contact). Builds Apollo lists and removes duplicates against your existing book by LinkedIn URL.",
+      "category": "moves",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/apollo-lead-finder",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Apollo Lead Finder",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "battlecard-generator",
+      "name": "Battlecard Generator",
+      "description": "Research a specific competitor across their website, reviews, ads, social presence, and pricing — then produce a structured sales battlecard with positioning traps, objection handlers, landmine questions, and win/loss themes. Chains web research, review mining, and ad intelligence. Reach for this when sales needs competitive ammo or when entering a new market with established incumbents.",
+      "category": "plays",
+      "tags": [
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/battlecard-generator",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Battlecard Generator",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "google-ad-scraper",
+        "review-site-scraper"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "beat-sync-reel",
+      "name": "Beat Sync Reel",
+      "description": "Generates Instagram Reels where product image cuts are synced to audio beats. Accepts audio as a local file, URL, or search query. Uses librosa for beat detection, FFmpeg Ken Burns for scene animation, and Pillow for text overlays. No AI video generation — fully free, fast, and scalable.",
+      "category": "moves",
+      "tags": [
+        "content"
+      ],
+      "version": "0.1.0",
+      "path": "skills/kits/channels/video-production/beat-sync-reel",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Beat Sync Reel",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": "video-production"
+    },
+    {
+      "slug": "blog-feed-monitor",
+      "name": "Blog Feed Monitor",
+      "description": "Pull blog content via RSS feeds (free, requires no API key) with an Apify fallback for JavaScript-heavy sites. Reach for this when you want to keep tabs on competitor blogs, follow industry publications, or collect posts filtered by topic.",
+      "category": "moves",
+      "tags": [
+        "content"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/blog-feed-monitor",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Blog Feed Monitor",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "boomerang-90day-reengage",
+      "name": "Boomerang 90day Reengage",
+      "description": "For closed-lost deals, monitor for trigger conditions changing — new funding, exec change, competitor renewal window approaching, product update addressing original loss reason, layoff/hiring shift, or news signal — and auto-create a re-engagement task when 2+ conditions changed since the loss. Generates a personalized re-engagement message anchored to the specific change, not a generic \"checking in.\"",
+      "category": "plays",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/boomerang-90day-reengage",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Boomerang 90day Reengage",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "company-funding-search",
+        "linkedin-profile-post-scraper",
+        "company-intel"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "brand-intel-branddev",
+      "name": "Brand Intel Branddev",
+      "description": "Brand intelligence - logos, colors, fonts, styleguides, and company data from any domain",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/brand-intel-branddev",
+      "argumentHint": "",
+      "domain": "brand.dev",
+      "appName": "Brand.dev",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "brand-voice-extractor",
+      "name": "Brand Voice Extractor",
+      "description": "Reverse-engineer a company's writing voice by reading 10-20 of their best published pieces and distilling tone, lexicon, sentence rhythm, structural habits, CTA framing, and reader profile into a concrete style profile. Run this before producing content, emails, or campaigns that need to feel native to an existing brand.",
+      "category": "moves",
+      "tags": [
+        "brand"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/brand-voice-extractor",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Brand Voice Extractor",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "breakup-permission-close",
+      "name": "Breakup Permission Close",
+      "description": "Generate a final-step \"breakup\" email for an outbound sequence — the permission-close pattern that consistently outperforms most middle steps as the highest reply generator. Produces three variants (soft / direct / clever) with subject lines, calibrated to the prospect's role and the prior cadence context. Replaces \"Just following up\" with a respectful exit that invites a one-word reply.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/breakup-permission-close",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Breakup Permission Close",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "browser-automation-notte",
+      "name": "Browser Automation Notte",
+      "description": "Browser automation - control browser sessions, scrape pages, and run AI agents",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/browser-automation-notte",
+      "argumentHint": "",
+      "domain": "notte.cc",
+      "appName": "Notte",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "buyer-persona-generator",
+      "name": "Buyer Persona Generator",
+      "description": "Investigate a company's ideal customer segments and produce vivid synthetic buyer personas. Surfaces 4-6 separate buyer profiles through web research, then writes realistic personas with demographics, motivations, skepticism profiles, decision criteria, and language patterns. Use when you need a deeper view of who actually buys — what drives them, how they push back, and how they assess solutions.",
+      "category": "moves",
+      "tags": [
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/buyer-persona-generator",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Buyer Persona Generator",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "campaign-brief-generator",
+      "name": "Campaign Brief Generator",
+      "description": "Build a complete marketing campaign brief from a launch goal, ICP, and product context. Pure reasoning skill. Emits channel plan, messaging angles, content types, timeline, and success metrics. Built for seed/Series A founders and small GTM teams without a professional marketer on staff who still need to run focused campaigns. No scripts — pure reasoning.",
+      "category": "plays",
+      "tags": [
+        "content"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/campaign-brief-generator",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Campaign Brief Generator",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "champion-departure-trigger",
+      "name": "Champion Departure Trigger",
+      "description": "Detect when a champion (current customer, past buyer, or known stakeholder) leaves their company, then fire two parallel plays: (1) re-engage the remaining account to re-establish executive sponsorship and protect retention; (2) reach out to the departed champion at their new company as a warm expansion lead. Combines LinkedIn job-change detection, CRM cross-reference, and personalized outreach generation.",
+      "category": "plays",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/champion-departure-trigger",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Champion Departure Trigger",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "linkedin-profile-post-scraper",
+        "company-contact-finder",
+        "company-intel"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "champion-move-outreach",
+      "name": "Champion Move Outreach",
+      "description": "End-to-end composite for champion/buyer/user job-change signals. Takes a set of known people (past buyers, champions, power users), detects when they move to a new company, researches the new company for ICP fit, and drafts personalized outreach that leans on the existing relationship. Tool-agnostic — works with any people source, detection method, and outreach platform.",
+      "category": "plays",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/champion-move-outreach",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Champion Move Outreach",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "cold-email-outreach",
+        "email-drafting",
+        "linkedin-outreach"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "champion-tracker",
+      "name": "Champion Tracker",
+      "description": "Watch product champions for role changes and assess their new employers against your ICP. Ingests a CSV of known champions (with LinkedIn URLs), builds a baseline snapshot through Apify enrichment, then flags when those champions land at new companies. Each new employer is scored on a 0-4 ICP fit scale. Outputs a downloadable CSV listing the movers with their qualification verdicts.",
+      "category": "moves",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/champion-tracker",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Champion Tracker",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "churn-risk-detector",
+      "name": "Churn Risk Detector",
+      "description": "Sweep through support tickets, Slack threads, NPS scores, and usage signals to flag accounts trending toward churn. Produces a weekly risk scorecard split into severity tiers, with root-cause hypotheses and tailored save plays per account. Aimed at seed/Series A teams where one founder or a lone CSM still juggles every account by hand.",
+      "category": "plays",
+      "tags": [
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/churn-risk-detector",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Churn Risk Detector",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "cold-email-outreach",
+      "name": "Cold Email Outreach",
+      "description": "Full-cycle cold email orchestration. Covers goal alignment, lead ingestion from any source (CSV, paste, CRM export, database), sequence design, email generation, campaign setup in the user's outreach tool of choice, and launch. Tool-agnostic — supports Smartlead (full MCP automation), Instantly, Lemlist, Apollo, or a plain CSV export.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/cold-email-outreach",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Cold Email Outreach",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "community-signals",
+      "name": "Community Signals",
+      "description": "Extract leads from developer forums (Hacker News, Reddit) by detecting intent signals — alternative seeking, competitor pain, scaling challenges, DIY solutions, and migration intent. Scores users by intent strength and cross-platform presence.",
+      "category": "moves",
+      "tags": [
+        "lead-generation",
+        "research",
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/kits/industries/lead-gen-devtools/community-signals",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Community Signals",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": "lead-gen-devtools"
+    },
+    {
+      "slug": "company-contact-finder",
+      "name": "Company Contact Finder",
+      "description": "Surface decision-makers at a named company by chaining Apollo, Crustdata, Fiber, and PDL people-search via the Moatt MCP. Provide a company plus the titles you care about; get back a deduplicated contact list with name, title, LinkedIn URL, and location.",
+      "category": "moves",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/company-contact-finder",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Company Contact Finder",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "company-current-gtm-analysis",
+      "name": "Company Current Gtm Analysis",
+      "description": "Full GTM analysis of a target company. Researches what a company is currently doing across every go-to-market dimension — content/blog, founder LinkedIn activity, SEO/traffic, hiring signals, social/community presence, customer acquisition channels, podcast appearances, review sites, competitive positioning, and partnerships. Produces a structured report identifying what's working, what's missing, and where white space exists for new strategies. Run this before designing GTM strategies for a client or prospect.",
+      "category": "plays",
+      "tags": [
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/company-current-gtm-analysis",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Company Current Gtm Analysis",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "blog-feed-monitor",
+        "linkedin-profile-post-scraper",
+        "review-site-scraper"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "company-domain-lookup-logodev",
+      "name": "Company Domain Lookup Logodev",
+      "description": "Logo.dev - search for company domains by brand name",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/company-domain-lookup-logodev",
+      "argumentHint": "",
+      "domain": "logo.dev",
+      "appName": "Logo.dev",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "company-funding-search",
+      "name": "Company Funding Search",
+      "description": "Find company funding history, investors, and investment details",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/company-funding-search",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Company Funding Search",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "company-intel",
+      "name": "Company Intel",
+      "description": "Full company intelligence report - overview, team, funding, products, news",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/company-intel",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Company Intel",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "comparison-matrix-builder",
+      "name": "Comparison Matrix Builder",
+      "description": "Generate a structured feature/pricing/fit comparison matrix across N tools in the same category. Each cell is sourced — pricing pages, product docs, G2/TrustRadius features lists, public roadmap. Outputs a clean markdown / HTML / CSV matrix ready for sales enablement, proposal docs, or competitor-vs page generation. Distinct from competitor-vs-page-builder (full marketing page); this is the data asset you reuse downstream.",
+      "category": "moves",
+      "tags": [
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/comparison-matrix-builder",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Comparison Matrix Builder",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "competitive-pricing-intel",
+      "name": "Competitive Pricing Intel",
+      "description": "Watch competitor pricing pages via live scrape and Web Archive snapshots. Track plan changes, tier restructuring, new pricing models, and feature gating shifts. Produces a pricing comparison matrix and flags whenever a competitor changes packaging. Run when product marketing needs to stay current on competitive pricing, or before changing your own.",
+      "category": "plays",
+      "tags": [
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/competitive-pricing-intel",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Competitive Pricing Intel",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "competitor-ad-intelligence",
+      "name": "Competitor Ad Intelligence",
+      "description": "Pull competitor ads from the Meta Ad Library and Google Ads Transparency Center, break down creative patterns (hooks, formats, CTAs), reverse-engineer the landing-page funnels, and ship a strategic teardown with vulnerability analysis and counter-play recommendations. Use when you need to understand the competitive ad landscape, find new creative directions, or identify weaknesses in a competitor's paid strategy.",
+      "category": "plays",
+      "tags": [
+        "ads"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/competitor-ad-intelligence",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Competitor Ad Intelligence",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "competitor-content-tracker",
+      "name": "Competitor Content Tracker",
+      "description": "Watch competitor content across blogs, LinkedIn, and Twitter/X on a recurring cadence. Surfaces fresh posts, trending topics, and content gaps you can capture. Chains blog-feed-monitor, linkedin-profile-post-scraper, and twitter-mention-tracker. Use when you want a weekly digest of what competitors are publishing and which topics are generating engagement.",
+      "category": "plays",
+      "tags": [
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/competitor-content-tracker",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Competitor Content Tracker",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "blog-feed-monitor",
+        "linkedin-profile-post-scraper",
+        "twitter-mention-tracker"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "competitor-intel",
+      "name": "Competitor Intel",
+      "description": "Competitor intelligence system. Research competitors across the web, Reddit, Twitter/X, LinkedIn, and blogs. Build deep competitor profiles, monitor content and positioning changes, track what gains traction, and identify competitive gaps. Covers data collection, content tracking, and strategy analysis. Pure research skill — uses web search, web fetch, and optionally Apify for social scraping. No scripts required.",
+      "category": "plays",
+      "tags": [
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/competitor-intel",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Competitor Intel",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "competitor-monitoring-system",
+      "name": "Competitor Monitoring System",
+      "description": "Set up and run ongoing competitive intelligence monitoring for a client. Tracks competitor content, ads, reviews, social presence, and product moves.",
+      "category": "moats",
+      "tags": [
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moats/competitor-monitoring-system",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Competitor Monitoring System",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "competitor-post-engagers",
+      "name": "Competitor Post Engagers",
+      "description": "Generate leads by harvesting the engagers off a competitor's strongest LinkedIn posts. Takes one or more company page URLs, pulls recent posts, ranks them by engagement, picks the top N, lists every reactor and commenter, sorts by ICP fit, and ships a CSV. Use this when someone wants to \"surface leads engaging with competitor content\" or \"pull people interacting with [company]'s LinkedIn posts\".",
+      "category": "moves",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/competitor-post-engagers",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Competitor Post Engagers",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "competitor-research",
+      "name": "Competitor Research",
+      "description": "Research competitors - products, pricing, team, funding, and strategy",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/competitor-research",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Competitor Research",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "competitor-signals",
+      "name": "Competitor Signals",
+      "description": "Extract leads from competitor product activity — Product Hunt commenters/upvoters, HN posts about competitors, case studies, testimonials, tech press, and switching signals. Detects people actively switching from competitors as highest-priority leads.",
+      "category": "moves",
+      "tags": [
+        "lead-generation",
+        "research",
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/kits/industries/lead-gen-devtools/competitor-signals",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Competitor Signals",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": "lead-gen-devtools"
+    },
+    {
+      "slug": "competitor-vs-page-builder",
+      "name": "Competitor Vs Page Builder",
+      "description": "Auto-build comparison pages (\"{Your product} vs {Competitor}\") using product data, G2/TrustRadius reviews, pricing pages, and feature-fit analysis, grounded in DataForSEO SERP analysis and head-to-head keyword data. Outputs ready-to-publish HTML/markdown with comparison table, FAQ schema, switching guide, and a \"switch to us\" CTA. One run produces an entire competitor matrix — typically 5-15 pages — ranking-ready for the \"X vs Y\" and \"alternatives to X\" search demand.",
+      "category": "plays",
+      "tags": [
+        "seo",
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/competitor-vs-page-builder",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Competitor Vs Page Builder",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "competitor-research",
+        "review-site-scraper",
+        "seo-opportunity-finder"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "comprehensive-enrichment",
+      "name": "Comprehensive Enrichment",
+      "description": "Enrich any person or company from any identifier — email, name, LinkedIn URL, domain, company name, Twitter/X handle. Use when asked to enrich, look up, or research a lead, contact, person, or company.",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/comprehensive-enrichment",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Comprehensive Enrichment",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "conference-speaker-scraper",
+      "name": "Conference Speaker Scraper",
+      "description": "Pull speaker names, titles, companies, and bios from conference websites. Combines direct HTML scraping with an Apify web scraper fallback for JavaScript-heavy sites. Useful for pre-event research and targeted outreach.",
+      "category": "moves",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/conference-speaker-scraper",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Conference Speaker Scraper",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "contact-cache",
+      "name": "Contact Cache",
+      "description": "Maintain a running list of every person identified or contacted across all outreach strategies. CSV-based contact ledger with dedup by LinkedIn URL or email address. Stops you from hitting the same person twice when your strategies run on a repeating cadence.",
+      "category": "moves",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/contact-cache",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Contact Cache",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "contact-finder-contactout",
+      "name": "Contact Finder Contactout",
+      "description": "Find emails, phone numbers, and enrich profiles using ContactOut. LinkedIn enrichment, people search, company enrichment, and batch operations.",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/contact-finder-contactout",
+      "argumentHint": "",
+      "domain": "contactout.com",
+      "appName": "ContactOut",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "content-asset-creator",
+      "name": "Content Asset Creator",
+      "description": "Spin up polished, on-brand HTML assets — industry reports, landing pages, side-by-side comparisons, one-pagers — from structured input. Prefers the Gamma API, falls back to v0.dev's Platform API, and ultimately to a self-hosted Tailwind template. Produces self-contained HTML files that can be hosted or printed to PDF.",
+      "category": "moves",
+      "tags": [
+        "content"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/content-asset-creator",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Content Asset Creator",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "content-brief-factory",
+      "name": "Content Brief Factory",
+      "description": "Generate detailed, differentiated content briefs at scale. Each brief bundles SERP analysis, competing-page breakdown, unique angles harvested from real customer language (reviews, Reddit), an internal linking plan, and SERP-feature targets. Batch mode produces 10-50 briefs per run. Beats the generic \"keyword density\" briefs that tools like Surfer or Clearscope hand back.",
+      "category": "plays",
+      "tags": [
+        "content"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/content-brief-factory",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Content Brief Factory",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "reddit-post-finder",
+        "review-site-scraper",
+        "seo-domain-analyzer",
+        "site-content-catalog"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "create-dashboard",
+      "name": "Create Dashboard",
+      "description": "Build a custom web dashboard (React + Vite + Express) inside the sandbox that visualizes the agent's Turso database. The dashboard runs on port 3847 and the user sees it live in the \"App\" tab inside Moatt. Use this whenever the user asks for a dashboard, visualization, chart, metric view, or any bespoke UI powered by their agent's data.",
+      "category": "moves",
+      "tags": [
+        "content",
+        "design"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/create-dashboard",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Create Dashboard",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "create-html-carousel",
+      "name": "Create Html Carousel",
+      "description": "Produce LinkedIn carousel posts as crisp PNG images. Lay out informational multi-slide posts (think \"5 AI GTM workflows\") with a unified visual system, then auto-screenshot each slide at LinkedIn's recommended 1080x1080px size.",
+      "category": "moves",
+      "tags": [
+        "content"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/create-html-carousel",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Create Html Carousel",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "create-html-slides",
+      "name": "Create Html Slides",
+      "description": "Build stunning, animation-rich HTML presentations from scratch or by converting PowerPoint files. Use when the user wants to assemble a presentation, port a PPT/PPTX to the web, or create slides for a talk or pitch. Helps non-designers find their aesthetic through visual exploration rather than abstract choices.",
+      "category": "moves",
+      "tags": [
+        "content"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/create-html-slides",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Create Html Slides",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "create-linkedin-content",
+      "name": "Create Linkedin Content",
+      "description": "Turn a free-form brief into voice-tuned LinkedIn post variants. Loads a personal voice guide (built via generate-voice-guide), produces 2-5 framings of the same idea, applies LinkedIn-native defaults (arrow bullets, \"why this matters\" beat, 150-500 words), and runs a self-check against the voice guide's banned phrases before delivering.",
+      "category": "moves",
+      "tags": [
+        "content",
+        "social"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/create-linkedin-content",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Create Linkedin Content",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "create-workflow-diagram",
+      "name": "Create Workflow Diagram",
+      "description": "Render FigJam/Miro-style workflow diagrams as high-resolution PNG images from a plain-text description of the steps. Builds a polished HTML diagram with linked nodes, arrows, and labels, then screenshots it for sharing.",
+      "category": "moves",
+      "tags": [
+        "content"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/create-workflow-diagram",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Create Workflow Diagram",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "create-x-content",
+      "name": "Create X Content",
+      "description": "Generate voice-aligned X (Twitter) post variants from a free-form brief. Reads a personal voice guide (built via generate-voice-guide), produces 2–5 variants in distinct framings (simple-howto, problem-first, hype, mechanism-breakdown, etc.), and runs a self-check against the voice guide's banned phrases before delivering.",
+      "category": "moves",
+      "tags": [
+        "content",
+        "social"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/create-x-content",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Create X Content",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "crm-suppression-sync",
+      "name": "Crm Suppression Sync",
+      "description": "Sync CRM-level suppression rules to every active outbound sequencing tool (Smartlead, Instantly, Outreach, Salesloft, HeyReach) so deals in active pipeline, customers, recently churned accounts, competitor employees, and unsubscribed contacts are automatically removed from cold sequences in real time. The single most important hygiene control for a multi-tool outbound stack.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/crm-suppression-sync",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Crm Suppression Sync",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "customer-discovery",
+      "name": "Customer Discovery",
+      "description": "Surface every customer of a target company by sweeping their website, case studies, review platforms, press, social media, job listings, and more. Reach for this when you need competitive intelligence on who a company is selling to.",
+      "category": "moves",
+      "tags": [
+        "competitive-intel",
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/customer-discovery",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Customer Discovery",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "customer-story-builder",
+      "name": "Customer Story Builder",
+      "description": "Take raw customer inputs — interview transcripts, survey responses, Slack quotes, support tickets, review excerpts — and produce a structured case study draft with problem/solution/result narrative, pull-quotes, metric callouts, and multi-format outputs (full case study, one-pager, social-proof snippet, sales deck slide). Pure reasoning skill. Use when a product-marketing team has customer signal but no time to write the story.",
+      "category": "plays",
+      "tags": [
+        "content"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/customer-story-builder",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Customer Story Builder",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "customer-win-back-sequencer",
+      "name": "Customer Win Back Sequencer",
+      "description": "For churned accounts, research what has shifted since they left — new funding, team growth, competitor dissatisfaction, product updates that target their old pain — then size up re-engagement potential and generate a personalized win-back email sequence with timing guidance. Chains web research and LinkedIn monitoring with email sequence generation.",
+      "category": "plays",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/customer-win-back-sequencer",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Customer Win Back Sequencer",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "linkedin-profile-post-scraper",
+        "review-site-scraper"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "demo-builder",
+      "name": "Demo Builder",
+      "description": "Builds personalized demo assets for top prospects using the founder's product API/MCP/SDK. Researches prospect, proposes demo concepts, builds working prototype, tests it, and generates comparison report with live demo link.",
+      "category": "moves",
+      "tags": [
+        "lead-generation",
+        "research",
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/kits/industries/lead-gen-devtools/demo-builder",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Demo Builder",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": "lead-gen-devtools"
+    },
+    {
+      "slug": "disqualification-handling",
+      "name": "Disqualification Handling",
+      "description": "Handles disqualified and near-miss inbound leads gracefully. Drafts polite rejection emails, referral requests (right company wrong person), and nurture routing (future fit). Ensures no inbound lead gets ghosted and every disqualification preserves the relationship. Tool-agnostic.",
+      "category": "plays",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/disqualification-handling",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Disqualification Handling",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "cold-email-outreach",
+        "email-drafting"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "dynamic-roi-calculator",
+      "name": "Dynamic Roi Calculator",
+      "description": "Generate a personalized ROI brief for a specific prospect using discovery-call notes, public company data, and a stored ROI model. Produces a one-page markdown or PDF brief with their numbers — not generic — covering addressable opportunity, projected savings or revenue lift, payback period, and three sensitivity scenarios. Designed to land with the economic buyer.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/dynamic-roi-calculator",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Dynamic Roi Calculator",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "email-campaign",
+      "name": "Email Campaign",
+      "description": "Build email campaigns - find emails, verify them, and prepare outreach",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/email-campaign",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Email Campaign",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "email-drafting",
+      "name": "Email Drafting",
+      "description": "Compose high-converting cold emails with structured frameworks, personalization tiers, and patterns harvested from real campaigns. Pure reasoning skill — no scripts. Loads automatically whenever a task requires outreach copy.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/email-drafting",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Email Drafting",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "email-finder-hunter",
+      "name": "Email Finder Hunter",
+      "description": "Email finder and verifier - find emails, verify deliverability, discover companies",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/email-finder-hunter",
+      "argumentHint": "",
+      "domain": "hunter.io",
+      "appName": "Hunter",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "email-finder-tomba",
+      "name": "Email Finder Tomba",
+      "description": "Email finder and verifier - find emails from domains, LinkedIn, or company search",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/email-finder-tomba",
+      "argumentHint": "",
+      "domain": "tomba.io",
+      "appName": "Tomba",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "enrichment-nyne",
+      "name": "Enrichment Nyne",
+      "description": "Intelligence and enrichment - person and company data, social profiles, events, and funding",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/enrichment-nyne",
+      "argumentHint": "",
+      "domain": "nyne.app",
+      "appName": "Nyne",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "event-prospecting-pipeline",
+      "name": "Event Prospecting Pipeline",
+      "description": "Surface event/conference attendees, research their companies, qualify them against ICP, and launch outreach",
+      "category": "moats",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moats/event-prospecting-pipeline",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Event Prospecting Pipeline",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "event-signals",
+      "name": "Event Signals",
+      "description": "Extract leads from conferences, meetups, hackathons, and podcasts by analyzing speaker lists, sponsor lists, hackathon entries, and podcast guests. Discovers events via Sessionize, Confs.tech, Meetup, Luma, ListenNotes, and Devpost. Looks back 90 days and forward 180 days.",
+      "category": "moves",
+      "tags": [
+        "lead-generation",
+        "research",
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/kits/industries/lead-gen-devtools/event-signals",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Event Signals",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": "lead-gen-devtools"
+    },
+    {
+      "slug": "expansion-signal-spotter",
+      "name": "Expansion Signal Spotter",
+      "description": "Watch existing customer accounts for upsell and cross-sell signals: team growth on LinkedIn, new job postings, product usage patterns, funding announcements, and public news. Produces a weekly expansion opportunity list with context and talk tracks. Chains web search, LinkedIn profile monitoring, and job-posting detection.",
+      "category": "plays",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/expansion-signal-spotter",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Expansion Signal Spotter",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "job-posting-intent",
+        "linkedin-profile-post-scraper"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "extract-webpage-data",
+      "name": "Extract Webpage Data",
+      "description": "Extract structured data from web pages using AI",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/extract-webpage-data",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Extract Webpage Data",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "feature-launch-playbook",
+      "name": "Feature Launch Playbook",
+      "description": "Take a new feature or product update and produce the full launch kit: changelog entry, email announcement, LinkedIn post variants, in-app banner text, Twitter/X thread, and internal sales-enablement one-pager. Pure reasoning skill that chains product context with audience-specific copy generation. Use when a product-marketing team needs to turn a feature spec into launch-ready assets fast.",
+      "category": "plays",
+      "tags": [
+        "content"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/feature-launch-playbook",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Feature Launch Playbook",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "find-email-by-name",
+      "name": "Find Email By Name",
+      "description": "Find someone's email address given their name and company",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/find-email-by-name",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Find Email By Name",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "find-skill",
+      "name": "Find Skill",
+      "description": "Find and install skills from the Orthogonal skill library. Use when you need capabilities you don't have, want to discover available skills, or need to add new tools to your agent.",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/find-skill",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Find Skill",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "find-twitter-influencers",
+      "name": "Find Twitter Influencers",
+      "description": "Find Twitter/X influencers to promote a product or brand. Use when asked to find influencers, discover Twitter accounts for partnerships, identify creators in a niche, or build an influencer outreach list.",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/find-twitter-influencers",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Find Twitter Influencers",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "funding-signal-monitor",
+      "name": "Funding Signal Monitor",
+      "description": "Watch web sources for Series A-C funding announcements. Aggregates signals across TechCrunch, Crunchbase (via web search), Twitter, Hacker News, and LinkedIn. Filters by stage, amount, and industry. Returns qualified recently-funded companies primed for outreach.",
+      "category": "plays",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/funding-signal-monitor",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Funding Signal Monitor",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "company-contact-finder",
+        "contact-cache",
+        "hacker-news-scraper",
+        "reddit-post-finder",
+        "twitter-mention-tracker"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "funding-signal-outreach",
+      "name": "Funding Signal Outreach",
+      "description": "Full-cycle funding signal composite. Takes any set of companies, detects recent funding events, qualifies them against your company context, finds relevant people (buyers, champions, users), and drafts personalized outreach. Tool-agnostic — works with any company source, contact finder, and outreach platform.",
+      "category": "plays",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/funding-signal-outreach",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Funding Signal Outreach",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "cold-email-outreach",
+        "email-drafting",
+        "linkedin-outreach"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "generate-voice-guide",
+      "name": "Generate Voice Guide",
+      "description": "Produce a personal voice guide for X (Twitter) and/or LinkedIn by analysing a user's prior posts and iterating through sample-and-feedback rounds. Outputs a structured Markdown voice guide that sibling skills (create-x-content, create-linkedin-content) consume to draft posts in the same voice. Distinct from brand-voice-extractor, which analyses company blogs and landing pages — this skill is built for personal social voice.",
+      "category": "moves",
+      "tags": [
+        "content",
+        "social"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/generate-voice-guide",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Generate Voice Guide",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "geo-audit",
+      "name": "Geo Audit",
+      "description": "Generative Engine Optimization (GEO) audit — review a website's content for AI-search citation readiness. Audits structure (Q&A, entity coverage, schema), tone (declarative vs. fluff), citations (sources, dates), llm.txt presence, and prompt-fit (does the page answer the queries AI engines actually receive). Outputs a prioritized fix list ranked by AI citation impact.",
+      "category": "moves",
+      "tags": [
+        "seo"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/geo-audit",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Geo Audit",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "get-brand-assets",
+      "name": "Get Brand Assets",
+      "description": "Get company logos, brand colors, fonts, and style guides",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/get-brand-assets",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Get Brand Assets",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "get-qualified-leads-from-luma",
+      "name": "Get Qualified Leads From Luma",
+      "description": "End-to-end lead prospecting from Luma events. Searches Luma for events by topic and location, pulls every attendee and host, qualifies them against a qualification prompt, drops the results into a Google Sheet, and Slacks a digest of the top leads. Use whenever someone wants to find qualified leads from events, prospect event attendees, or run an event-based lead-gen workflow. Also triggers on \"find people at events and qualify them\" or \"who's attending X events that matches our ICP.\"",
+      "category": "plays",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/get-qualified-leads-from-luma",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Get Qualified Leads From Luma",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "lead-qualification",
+        "luma-event-attendees"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "github-activity-monitor",
+      "name": "Github Activity Monitor",
+      "description": "Monitor GitHub for activity signals on a specified company or repository list — star velocity, contributor growth, release cadence, repo creation patterns, and dependency adoption. Surfaces strategic direction and team-scaling signals for devtools, OSS, and AI/ML companies. Uses GitHub's free public API; no PAT required for public-only monitoring, but a PAT raises rate limit dramatically.",
+      "category": "moves",
+      "tags": [
+        "research",
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/github-activity-monitor",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Github Activity Monitor",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "github-repo-signals",
+      "name": "Github Repo Signals",
+      "description": "Extract and score leads from GitHub repositories by analyzing stars, forks, issues, PRs, comments, and contributions. Produces unified multi-repo CSV with deduplicated user profiles. No paid API credits required.",
+      "category": "moves",
+      "tags": [
+        "lead-generation",
+        "research",
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/kits/industries/lead-gen-devtools/github-repo-signals",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Github Repo Signals",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": "lead-gen-devtools"
+    },
+    {
+      "slug": "glossary-page-generator",
+      "name": "Glossary Page Generator",
+      "description": "Generate ranking-ready glossary / definition pages programmatically for a list of category terms. Each page covers definition, \"what is X vs Y\" disambiguation, common confusion points, real-world examples, and an FAQ block with schema markup. Designed to capture top-of-funnel \"what is X\" search intent and feed search engines a clean entity-rich source for AI Overviews and citations. Uses DataForSEO for term volume, related keywords, and SERP intelligence.",
+      "category": "moves",
+      "tags": [
+        "seo",
+        "content"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/glossary-page-generator",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Glossary Page Generator",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "google-ad-scraper",
+      "name": "Google Ad Scraper",
+      "description": "Pull competitor ads from Google Ads by domain. Returns ad creatives, formats, and campaign metadata. Use for competitive ad research and message analysis.",
+      "category": "moves",
+      "tags": [
+        "ads"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/google-ad-scraper",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Google Ad Scraper",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "google-search-ads-builder",
+      "name": "Google Search Ads Builder",
+      "description": "End-to-end Google Search Ads campaign builder powered by DataForSEO. Pulls real keyword search volumes (from Google Ads API panel data), CPCs, difficulty scores, search-intent classification, and competitor PPC keyword data. Mines review/Reddit/HN language for buyer vocabulary, builds the keyword architecture with funnel mapping, generates an ad-group structure + headline / description variants + negative-keyword lists, recommends a bid strategy, and exports a campaign-ready CSV for Google Ads Editor import.",
+      "category": "plays",
+      "tags": [
+        "ads"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/google-search-ads-builder",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Google Search Ads Builder",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "seo-domain-analyzer"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "gtm-enrichment-deep",
+      "name": "Gtm Enrichment Deep",
+      "description": "AI-agent-powered lead enrichment using Sixtyfour as primary source. Takes an email (+ optional name) and returns comprehensive person + company data with funding, AI/B2B classification, and full error visibility. Higher cost (~$0.20/lead) but simpler architecture.",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/gtm-enrichment-deep",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Gtm Enrichment Deep",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "gtm-enrichment-smart",
+      "name": "Gtm Enrichment Smart",
+      "description": "Multi-provider waterfall lead enrichment. Takes an email (+ optional name) and returns person + company data by cross-referencing cheap APIs first, using expensive AI agents only as fallback. Cost-efficient (~$0.04-$0.10/lead) with confidence scoring and full error visibility.",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/gtm-enrichment-smart",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Gtm Enrichment Smart",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "hacker-news-scraper",
+      "name": "Hacker News Scraper",
+      "description": "Query Hacker News stories and comments through the free Algolia API. Needs no Apify token. Use when hunting for HN discussions, watching for mentions, scanning Show HN launches, or gauging tech community sentiment.",
+      "category": "moves",
+      "tags": [
+        "monitoring"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/hacker-news-scraper",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Hacker News Scraper",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "help-center-article-generator",
+      "name": "Help Center Article Generator",
+      "description": "Convert support ticket clusters, FAQ patterns, product documentation, or feature specs into structured help center articles complete with step-by-step instructions, screenshot placeholders, troubleshooting sections, and related-article links. Batch mode generates many articles from a ticket export. Pure reasoning skill.",
+      "category": "plays",
+      "tags": [
+        "content"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/help-center-article-generator",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Help Center Article Generator",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "hiring-signal-outreach",
+      "name": "Hiring Signal Outreach",
+      "description": "Full-cycle hiring signal composite. Takes any set of companies, surfaces job postings that your product augments or replaces, locates relevant people (the hiring manager, buyers, champions, users), and drafts personalized outreach with the job role as the hook. Tool-agnostic — works with any company source, job board, contact finder, and outreach platform.",
+      "category": "plays",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/hiring-signal-outreach",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Hiring Signal Outreach",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "cold-email-outreach",
+        "email-drafting",
+        "linkedin-outreach"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "hugging-face-model-monitor",
+      "name": "Hugging Face Model Monitor",
+      "description": "Monitor Hugging Face for model uploads, dataset publications, and Spaces by a target organization or person. Detect when companies start publishing AI artifacts publicly, what categories they're working in, and which engineers are leading the work. Reveals AI product investment 12+ months before launch announcements. Free, no API key required.",
+      "category": "moves",
+      "tags": [
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/hugging-face-model-monitor",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Hugging Face Model Monitor",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "icp-identification",
+      "name": "Icp Identification",
+      "description": "Research a company or product, lock the Ideal Customer Profile, then route to the next move — TAM mapping or going straight to lead discovery. The front door for any \"find me leads\", \"map my market\", or \"who should I sell to\" request. Loads automatically when a user hands over a company URL or idea and asks for leads or market mapping.",
+      "category": "moves",
+      "tags": [
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/icp-identification",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Icp Identification",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "icp-website-audit",
+      "name": "Icp Website Audit",
+      "description": "End-to-end website audit through ICP eyes. Builds synthetic personas (if they don't already exist), runs a structured scorecard review of the client's site, then runs a head-to-head competitive comparison against top competitors. Emits a single consolidated report with persona feedback, competitive positioning, and prioritized recommendations. The complete \"how do our buyers actually experience our site vs the competition?\" workflow.",
+      "category": "plays",
+      "tags": [
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/icp-website-audit",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Icp Website Audit",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "content-asset-creator"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "icp-website-review",
+      "name": "Icp Website Review",
+      "description": "Review a website, landing page, content piece, or any online asset through the eyes of pre-built synthetic ICP personas. Loads personas from buyer-persona-generator output, then runs them against the target URLs. Ships in three modes: structured scorecard, freeform focus group, and head-to-head competitive comparison. Reusable — run it again against the same site after a change, or against new content any time.",
+      "category": "moves",
+      "tags": [
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/icp-website-review",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Icp Website Review",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "inbound-lead-enrichment",
+      "name": "Inbound Lead Enrichment",
+      "description": "Fill in the gaps for inbound leads — research the company, identify the person's role and seniority, surface the other stakeholders at the company, check for any existing CRM relationships, and update the lead record. Produces enriched lead data ready for qualification or outreach. Tool-agnostic.",
+      "category": "plays",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/inbound-lead-enrichment",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Inbound Lead Enrichment",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "company-contact-finder"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "inbound-lead-qualification",
+      "name": "Inbound Lead Qualification",
+      "description": "Qualify inbound leads against full ICP criteria — company size, industry, use case fit, role/seniority of the person. Checks CRM and existing customer base for duplicates and current relationships. Emits a scored CSV with qualification status, reasoning, and pipeline overlap flags. Tool-agnostic — works with any CRM, enrichment tool, or data source.",
+      "category": "plays",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/inbound-lead-qualification",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Inbound Lead Qualification",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "lead-qualification"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "inbound-lead-triage",
+      "name": "Inbound Lead Triage",
+      "description": "Triages every inbound lead from a given period — demo requests, free trial signups, content downloads, webinar registrations, chatbot conversations. Classifies by urgency, qualifies against ICP, enriches with context, and produces a prioritized action queue with a recommended response for each lead. Tool-agnostic — works with any CRM, form tool, or lead source.",
+      "category": "plays",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/inbound-lead-triage",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Inbound Lead Triage",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "cold-email-outreach",
+        "email-drafting",
+        "lead-qualification"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "industry-scanner",
+      "name": "Industry Scanner",
+      "description": "Daily industry intelligence scanner. Sweeps web, social media, news, blogs, and communities for industry-relevant events, trends, and signals. Produces a comprehensive intelligence briefing plus strategic GTM opportunity ideas. Orchestrates existing scraping skills — does not reimplement data collection.",
+      "category": "plays",
+      "tags": [
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/industry-scanner",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Industry Scanner",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "blog-feed-monitor",
+        "company-contact-finder",
+        "conference-speaker-scraper",
+        "hacker-news-scraper",
+        "linkedin-post-research",
+        "luma-event-attendees",
+        "reddit-post-finder",
+        "review-site-scraper",
+        "twitter-mention-tracker",
+        "web-archive-scraper"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "instagram-scraper",
+      "name": "Instagram Scraper",
+      "description": "Get Instagram profiles, posts, and reels",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/instagram-scraper",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Instagram Scraper",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "intent-fit-matrix-router",
+      "name": "Intent Fit Matrix Router",
+      "description": "Real-time inbound lead router that scores each incoming form fill, demo request, free-trial signup, or PQL on a 2x2 matrix — ICP fit (firmographic + technographic) by behavioral intent strength — and routes to Hot/Warm/Cold lanes with different SLAs. Distinct from triple-signal-prioritizer (which is for outbound batch scanning); this runs synchronously on inbound at the moment of capture so the right rep reaches out within minutes.",
+      "category": "moves",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/intent-fit-matrix-router",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Intent Fit Matrix Router",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "internal-link-optimizer",
+      "name": "Internal Link Optimizer",
+      "description": "Audit a site's internal linking structure, identify orphan pages, topical clusters lacking hub-and-spoke connection, and pages with too many or too few outbound internal links. Generate a prioritized list of internal-link insertions: which existing page should link to which target, with recommended anchor text grounded in real on-page context. The single highest-leverage SEO action for a content-heavy site, powered by the DataForSEO OnPage API.",
+      "category": "moves",
+      "tags": [
+        "seo"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/internal-link-optimizer",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Internal Link Optimizer",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "job-posting-intent",
+      "name": "Job Posting Intent",
+      "description": "Surface buying intent from job postings. When a company opens a role in your problem area, it has earmarked budget and is actively reasoning about that problem. This skill locates those companies, qualifies them, pulls personalization context, and exports everything to a Google Sheet. It does NOT run outreach — it just delivers qualified leads with reasoning.",
+      "category": "moves",
+      "tags": [
+        "lead-generation",
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/job-posting-intent",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Job Posting Intent",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "job-scraper",
+      "name": "Job Scraper",
+      "description": "Search job postings across LinkedIn and Indeed. Reach for this when users want to surface open roles, monitor hiring signals, identify companies hiring for specific positions, or research competitor hiring patterns. Returns job title, company, location, salary, description, seniority level, and direct apply URLs. No login or cookies required.",
+      "category": "moves",
+      "tags": [
+        "lead-generation",
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/job-scraper",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Job Scraper",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "job-search",
+      "name": "Job Search",
+      "description": "Search for jobs matching your skills, experience, and preferences",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/job-search",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Job Search",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "kol-content-monitor",
+      "name": "Kol Content Monitor",
+      "description": "Track what key opinion leaders (KOLs) in your space are posting on LinkedIn and Twitter/X. Surfaces trending narratives, high-engagement topics, and early signs of conversations before they peak. Chains linkedin-profile-post-scraper and twitter-mention-tracker. Use when a marketing team wants to ride trends rather than start them from scratch, or when a founder wants to know which topics are resonating with their audience.",
+      "category": "plays",
+      "tags": [
+        "monitoring"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/kol-content-monitor",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Kol Content Monitor",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "kol-discovery",
+        "linkedin-profile-post-scraper",
+        "twitter-mention-tracker"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "kol-discovery",
+      "name": "Kol Discovery",
+      "description": "Surface Key Opinion Leaders (KOLs) in a given domain by pairing web research with LinkedIn post search. Given a company/idea and target domain, the skill generates authority keywords, scrapes LinkedIn posts to identify prolific authors with strong engagement, then merges those with web-researched influencers. Use whenever the request is \"find influencers in X space\" or \"who are the KOLs for Y industry.\"",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/kol-discovery",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Kol Discovery",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "kol-engager-icp",
+      "name": "Kol Engager Icp",
+      "description": "Surface ICP-fit leads from KOL audiences on LinkedIn. Takes a list of KOLs, picks their most relevant high-engagement post from the past 30 days, pulls engagers (reactors + commenters), pre-filters by position, enriches the top profiles, and tags by ICP fit. Cost-controlled: 1 post per KOL. Use when someone wants to \"find leads from KOL audiences\", \"scrape engagers from influencer posts\", or right after running kol-discovery.",
+      "category": "moves",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/kol-engager-icp",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Kol Engager Icp",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "landing-page-intel",
+      "name": "Landing Page Intel",
+      "description": "Pull competitor and customer intelligence out of any company's landing page HTML. Surfaces tech stack, analytics tools, ad pixels, customer logos, SEO metadata, CTAs, hidden elements, and more. No API keys required.",
+      "category": "moves",
+      "tags": [
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/landing-page-intel",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Landing Page Intel",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "launch-positioning-builder",
+      "name": "Launch Positioning Builder",
+      "description": "Investigate competitors, analyse their messaging, and produce a positioning document with category definition, differentiation claims, value propositions, and proof points. Chains web research, competitor site analysis, and review mining to assemble a positioning doc ready for website copy and sales deck use. Use when a product marketing team needs to define or refresh positioning ahead of a launch, rebrand, or competitive shift.",
+      "category": "plays",
+      "tags": [
+        "brand"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/launch-positioning-builder",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Launch Positioning Builder",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "review-site-scraper"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "layoffs-fyi-monitor",
+      "name": "Layoffs Fyi Monitor",
+      "description": "Monitor layoffs.fyi (the public layoff tracker) for layoff events at target companies. Surface event details — date, percentage, function affected — and route signals: distress flag for sales pursuit (deprioritize OR hyper-target depending on context), champion-departure check (was your champion in the layoff?), and potential displaced-buyer outreach (people impacted are looking for new tools at their next gig).",
+      "category": "moves",
+      "tags": [
+        "research",
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/layoffs-fyi-monitor",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Layoffs Fyi Monitor",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "lead-discovery",
+      "name": "Lead Discovery",
+      "description": "Orchestrator that runs first for lead generation requests. Gathers business context via website analysis or questions, identifies competitors, builds ICP, and routes to signal skills with pre-filled inputs.",
+      "category": "moves",
+      "tags": [
+        "lead-generation",
+        "research",
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/kits/industries/lead-gen-devtools/lead-discovery",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Lead Discovery",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": "lead-gen-devtools"
+    },
+    {
+      "slug": "lead-enrichment",
+      "name": "Lead Enrichment",
+      "description": "Enrich leads with email, phone, company data using multiple data sources",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/lead-enrichment",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Lead Enrichment",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "lead-enrichment-sixtyfour",
+      "name": "Lead Enrichment Sixtyfour",
+      "description": "AI-powered lead enrichment - find emails, phones, and enrich company/lead data",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/lead-enrichment-sixtyfour",
+      "argumentHint": "",
+      "domain": "sixtyfour.ai",
+      "appName": "SixtyFour",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "lead-qualification",
+      "name": "Lead Qualification",
+      "description": "Lead qualification engine with conversational intake. Walks through structured questions to capture your qualification criteria, generates a reusable qualification prompt, then batch-enriches leads via Apify LinkedIn scraping and scores them with parallel processing. Outputs qualified/disqualified verdicts with confidence scores and reasoning to CSV or whatever destination the user wants. Supports a calibration mode for refining the prompt.",
+      "category": "moves",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/lead-qualification",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Lead Qualification",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "lead-to-account-matcher",
+      "name": "Lead To Account Matcher",
+      "description": "Match incoming leads to existing CRM accounts using email domain, company name fuzzy match, and IP-resolution data. Prevents the \"duplicate lead routed to a new SDR while an AE owns the parent account\" problem and surfaces lead-to-existing-customer matches for CSM routing. Outputs each lead with a match verdict, the matched account ID (if any), and a recommended routing action.",
+      "category": "moves",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/lead-to-account-matcher",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Lead To Account Matcher",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "leadership-change-outreach",
+      "name": "Leadership Change Outreach",
+      "description": "Full-cycle leadership-change signal composite. Takes any set of companies, catches recent leadership changes (new VP+ and C-suite hires plus promotions), assesses relevance to your product, and drafts personalized outreach. Uses Apollo People Search (free) for fast detection plus Apollo Enrichment (1 credit/person) for employment history, start dates, LinkedIn URLs, and verified emails.",
+      "category": "plays",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/leadership-change-outreach",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Leadership Change Outreach",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "cold-email-outreach",
+        "email-drafting",
+        "linkedin-outreach",
+        "linkedin-profile-post-scraper"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "linkedin-commenter-extractor",
+      "name": "Linkedin Commenter Extractor",
+      "description": "Pull commenters off LinkedIn posts via Apify. Returns commenter names, titles, profile URLs, and the comment text itself. Use to surface warm leads who are already engaging with relevant discussions. No LinkedIn cookies required.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/linkedin-commenter-extractor",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Linkedin Commenter Extractor",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "linkedin-influencer-discovery",
+      "name": "Linkedin Influencer Discovery",
+      "description": "Surface top LinkedIn influencers and voices by topic, industry, follower count, and country. Use when you need to find the top 100 voices in a space, build influencer lists for outreach, or identify thought leaders on LinkedIn.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/linkedin-influencer-discovery",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Linkedin Influencer Discovery",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "linkedin-job-scraper",
+      "name": "Linkedin Job Scraper",
+      "description": "Scrapes LinkedIn job postings via the JobSpy library (python-jobspy). Reach for this skill any time the user wants to find LinkedIn jobs, search for open roles, pull job listings, build a job pipeline, surface job targets for GTM research, or monitor hiring signals. Even if the user just says \"find me some jobs\" or \"what roles is [company] hiring for\", use this skill. It runs a local Python script that emits a CSV of job postings covering title, company, location, salary, job type, description, and direct URLs.",
+      "category": "moves",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/linkedin-job-scraper",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Linkedin Job Scraper",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "linkedin-message-writer",
+      "name": "Linkedin Message Writer",
+      "description": "Research LinkedIn profiles and write personalized messages for any LinkedIn message type — connection requests, InMails, DMs, message requests, post comments, and comment replies. Takes LinkedIn URLs as input, researches each person (profile data + recent posts via Apify), and generates messages tailored to each lead's background, interests, and recent activity. Exports tool-ready CSVs for Dripify, Expandi, Botdog, PhantomBuster, or a generic format. No LinkedIn cookies or login required.",
+      "category": "moves",
+      "tags": [
+        "outreach",
+        "social"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/linkedin-message-writer",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Linkedin Message Writer",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "linkedin-outreach",
+      "name": "Linkedin Outreach",
+      "description": "End-to-end LinkedIn outreach campaign builder. Pulls leads from Supabase, an upstream skill, or CSV. Aligns on goal and tone, writes personalized LinkedIn sequences (connection note + follow-ups + optional InMail), presents for review, and exports for the user's outreach tool (Dripify, Botdog, Expandi, or a generic CSV). Logs everything back to the Supabase outreach_log.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/linkedin-outreach",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Linkedin Outreach",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "linkedin-post-research",
+      "name": "Linkedin Post Research",
+      "description": "Search LinkedIn posts by keyword, sorted by engagement or date. Use when researching what people are saying about a topic on LinkedIn, finding high-engagement content, identifying thought leaders, or surfacing warm leads through post engagement. Returns author, post text, reactions, comments, shares, post URL, and date. No LinkedIn cookies or login required.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/linkedin-post-research",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Linkedin Post Research",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "linkedin-profile-post-scraper",
+      "name": "Linkedin Profile Post Scraper",
+      "description": "Scrape recent posts from LinkedIn profiles via Apify. Use when you want to watch what specific people are publishing on LinkedIn, track founder/exec activity, or gather LinkedIn content for competitive intelligence.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/linkedin-profile-post-scraper",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Linkedin Profile Post Scraper",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "linkedin-scraper",
+      "name": "Linkedin Scraper",
+      "description": "Get LinkedIn profiles, company pages, and posts",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/linkedin-scraper",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Linkedin Scraper",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "linkedin-voicenote-pre-warm",
+      "name": "Linkedin Voicenote Pre Warm",
+      "description": "Generate a 30-45 second LinkedIn voice note script per prospect, designed to be sent before the first email touch as a warm-up. Personalizes around one specific verifiable fact. Reps record and send via LinkedIn mobile; the email sequence follows 24 hours later referencing the voice note. Reply rate on the subsequent email lifts 30-40% versus cold email alone.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/linkedin-voicenote-pre-warm",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Linkedin Voicenote Pre Warm",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "llm-txt-generator",
+      "name": "Llm Txt Generator",
+      "description": "Generate a properly-formatted /llm.txt and /llms-full.txt for a website so AI crawlers (ChatGPT, Perplexity, Claude, Gemini) can correctly understand the product, key URLs, and conventions. Pulls from existing site content, validates against the llms.txt spec, and produces both files plus a deployment checklist.",
+      "category": "moves",
+      "tags": [
+        "seo"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/llm-txt-generator",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Llm Txt Generator",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "luma-event-attendees",
+      "name": "Luma Event Attendees",
+      "description": "Surface speakers, hosts, and guest profiles for conferences and events on Luma. Runs in two modes — a free direct scrape for hosts, or an Apify-powered search that returns full guest profiles including LinkedIn, Twitter, and bio data.",
+      "category": "moves",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/luma-event-attendees",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Luma Event Attendees",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "market-research",
+      "name": "Market Research",
+      "description": "Research market trends, size, competitors, and growth opportunities",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/market-research",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Market Research",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "meeting-brief",
+      "name": "Meeting Brief",
+      "description": "Daily meeting prep system that checks your calendar each morning, deeply researches external attendees (LinkedIn, company info, GitHub, past notes), and sends personalized briefs via email (1 per person). Use when you want automated preparation for upcoming meetings with context about each person you're meeting.",
+      "category": "plays",
+      "tags": [
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/meeting-brief",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Meeting Brief",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "messaging-ab-tester",
+      "name": "Messaging Ab Tester",
+      "description": "Produce 3-5 messaging variants for a value proposition, design structured A/B tests, and analyze the results to determine which framing resonates most with the ICP. Tests can run via LinkedIn organic posts, cold email subject-line splits, or both. Pure reasoning for variant generation and analysis — the user deploys the tests through their own tools. Use when a team can't decide between messaging angles and needs data, not opinions.",
+      "category": "plays",
+      "tags": [
+        "brand"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/messaging-ab-tester",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Messaging Ab Tester",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "meta-ad-scraper",
+      "name": "Meta Ad Scraper",
+      "description": "Pull competitor ads from Meta's Ad Library (Facebook, Instagram, Messenger, Threads, WhatsApp). Search by company name, Facebook Page URL, or keyword. Returns creatives, spend estimates, reach, impressions, and campaign details. Useful for competitive ad research, messaging analysis, and creative inspiration.",
+      "category": "moves",
+      "tags": [
+        "ads"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/meta-ad-scraper",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Meta Ad Scraper",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "meta-ads-campaign-builder",
+      "name": "Meta Ads Campaign Builder",
+      "description": "End-to-end Meta Ads campaign builder for Facebook and Instagram. Takes ICP + objective, generates audience targeting recommendations, ad set structure, copy framework per placement, and exports as a campaign brief or structured CSV. Focused on campaign architecture, not creative generation.",
+      "category": "plays",
+      "tags": [
+        "ads"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/meta-ads-campaign-builder",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Meta Ads Campaign Builder",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "moatt-graphics",
+      "name": "Moatt Graphics",
+      "description": "Portable visual skill pack for the Agent Skills ecosystem (Claude Code, Claude Desktop, Claude Cowork, Claude Design, Moatt, Cursor, Codex). Discovers community-published styles + formats via the moatt CLI, runs an extract-style workflow on reference images, and exports rendered PNGs via Playwright.",
+      "category": "plays",
+      "tags": [
+        "content",
+        "design",
+        "social"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/moatt-graphics",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Moatt Graphics",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "moatt-graphics-create-format",
+      "name": "Moatt Graphics Create Format",
+      "description": "Creates a new graphics format spec (custom canvas dimensions + content rules) and publishes it to the Moatt library so any agent can render against it. Use when the existing community formats (carousel, story, infographic, slides, poster, chart, tweet, plus community additions) don't fit the user's canvas — e.g., LinkedIn banner 1584×396, story cover 1080×1920, event flyer 8.5×11in. Mirrors moatt-graphics-create-style but for formats.",
+      "category": "plays",
+      "tags": [
+        "design",
+        "content"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/moatt-graphics-create-format",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Moatt Graphics Create Format",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "moatt-graphics"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "moatt-graphics-create-style",
+      "name": "Moatt Graphics Create Style",
+      "description": "End-to-end skill that turns a single reference image into a published Moatt style — analyzes the image, drafts the slim style spec, renders a hero example plus 2-3 additional formats via Playwright, writes the `moatt-style.json` manifest, and publishes via `npx moatt styles publish` so other agents can discover it. Mirrors moatt-graphics-create-format but for styles.",
+      "category": "plays",
+      "tags": [
+        "design",
+        "content"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/moatt-graphics-create-style",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Moatt Graphics Create Style",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "moatt-graphics"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "multi-platform-search-searchapi",
+      "name": "Multi Platform Search Searchapi",
+      "description": "Multi-platform search - YouTube, Amazon, eBay, Walmart, TikTok, Instagram, and more",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/multi-platform-search-searchapi",
+      "argumentHint": "",
+      "domain": "searchapi.io",
+      "appName": "SearchAPI",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "multichannel-cadence-runner",
+      "name": "Multichannel Cadence Runner",
+      "description": "Build and orchestrate a 4x8 multichannel cadence (email + LinkedIn DM + LinkedIn voice note + cold call) over 8 business days, with each step personalized using prior-channel context. Each step's content adapts based on whether the prospect engaged in the prior step. Outputs the full per-prospect cadence ready for push to Smartlead/HeyReach/etc. with sender rotation suggestions.",
+      "category": "plays",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/multichannel-cadence-runner",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Multichannel Cadence Runner",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "linkedin-message-writer",
+        "email-drafting",
+        "persona-on-the-fly-emailer"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "mutual-action-plan-builder",
+      "name": "Mutual Action Plan Builder",
+      "description": "Generate a buyer-seller mutual action plan from discovery notes — a shared timeline of milestones, owners, and dates between the seller and buyer to drive enterprise deals to close. Includes legal/security review checkpoints, pilot setup steps, signature/launch dates, and a champion-coachable summary. Outputs both a markdown plan and a Notion/Google-Docs-friendly format.",
+      "category": "plays",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/mutual-action-plan-builder",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Mutual Action Plan Builder",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "mxtoolbox-domain-audit",
+      "name": "Mxtoolbox Domain Audit",
+      "description": "Audit a sending domain's email-deliverability posture — SPF, DKIM, DMARC, MX, blacklists, BIMI, MTA-STS — and produce a fix list ranked by deliverability impact. Run on every domain you send outbound from before launch; rerun monthly. Uses the public MXToolbox-equivalent DNS lookups (free, no key required) plus standard blacklist checks. The single most important pre-launch check for any cold-email campaign.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/mxtoolbox-domain-audit",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Mxtoolbox Domain Audit",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "negative-icp-scorer",
+      "name": "Negative Icp Scorer",
+      "description": "Pre-send filter that runs an enriched prospect list through a \"bad-fit signals\" check (too small, wrong vertical, competitor partner, just churned a competitor, recently raised down-round, currently in a freeze, sanctioned, etc.) and removes high-friction targets before any emails are sent. Saves outbound credits and protects sender reputation.",
+      "category": "moves",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/negative-icp-scorer",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Negative Icp Scorer",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "news-signal-outreach",
+      "name": "News Signal Outreach",
+      "description": "Full-cycle news-triggered signal composite. Takes any piece of news — an article, LinkedIn post, tweet, announcement, event, trend, regulation, product launch, acquisition, layoff, expansion, or any other public event — and evaluates whether the companies or people mentioned are ICP fits. If yes, identifies the connection between the news and your product, surfaces the right people to contact, and drafts personalized outreach with the news as the hook. Tool-agnostic. Accepts both company-level and person-level news triggers.\n\nAUTO-TRIGGER: Load this composite whenever a user shares a URL (LinkedIn post, article, tweet, blog post) or mentions a company/person they \"came across\", \"saw\", or \"found\" from any external source and asks about relevance, fit, ICP match, or whether to reach out. The user does NOT need to explicitly say \"outreach\" — any signal-evaluation request from an external source triggers this.",
+      "category": "plays",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/news-signal-outreach",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "News Signal Outreach",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "cold-email-outreach",
+        "email-drafting",
+        "linkedin-outreach"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "newsletter-monitor",
+      "name": "Newsletter Monitor",
+      "description": "Sweep an AgentMail inbox for newsletter signals via configurable keyword campaigns. Pulls matched keywords, context snippets, and company mentions from incoming emails. Built for watching accounting-industry newsletters for buying signals like acquisitions, migrations, and staffing news.",
+      "category": "plays",
+      "tags": [
+        "monitoring"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/newsletter-monitor",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Newsletter Monitor",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "company-contact-finder"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "newsletter-signal-scanner",
+      "name": "Newsletter Signal Scanner",
+      "description": "Subscribe to and scan industry newsletters for buying signals, competitor mentions, ICP pain-point language, and market shifts. Parses incoming newsletter emails via AgentMail, matches them against keyword campaigns, and delivers a weekly digest of actionable signals. Use when a marketing team wants to turn newsletter subscriptions into an ongoing intelligence feed without reading them manually.",
+      "category": "plays",
+      "tags": [
+        "monitoring"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/newsletter-signal-scanner",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Newsletter Signal Scanner",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "newsletter-sponsorship-finder",
+      "name": "Newsletter Sponsorship Finder",
+      "description": "Find newsletters that reach a target audience or industry for sponsorship opportunities. Discovers newsletters via web search, newsletter directories, and industry research. Returns newsletter name, author, estimated audience, topic focus, sponsorship rates (when available), and contact info.",
+      "category": "moves",
+      "tags": [
+        "monitoring"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/newsletter-sponsorship-finder",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Newsletter Sponsorship Finder",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "npm-pypi-trend-tracker",
+      "name": "Npm Pypi Trend Tracker",
+      "description": "Track download velocity for npm and PyPI packages — surface week-over-week spikes, sustained growth, and emerging packages in a target category. Reveals developer-tool adoption signals 6-12 months before they hit Hacker News or industry analyst reports. Free public APIs, no key. Useful for devtools competitive intel, AI/ML stack tracking, and identifying the small libraries that are about to be acquisition targets.",
+      "category": "moves",
+      "tags": [
+        "research",
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/npm-pypi-trend-tracker",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Npm Pypi Trend Tracker",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "nppes-registry-monitor",
+      "name": "Nppes Registry Monitor",
+      "description": "Monitor the NPPES (National Plan and Provider Enumeration System) registry — the canonical CMS database of US healthcare providers and organizations — for new NPI registrations, taxonomy/specialty changes, organization affiliations, and address moves. Surfaces newly licensed practices, provider role changes, and group practice formations as healthcare GTM signals. Free, no API key required.",
+      "category": "moves",
+      "tags": [
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/nppes-registry-monitor",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Nppes Registry Monitor",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "nrr-expansion-trigger",
+      "name": "Nrr Expansion Trigger",
+      "description": "Identify customer accounts ready for expansion based on usage, team-growth, and feature-coverage signals — accounts at 80%+ of licensed capacity, accounts that have hired in roles served by the product, accounts where adoption is deep on core features and ready for adjacent ones. Outputs a tiered expansion queue with a 3-option proposal per account ready for the AM/CSM expansion conversation.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/nrr-expansion-trigger",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Nrr Expansion Trigger",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "objection-library-rag",
+      "name": "Objection Library Rag",
+      "description": "Build and query a retrieval-augmented objection library from past winning sales-call transcripts. Indexes objections by type, with the verbatim winning response, the rep who said it, the deal it closed, and the contextual setup. Reps can query in real-time: \"what's the best response when a CFO says X?\" and get the actual language that's worked, grounded in real wins.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/objection-library-rag",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Objection Library Rag",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "outbound-prospecting-engine",
+      "name": "Outbound Prospecting Engine",
+      "description": "Full-cycle outbound prospecting: catch intent signals, research companies, locate decision-maker contacts, personalize messaging, launch campaign.",
+      "category": "moats",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moats/outbound-prospecting-engine",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Outbound Prospecting Engine",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "paid-channel-prioritizer",
+      "name": "Paid Channel Prioritizer",
+      "description": "For founders who don't know where to start with paid ads. Analyses ICP, competitor ad presence, budget constraints, and product type to recommend the 1-2 paid channels worth starting with, plus a 90-day ramp plan. Prevents the common mistake of spreading a tiny budget across too many platforms.",
+      "category": "plays",
+      "tags": [
+        "ads"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/paid-channel-prioritizer",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Paid Channel Prioritizer",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "google-ad-scraper"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "pain-language-engagers",
+      "name": "Pain Language Engagers",
+      "description": "Surface warm leads by mining LinkedIn for pain-language posts — the frustrations, complaints, and operational struggles your ICP openly discusses. Asks clarifying questions about your product, ICP, and their pain points, then generates pain-language search keywords, scrapes LinkedIn for posts and engagers, enriches profiles, and filters the results against ICP. Use when someone wants to \"find leads who are complaining about X\" or \"find people discussing problems we solve\" or run \"LinkedIn pain-based prospecting.\"",
+      "category": "moves",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/pain-language-engagers",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Pain Language Engagers",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "people-company-search-fiber",
+      "name": "People Company Search Fiber",
+      "description": "People, company, investor, and job search with LinkedIn data enrichment",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/people-company-search-fiber",
+      "argumentHint": "",
+      "domain": "fiber.dev",
+      "appName": "Fiber",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "person-lookup",
+      "name": "Person Lookup",
+      "description": "Look up information about a person - work history, social profiles, contact info",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/person-lookup",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Person Lookup",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "persona-on-the-fly-emailer",
+      "name": "Persona On The Fly Emailer",
+      "description": "Generate a unique first-line opener per prospect by running a structured prompt over enriched account data (LinkedIn summary, recent posts, news, job postings, tech stack, competitor usage) and grounding the line in one verifiable, prospect-specific fact. Replaces \"Hey {first_name}, hope you're well\" with a one-line hook that proves the rep researched — without the rep researching.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/persona-on-the-fly-emailer",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Persona On The Fly Emailer",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "phone-verification",
+      "name": "Phone Verification",
+      "description": "Verify phone numbers using SMS one-time codes via the Didit API. Use when you need to confirm a user owns a phone number, implement SMS-based 2FA, or validate phone during signup/onboarding flows.",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/phone-verification",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Phone Verification",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "pipeline-review",
+      "name": "Pipeline Review",
+      "description": "Pipeline analysis composite. Pulls deal/meeting data from any CRM or tracking system, analyzes the pipeline over a user-defined period (weekly, fortnightly, monthly, quarterly), and produces both an executive summary and a detailed diagnostic report. Covers volume, qualification rates, source effectiveness, stage velocity, stuck deals, and actionable recommendations. Tool-agnostic — works with any CRM (Salesforce, HubSpot, Pipedrive, Close, Supabase, CSV).",
+      "category": "plays",
+      "tags": [
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/pipeline-review",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Pipeline Review",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "cold-email-outreach"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "product-hunt-scraper",
+      "name": "Product Hunt Scraper",
+      "description": "Pull trending Product Hunt launches via Apify. Reach for this when you need to surface newly-launched products, track competitor activity on Product Hunt, or scan the startup ecosystem for noteworthy launches.",
+      "category": "moves",
+      "tags": [
+        "monitoring"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/product-hunt-scraper",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Product Hunt Scraper",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "product-reel-generator",
+      "name": "Product Reel Generator",
+      "description": "Generates Instagram-ready product reels from any e-commerce product page URL. Scrapes product images, classifies by type, generates AI-animated clips via Higgsfield API, creates text overlays with style presets, and composes a 15-20 second reel with music. Supports model-based and product-only reels.",
+      "category": "moves",
+      "tags": [
+        "content"
+      ],
+      "version": "0.1.0",
+      "path": "skills/kits/channels/video-production/product-reel-generator",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Product Reel Generator",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": "video-production"
+    },
+    {
+      "slug": "programmatic-seo-planner",
+      "name": "Programmatic Seo Planner",
+      "description": "Identify which programmatic SEO page patterns are worth building for your product — vs/ pages, integrations/, for-{industry}/, alternatives-to/, use-cases/ — then design the template structure, data model, and priority order. Emits a complete pSEO blueprint with URL patterns, title templates, content frameworks, and data sources per variable.",
+      "category": "plays",
+      "tags": [
+        "seo"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/programmatic-seo-planner",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Programmatic Seo Planner",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "reddit-post-finder",
+        "seo-domain-analyzer",
+        "site-content-catalog"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "programmatic-seo-spy",
+      "name": "Programmatic Seo Spy",
+      "description": "Reverse-engineer how competitors run programmatic SEO. Detects URL pattern clusters (vs/, integrations/, for-{industry}/), estimates page count per pattern, assesses template quality, infers which patterns actually drive traffic, and identifies gaps you can exploit. Ships a competitive pSEO landscape report.",
+      "category": "plays",
+      "tags": [
+        "seo"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/programmatic-seo-spy",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Programmatic Seo Spy",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "seo-domain-analyzer",
+        "site-content-catalog"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "prospect-case-study-matcher",
+      "name": "Prospect Case Study Matcher",
+      "description": "For a given prospect, retrieve the closest customer story from the win library — matching on industry, company size, use case, and pain pattern — and surface the specific outcome that's most relevant to the prospect's situation. Outputs a 3-line \"you remind us of {customer}\" block ready to drop into an email or one-pager.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/prospect-case-study-matcher",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Prospect Case Study Matcher",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "qbr-deck-generator",
+      "name": "Qbr Deck Generator",
+      "description": "Generate a complete Quarterly Business Review (QBR) deck for an enterprise customer — pre-populated from product usage data, support ticket history, business outcomes vs. original success criteria, and the team's roadmap. Outputs a ~10-12 slide deck with the customer-relevant narrative, a results-vs-MAP comparison, an expansion roadmap, and an executive summary. Designed to land on the CSM's calendar 72 hours before the QBR.",
+      "category": "plays",
+      "tags": [
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/qbr-deck-generator",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Qbr Deck Generator",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "create-html-slides",
+        "data-charts-tako"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "reddit-aeo-monitor",
+      "name": "Reddit Aeo Monitor",
+      "description": "Monitor Reddit for threads where AI search engines (ChatGPT, Perplexity, Google AI Mode) are likely to retrieve answers about a brand or category. Surfaces threads that are ranking in Reddit search and drawing AI-citation traffic, identifies the top answer's content + author, and recommends interventions (engaging in the thread, creating canonical content elsewhere, fixing brand-mention sentiment).",
+      "category": "moves",
+      "tags": [
+        "seo",
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/reddit-aeo-monitor",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Reddit Aeo Monitor",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "reddit-post-finder",
+      "name": "Reddit Post Finder",
+      "description": "Scrape and search Reddit posts via Apify. Use when you need to find Reddit threads, track competitor mentions, monitor product feedback, surface pain points, or analyze subreddit activity. Supports keyword filtering, time windows, and subreddit-specific queries.",
+      "category": "moves",
+      "tags": [
+        "monitoring"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/reddit-post-finder",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Reddit Post Finder",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "remotion-best-practices",
+      "name": "Remotion Best Practices",
+      "description": "Best practices for Remotion - Video creation in React",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/remotion-best-practices",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Remotion Best Practices",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "reply-classifier",
+      "name": "Reply Classifier",
+      "description": "Classify inbound replies to cold email or LinkedIn outreach into nine intent categories — positive interest, objection, wrong person, out of office, unsubscribe, refer to colleague, ask for resources, ghost, or already a customer — with a confidence score, an extracted summary line, and a recommended next action per reply.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/reply-classifier",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Reply Classifier",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "review-intelligence-digest",
+      "name": "Review Intelligence Digest",
+      "description": "Pull G2, Capterra, and Trustpilot reviews for your product alongside the competition, then mine them for recurring themes, objections, proof points, and the verbatim language customers use for messaging. Chains review-site-scraper into LLM analysis. Outputs a weekly or monthly digest that drops straight into copywriting, positioning, and sales enablement. Reach for it when a marketing team wants to anchor messaging in real customer language.",
+      "category": "plays",
+      "tags": [
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/review-intelligence-digest",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Review Intelligence Digest",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "review-site-scraper"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "review-scraper",
+      "name": "Review Scraper",
+      "description": "Pull product reviews from G2, Capterra, and Trustpilot via Apify. A single script with platform dispatch. Use when you need to monitor competitor reviews, track product sentiment, or collect customer feedback from review sites.",
+      "category": "moves",
+      "tags": [
+        "monitoring"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/review-scraper",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Review Scraper",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "review-site-scraper",
+      "name": "Review Site Scraper",
+      "description": "Harvest product reviews off G2, Capterra, and Trustpilot through Apify. One script handles every platform via dispatch. Reach for it when you want to watch competitor review activity, follow product sentiment, or pull customer feedback off review sites.",
+      "category": "moves",
+      "tags": [
+        "monitoring"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/review-site-scraper",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Review Site Scraper",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "sales-call-prep",
+      "name": "Sales Call Prep",
+      "description": "Pre-sales-call intelligence composite. Deep dives on the person AND their company before a sales call, then maps findings to your product to generate talking points, objection prep, and a call strategy. Goes beyond generic attendee research — this is sales-specific intelligence that helps SDRs, AEs, and founders walk into calls with a plan. Tool-agnostic — works with any CRM, research source, and calendar.",
+      "category": "plays",
+      "tags": [
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/sales-call-prep",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Sales Call Prep",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "sales-coaching",
+      "name": "Sales Coaching",
+      "description": "AI sales coach composite. Pulls in every available sales signal — email campaigns, call recordings/transcripts, reply patterns, pipeline outcomes — to identify what the user does well, where they struggle, and how to improve. Surfaces patterns in top-performing emails, winning call moves, successful objection handles, and deal progression. Produces personalized coaching tied to their specific product, market, and selling style. Tool-agnostic.",
+      "category": "plays",
+      "tags": [
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/sales-coaching",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Sales Coaching",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "email-drafting"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "sales-prospecting",
+      "name": "Sales Prospecting",
+      "description": "Build targeted prospect lists with verified contact information",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/sales-prospecting",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Sales Prospecting",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "sec-edgar-filings",
+      "name": "Sec Edgar Filings",
+      "description": "Monitor SEC EDGAR for material filings (8-K, S-1, 10-Q, 10-K, 13F, proxy statements) on a specified company list. Surfaces material events — leadership changes, M&A, capital raises, lawsuits, executive compensation disclosures — within hours of filing. Free, no API key required. Lookup by ticker or CIK; recurring scan or one-shot.",
+      "category": "moves",
+      "tags": [
+        "research",
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/sec-edgar-filings",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Sec Edgar Filings",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "send-sms-textbelt",
+      "name": "Send Sms Textbelt",
+      "description": "Send SMS text messages to phone numbers. Use when the user asks to send a text, send an SMS, text someone, message a phone number, or send a notification via text message.",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/send-sms-textbelt",
+      "argumentHint": "",
+      "domain": "textbelt.com",
+      "appName": "Textbelt",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "seo-analyzer",
+      "name": "Seo Analyzer",
+      "description": "General-purpose SEO analyzer for any domain via DataForSEO — technical health (OnPage API + Lighthouse CWV, broken links, meta issues), authority + ranking snapshot (Labs domain rank, ranked keywords), top content opportunities (keyword_ideas), and live competitive SERP for top keywords. The lightweight first-look \"analyze SEO for {domain}\" entry point. Pay-per-use, ~$0.10–0.20 per run.",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/seo-analyzer",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Seo Analyzer",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "seo-content-audit",
+      "name": "Seo Content Audit",
+      "description": "Comprehensive SEO footprint analysis powered by DataForSEO. Catalogs every piece of content, pulls real SEO metrics (domain rank, ranked keywords, top pages, backlinks), runs an OnPage technical audit (Core Web Vitals, broken links, duplicate tags), runs competitor comparison via DFS Labs, builds topic/keyword and content-type gap matrices, and produces a prioritized recommendations report. The complete SEO audit for any company.",
+      "category": "plays",
+      "tags": [
+        "seo"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/seo-content-audit",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Seo Content Audit",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "brand-voice-extractor",
+        "seo-domain-analyzer",
+        "site-content-catalog"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "seo-content-engine",
+      "name": "Seo Content Engine",
+      "description": "Stand up and operate an SEO content engine: audit current state, identify gaps, build keyword architecture, generate a content calendar, draft content.",
+      "category": "moats",
+      "tags": [
+        "seo"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moats/seo-content-engine",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Seo Content Engine",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "seo-domain-analyzer",
+      "name": "Seo Domain Analyzer",
+      "description": "Pull live SEO metrics for any domain via DataForSEO — authority/rank, organic traffic estimates, keyword rankings (with volumes and positions), top pages, backlink profile (referring domains, anchors, dofollow ratio), and auto-discovered competitors. Pay-per-use (~$0.05–0.15 per full domain), no monthly subscription required. Falls back to Apify-scraped Semrush or Ahrefs when DFS credentials aren't available.",
+      "category": "moves",
+      "tags": [
+        "competitive-intel",
+        "seo"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/seo-domain-analyzer",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Seo Domain Analyzer",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "seo-opportunity-finder",
+      "name": "Seo Opportunity Finder",
+      "description": "Find quick-win SEO content opportunities by comparing your site's existing content against competitor keyword rankings through DataForSEO. Uses `site-content-catalog` for your content inventory and DFS Labs domain intersection (the canonical keyword-gap endpoint) to surface topics that competitors rank for and that you don't cover yet. Outputs a prioritised list of posts to write or update, backed by real volume + difficulty data.",
+      "category": "plays",
+      "tags": [
+        "seo"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/seo-opportunity-finder",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Seo Opportunity Finder",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "seo-domain-analyzer",
+        "seo-traffic-analyzer",
+        "site-content-catalog"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "seo-traffic-analyzer",
+      "name": "Seo Traffic Analyzer",
+      "description": "Reverse-engineer how a domain wins organic traffic via DataForSEO: multi-month trends, top traffic-driving pages and keywords, and competitive share-of-traffic shifts. Pay-per-use (~$0.08-0.15 per domain) with no monthly subscription. WebSearch fallback when DFS credentials are missing.",
+      "category": "moves",
+      "tags": [
+        "competitive-intel",
+        "seo"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/seo-traffic-analyzer",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Seo Traffic Analyzer",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "sequence-performance",
+      "name": "Sequence Performance",
+      "description": "Email campaign/sequence performance review composite. Pulls campaign data (sends, opens, replies, bounces), reads the actual email copy and subject lines, analyzes reply content (objections, positive interest, questions), and produces a diagnostic report covering quantitative metrics, copy quality, lead quality, and actionable recommendations. Tool-agnostic — works with Smartlead (MCP), Instantly, Outreach, Lemlist, Apollo, or CSV data.",
+      "category": "plays",
+      "tags": [
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/sequence-performance",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Sequence Performance",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "cold-email-outreach",
+        "email-drafting"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "setup-outreach-campaign-smartlead",
+      "name": "Setup Outreach Campaign Smartlead",
+      "description": "Spin up a complete outbound email campaign inside Smartlead. Walks the user through campaign goal, audience, messaging, schedule, and mailbox allocation. Creates the campaign, adds the leads, saves the email sequence, sets the schedule, and assigns available mailboxes. Use when a user wants to launch email outreach via Smartlead.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/setup-outreach-campaign-smartlead",
+      "argumentHint": "",
+      "domain": "smartlead.ai",
+      "appName": "Smartlead",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "signal-detection-pipeline",
+      "name": "Signal Detection Pipeline",
+      "description": "Detect buying signals across multiple sources, qualify leads, and generate outreach context",
+      "category": "moats",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moats/signal-detection-pipeline",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Signal Detection Pipeline",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "signal-scanner",
+      "name": "Signal Scanner",
+      "description": "Surface buying signals across TAM companies and watchlist personas. Three-phase architecture: (1) free diff-based signals built from existing data (headcount growth, tech stack shifts, funding rounds), (2) Apify-powered signals (job postings, LinkedIn content analysis, profile changes), and (3) post-processing with dedup, scoring, and lead status updates. Writes signals to the Supabase signals table for downstream activation.",
+      "category": "moves",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/signal-scanner",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Signal Scanner",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "single-thread-risk-flag",
+      "name": "Single Thread Risk Flag",
+      "description": "Audit pipeline for \"single-thread risk\" — opportunities over a value threshold engaged with only one stakeholder, missing exec-level contact, or with no champion-side activity in 14+ days. Flags each at-risk deal with the specific gap and a recommended multithreading task. Designed to run weekly as part of pipeline review and block deals from advancing to commit without coverage.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/single-thread-risk-flag",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Single Thread Risk Flag",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "site-content-catalog",
+      "name": "Site Content Catalog",
+      "description": "Crawl a website's sitemap and blog index to assemble a complete content inventory. Catalogs every page with URL, title, publish date, content type, and topic cluster. Groups content by category and theme. Optionally deep-reads the top N pages for quality analysis and funnel-stage tagging. Run this before SEO audits, content gap analysis, or brand voice extraction.",
+      "category": "moves",
+      "tags": [
+        "content",
+        "seo"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/site-content-catalog",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Site Content Catalog",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "skill-creator",
+      "name": "Skill Creator",
+      "description": "Create, structure, and package agent skills. Use when designing new skills, updating existing skills, or helping users build skills with scripts, references, and assets. Triggers on requests to create skills, write SKILL.md files, or structure skill directories.",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/skill-creator",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Skill Creator",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "social-kit",
+      "name": "Social Kit",
+      "description": "End-to-end composite that turns a single brief into voice-tuned X post variants, LinkedIn post variants, and a matching social graphic. Orchestrates create-x-content + create-linkedin-content + moatt-graphics in one invocation. Asks about the graphic format when not specified, with heuristic-driven recommendations.",
+      "category": "plays",
+      "tags": [
+        "content",
+        "social"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/social-kit",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Social Kit",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "create-x-content",
+        "create-linkedin-content",
+        "moatt-graphics"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "social-listening",
+      "name": "Social Listening",
+      "description": "Monitor brand mentions, competitor activity, and industry conversations across social media and the web",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/social-listening",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Social Listening",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "social-media-scraping-scrapecreators",
+      "name": "Social Media Scraping Scrapecreators",
+      "description": "Social media scraping - Instagram, TikTok, LinkedIn, and X/Twitter profiles, posts, and content",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/social-media-scraping-scrapecreators",
+      "argumentHint": "",
+      "domain": "scrapecreators.com",
+      "appName": "ScrapeCreators",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "sponsored-newsletter-finder",
+      "name": "Sponsored Newsletter Finder",
+      "description": "Discover newsletters in a target niche that reach your ICP, evaluate audience fit, estimate reach and CPM, and produce a ranked shortlist of sponsorship opportunities. Uses web search to surface newsletters, then scores each against ICP alignment criteria. Use when a marketing team wants to reach an existing engaged audience for less than the cost of building their own, or when testing a new channel before committing.",
+      "category": "plays",
+      "tags": [
+        "ads"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/sponsored-newsletter-finder",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Sponsored Newsletter Finder",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "stalled-deal-detector",
+      "name": "Stalled Deal Detector",
+      "description": "Identify open opportunities with no buyer-side activity in 14+ days, no advancement in stage in 30+ days, or stage inconsistencies (deals that should have multi-stakeholder engagement at this stage but don't). Outputs a prioritized list with the specific stall pattern, diagnosed cause, and a tailored re-engagement recommendation per deal. Different from single-thread-risk-flag — this finds deals that have already gone quiet, regardless of multithreading status.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/stalled-deal-detector",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Stalled Deal Detector",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "structured-scraping-riveter",
+      "name": "Structured Scraping Riveter",
+      "description": "Web scraping with structured data extraction - define your output schema",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/structured-scraping-riveter",
+      "argumentHint": "",
+      "domain": "riveter.com",
+      "appName": "Riveter",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "talking-head-video",
+      "name": "Talking Head Video",
+      "description": "Creates talking head videos from any source material (docs, changelogs, blog posts, notes, transcripts). Produces multi-scene videos with avatar narration over screenshots/images using HeyGen v2 API. Supports Quick Shot and Full Producer modes.",
+      "category": "moves",
+      "tags": [
+        "content"
+      ],
+      "version": "0.1.0",
+      "path": "skills/kits/channels/video-production/talking-head-video",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Talking Head Video",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": "video-production"
+    },
+    {
+      "slug": "tam-builder",
+      "name": "Tam Builder",
+      "description": "Build and maintain a scored Total Addressable Market using Apollo Company Search. Discovers companies matching the ICP, scores fit (0-100), assigns tiers (1/2/3), and auto-generates a persona watchlist for Tier 1-2 accounts via Apollo People Search (free). Outputs to CSV.",
+      "category": "moves",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/tam-builder",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Tam Builder",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "targeted-prospecting",
+      "name": "Targeted Prospecting",
+      "description": "Build a prospect list of companies with decision makers, verified contact info, and hiring/intent signals. Use when asked to find leads by industry, build an account list with specific titles, prospect companies that are actively hiring, or create a targeted outreach list filtered by company size, location, and hiring activity.",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/targeted-prospecting",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Targeted Prospecting",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "team-linkedin-profiles",
+      "name": "Team Linkedin Profiles",
+      "description": "Find LinkedIn profiles of a specific team or department at a company. Use when asked to get LinkedIn profiles, find team members, or look up people in a particular team/department/group at a company.",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/team-linkedin-profiles",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Team Linkedin Profiles",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "tech-stack-teardown",
+      "name": "Tech Stack Teardown",
+      "description": "Reverse-engineer a company's sales and marketing tech stack from public signals. Detects CRMs, cold-email tools, people databases, ad pixels, email-delivery services, and outbound sending domains via DNS records, website source inspection, Apify technology profiling, blacklist checks, and public spam-complaint searches. Works on single companies or batches. Produces a structured markdown report per company.",
+      "category": "moves",
+      "tags": [
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/tech-stack-teardown",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Tech Stack Teardown",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "tiktok-influencer-finder",
+      "name": "Tiktok Influencer Finder",
+      "description": "Locate TikTok influencers via Apify's Influencer Discovery Agent. Use when the user wants to discover TikTok creators or influencers in any niche.",
+      "category": "moves",
+      "tags": [
+        "outreach"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/tiktok-influencer-finder",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Tiktok Influencer Finder",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "tiktok-search",
+      "name": "Tiktok Search",
+      "description": "Search TikTok - find profiles, videos, hashtags, and trending content",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/tiktok-search",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Tiktok Search",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "topical-authority-mapper",
+      "name": "Topical Authority Mapper",
+      "description": "Map complete topic clusters for any subject area — hub pages, spoke articles, supporting content, internal linking architecture. Identifies content gaps, priority order, and builds a structured content calendar. Produces topic maps that build genuine topical authority, not random blog posts.",
+      "category": "plays",
+      "tags": [
+        "seo"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/topical-authority-mapper",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Topical Authority Mapper",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "reddit-post-finder",
+        "seo-domain-analyzer",
+        "site-content-catalog"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "trending-ad-hook-spotter",
+      "name": "Trending Ad Hook Spotter",
+      "description": "Watch Twitter/X, Reddit, LinkedIn, and Hacker News for trending narratives, viral posts, and hot-button topics in your space. Maps each trend to a concrete ad-hook opportunity with a timing-urgency score. Tells you exactly what to run ads about right now while the topic is still hot.",
+      "category": "plays",
+      "tags": [
+        "ads"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/trending-ad-hook-spotter",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Trending Ad Hook Spotter",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "hacker-news-scraper",
+        "linkedin-profile-post-scraper",
+        "reddit-post-finder",
+        "twitter-mention-tracker"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "triple-signal-prioritizer",
+      "name": "Triple Signal Prioritizer",
+      "description": "Compound account scorer that only enrolls accounts in outbound when three conditions are simultaneously true: ICP fit > threshold, behavioral intent in the last 14 days, and a timing trigger (funding, hire, renewal, news event). Eliminates list-blasting by demanding signal convergence rather than any-one-signal entry. Outputs a tier-ranked list with the convergence reasoning per row.",
+      "category": "moves",
+      "tags": [
+        "lead-generation"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/triple-signal-prioritizer",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Triple Signal Prioritizer",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "twitter-mention-tracker",
+      "name": "Twitter Mention Tracker",
+      "description": "Search and pull Twitter/X posts via Apify. Reach for this when looking up tweets, watching for brand mentions, monitoring competitors on Twitter, or analyzing conversations on the platform. Date filtering uses Twitter's native since:/until: operators for reliable server-side scoping.",
+      "category": "moves",
+      "tags": [
+        "monitoring"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/twitter-mention-tracker",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Twitter Mention Tracker",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "twitter-profile-lookup",
+      "name": "Twitter Profile Lookup",
+      "description": "Look up Twitter/X profiles - get bio, followers, tweets, and engagement",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/twitter-profile-lookup",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Twitter Profile Lookup",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "uptime-monitor",
+      "name": "Uptime Monitor",
+      "description": "Monitor website uptime - check availability, response times, and status",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/uptime-monitor",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Uptime Monitor",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "usage-drop-csm-trigger",
+      "name": "Usage Drop Csm Trigger",
+      "description": "Monitor weekly active usage per customer account, detect significant drops (below 50% of baseline for 2+ consecutive weeks, or below 30% in a single week), and fire a CSM task with a pre-written re-engagement script. Catches churn signals 60-90 days before renewal; the highest-leverage retention play in a SaaS GTM motion.",
+      "category": "moves",
+      "tags": [
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/usage-drop-csm-trigger",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Usage Drop Csm Trigger",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "uspto-patent-monitor",
+      "name": "Uspto Patent Monitor",
+      "description": "Monitor USPTO patent filings and grants for a specified company list, classifying each filing by technology category and surfacing R&D direction signals — what the company is investing in, what they're hiding, and where a vendor or competitor might intersect. Free, no API key required. Useful for competitive intel, R&D-aware outbound, and sales to deep-tech buyers.",
+      "category": "moves",
+      "tags": [
+        "research",
+        "competitive-intel"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/uspto-patent-monitor",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Uspto Patent Monitor",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "verify-email",
+      "name": "Verify Email",
+      "description": "Verify if an email address is valid and deliverable",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/verify-email",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Verify Email",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "video-clipper",
+      "name": "Video Clipper",
+      "description": "Repurposes long-form video (podcasts, interviews, talks) into short-form vertical clips for Instagram Reels, TikTok, and YouTube Shorts. Handles transcription, moment selection, clip extraction, speaker-tracked reframing (16:9 to 9:16), and animated captions.",
+      "category": "moves",
+      "tags": [
+        "content"
+      ],
+      "version": "0.1.0",
+      "path": "skills/kits/channels/video-production/video-clipper",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Video Clipper",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": "video-production"
+    },
+    {
+      "slug": "video-polish",
+      "name": "Video Polish",
+      "description": "Takes an existing screen recording or demo video and adds professional zoom/pan effects synchronized to the narration. Uses transcript-driven zoom targeting and Remotion for rendering. Optionally replaces audio with a soundtrack.",
+      "category": "moves",
+      "tags": [
+        "content"
+      ],
+      "version": "0.1.0",
+      "path": "skills/kits/channels/video-production/video-polish",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Video Polish",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": "video-production"
+    },
+    {
+      "slug": "visual-brand-extractor",
+      "name": "Visual Brand Extractor",
+      "description": "Pull visual branding (colors, typography, layout patterns) from a client's website and emit a style preset compatible with the HTML slides skill plus a brand config JSON for the content asset creator. WebFetch reads the pages; the agent then analyzes the CSS/HTML to identify the palette, font pairings, and aesthetic patterns.",
+      "category": "moves",
+      "tags": [
+        "brand"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/visual-brand-extractor",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Visual Brand Extractor",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "voice-of-customer-synthesizer",
+      "name": "Voice Of Customer Synthesizer",
+      "description": "Aggregate customer feedback from every source — support tickets, NPS comments, Slack messages, G2 reviews, call transcripts, survey responses — into a single VoC report with theme clustering, sentiment analysis, trend detection, and actionable recommendations for product, marketing, and CS teams. Chains review-site-scraper for public review data.",
+      "category": "plays",
+      "tags": [
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/voice-of-customer-synthesizer",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Voice Of Customer Synthesizer",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "reddit-post-finder",
+        "review-site-scraper",
+        "twitter-mention-tracker"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "web-archive-scraper",
+      "name": "Web Archive Scraper",
+      "description": "Query the Wayback Machine for archived versions of websites. Pull cached pages, customer lists, testimonials, and partner directories from sites that have changed or gone offline. Uses the free CDX API — no API key needed.",
+      "category": "moves",
+      "tags": [
+        "monitoring"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/web-archive-scraper",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Web Archive Scraper",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "web-research-parallel",
+      "name": "Web Research Parallel",
+      "description": "Web research API with OpenAI-compatible chat completions and async tasks",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/web-research-parallel",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Web Research Parallel",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "web-scraping",
+      "name": "Web Scraping",
+      "description": "Scrape websites, extract structured data, and automate browsers. Use when asked to scrape, extract, crawl, parse, or pull data from web pages or any URL.",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/web-scraping",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Web Scraping",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "web-scraping-olostep",
+      "name": "Web Scraping Olostep",
+      "description": "Web scraping, crawling, and AI-powered answer extraction at scale",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/web-scraping-olostep",
+      "argumentHint": "",
+      "domain": "olostep.com",
+      "appName": "Olostep",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "web-search",
+      "name": "Web Search",
+      "description": "Search the web, platforms, and datasets. Use when asked to search, find, look up, research, or discover information from the web, YouTube, Amazon, eBay, news, academic sources, or any online platform.",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/web-search",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Web Search",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "web-search-andi",
+      "name": "Web Search Andi",
+      "description": "Fast, high-quality web search with intelligent ranking and instant answers",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/web-search-andi",
+      "argumentHint": "",
+      "domain": "andisearch.com",
+      "appName": "Andi",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "web-search-exa",
+      "name": "Web Search Exa",
+      "description": "Neural web search - find similar content, extract pages, and run deep research",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/web-search-exa",
+      "argumentHint": "",
+      "domain": "exa.ai",
+      "appName": "Exa",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "web-search-jina",
+      "name": "Web Search Jina",
+      "description": "Jina Search - fast web search returning SERP results",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/web-search-jina",
+      "argumentHint": "",
+      "domain": "jina.ai",
+      "appName": "Jina",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "web-search-linkup",
+      "name": "Web Search Linkup",
+      "description": "Web search and content fetching - search the web or extract content from URLs",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/web-search-linkup",
+      "argumentHint": "",
+      "domain": "linkup.so",
+      "appName": "Linkup",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "web-search-perplexity",
+      "name": "Web Search Perplexity",
+      "description": "Perplexity AI search and chat completions with real-time web data",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/web-search-perplexity",
+      "argumentHint": "",
+      "domain": "perplexity.ai",
+      "appName": "Perplexity",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "web-search-tavily",
+      "name": "Web Search Tavily",
+      "description": "AI-powered web search, crawling, extraction, and deep research",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/web-search-tavily",
+      "argumentHint": "",
+      "domain": "tavily.com",
+      "appName": "Tavily",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "web-search-valyu",
+      "name": "Web Search Valyu",
+      "description": "Web search, AI answers, content extraction, and async deep research",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/web-search-valyu",
+      "argumentHint": "",
+      "domain": "valyu.network",
+      "appName": "Valyu",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "website-screenshot-notte",
+      "name": "Website Screenshot Notte",
+      "description": "Take screenshots of any website using Notte browser automation. Use when asked to screenshot, capture, or snap a webpage.",
+      "category": "moves",
+      "tags": [],
+      "version": "0.1.0",
+      "path": "skills/moves/website-screenshot-notte",
+      "argumentHint": "",
+      "domain": "notte.cc",
+      "appName": "Notte",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "youtube-apify-transcript",
+      "name": "Youtube Apify Transcript",
+      "description": "Fetch YouTube transcripts through the APIFY API. Works from cloud IPs (Hetzner, AWS, etc.) by routing around YouTube's bot detection. Free tier ships with $5/month of credits (~714 videos). No credit card required.",
+      "category": "moves",
+      "tags": [
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/youtube-apify-transcript",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Youtube Apify Transcript",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "youtube-watcher",
+      "name": "Youtube Watcher",
+      "description": "Retrieve transcripts from YouTube videos. Use when you need to summarize a video, answer questions about what was said, or pull specific information out of one.",
+      "category": "moves",
+      "tags": [
+        "content"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/youtube-watcher",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Youtube Watcher",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    }
+  ],
+  "kits": [
+    {
+      "slug": "lead-gen-devtools",
+      "name": "Lead Gen DevTools",
+      "description": "7-skill lead generation toolkit: discovery orchestrator, GitHub repo signals, community signals, competitor signals, event signals, hiring signal outreach, and personalized demo builder.",
+      "tags": [
+        "lead-generation",
+        "research",
+        "competitive-intel"
+      ],
+      "path": "skills/kits/industries/lead-gen-devtools",
+      "skills": [
+        {
+          "slug": "lead-discovery",
+          "name": "lead-discovery",
+          "description": "Orchestrator that runs first for lead generation requests. Gathers business context via website analysis or questions, identifies competitors, builds ICP, and routes to signal skills with pre-filled inputs."
+        },
+        {
+          "slug": "github-repo-signals",
+          "name": "github-repo-signals",
+          "description": "Extract and score leads from GitHub repositories by analyzing stars, forks, issues, PRs, comments, and contributions. Produces unified multi-repo CSV with deduplicated user profiles. No paid API credits required."
+        },
+        {
+          "slug": "community-signals",
+          "name": "community-signals",
+          "description": "Extract leads from developer forums (Hacker News, Reddit) by detecting intent signals — alternative seeking, competitor pain, scaling challenges, DIY solutions, and migration intent. Scores users by intent strength and cross-platform presence."
+        },
+        {
+          "slug": "competitor-signals",
+          "name": "competitor-signals",
+          "description": "Extract leads from competitor product activity — Product Hunt commenters/upvoters, HN posts about competitors, case studies, testimonials, tech press, and switching signals. Detects people actively switching from competitors as highest-priority leads."
+        },
+        {
+          "slug": "event-signals",
+          "name": "event-signals",
+          "description": "Extract leads from conferences, meetups, hackathons, and podcasts by analyzing speaker lists, sponsor lists, hackathon entries, and podcast guests. Discovers events via Sessionize, Confs.tech, Meetup, Luma, ListenNotes, and Devpost. Looks back 90 days and forward 180 days."
+        },
+        {
+          "slug": "demo-builder",
+          "name": "demo-builder",
+          "description": "Builds personalized demo assets for top prospects using the founder's product API/MCP/SDK. Researches prospect, proposes demo concepts, builds working prototype, tests it, and generates comparison report with live demo link."
+        },
+        {
+          "slug": "hiring-signal-outreach",
+          "name": "hiring-signal-outreach",
+          "description": "Full-cycle hiring signal composite. Takes any set of companies, surfaces job postings that your product augments or replaces, locates relevant people (the hiring manager, buyers, champions, users), and drafts personalized outreach with the job role as the hook. Tool-agnostic — works with any company source, job board, contact finder, and outreach platform."
+        }
+      ]
+    },
+    {
+      "slug": "video-production",
+      "name": "Video Production",
+      "description": "5-skill video production toolkit: beat-synced reels from product images, AI-animated product reels via Higgsfield, talking head videos via HeyGen, long-form to short-form clip repurposing, and screen recording polish with zoom/pan effects.",
+      "tags": [
+        "content"
+      ],
+      "path": "skills/kits/channels/video-production",
+      "skills": [
+        {
+          "slug": "beat-sync-reel",
+          "name": "beat-sync-reel",
+          "description": "Generates Instagram Reels where product image cuts are synced to audio beats. Accepts audio as a local file, URL, or search query. Uses librosa for beat detection, FFmpeg Ken Burns for scene animation, and Pillow for text overlays. No AI video generation — fully free, fast, and scalable."
+        },
+        {
+          "slug": "product-reel-generator",
+          "name": "product-reel-generator",
+          "description": "Generates Instagram-ready product reels from any e-commerce product page URL. Scrapes product images, classifies by type, generates AI-animated clips via Higgsfield API, creates text overlays with style presets, and composes a 15-20 second reel with music. Supports model-based and product-only reels."
+        },
+        {
+          "slug": "talking-head-video",
+          "name": "talking-head-video",
+          "description": "Creates talking head videos from any source material (docs, changelogs, blog posts, notes, transcripts). Produces multi-scene videos with avatar narration over screenshots/images using HeyGen v2 API. Supports Quick Shot and Full Producer modes."
+        },
+        {
+          "slug": "video-clipper",
+          "name": "video-clipper",
+          "description": "Repurposes long-form video (podcasts, interviews, talks) into short-form vertical clips for Instagram Reels, TikTok, and YouTube Shorts. Handles transcription, moment selection, clip extraction, speaker-tracked reframing (16:9 to 9:16), and animated captions."
+        },
+        {
+          "slug": "video-polish",
+          "name": "video-polish",
+          "description": "Takes an existing screen recording or demo video and adds professional zoom/pan effects synchronized to the narration. Uses transcript-driven zoom targeting and Remotion for rendering. Optionally replaces audio with a soundtrack."
+        }
+      ]
+    }
+  ]
+}
