@@ -1,0 +1,25 @@
+{
+  "slug": "moatt-graphics",
+  "category": "plays",
+  "tags": [
+    "content",
+    "design",
+    "social"
+  ],
+  "installation": {
+    "base_command": "npx moatt install moatt-graphics",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "features": [
+    "Community-driven style catalog discovered via npx moatt styles list/search/get",
+    "Community-driven format catalog discovered via npx moatt formats list/search/get",
+    "Unsplash + ASCII image sourcing",
+    "Playwright PNG export",
+    "Image-to-style extraction with publish to the central catalog",
+    "Args-based slash command invocation"
+  ]
+}

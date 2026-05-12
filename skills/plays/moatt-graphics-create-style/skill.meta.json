@@ -1,0 +1,25 @@
+{
+  "slug": "moatt-graphics-create-style",
+  "category": "plays",
+  "tags": [
+    "design",
+    "content"
+  ],
+  "installation": {
+    "base_command": "npx moatt install moatt-graphics-create-style",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "moatt-graphics"
+  ],
+  "features": [
+    "Reference image → fully installed style preset in one command",
+    "Generates all 7 format examples (poster, infographic, carousel, slides, story, chart, tweet) using a standard brief",
+    "Auto-renders PNGs via the moatt-graphics Playwright pipeline",
+    "Registers the new style in styles/index.json and examples/manifest.json"
+  ]
+}

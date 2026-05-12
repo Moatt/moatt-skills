@@ -1,0 +1,25 @@
+{
+  "slug": "moatt-graphics-create-format",
+  "category": "plays",
+  "tags": [
+    "design",
+    "content"
+  ],
+  "installation": {
+    "base_command": "npx moatt install moatt-graphics-create-format",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "moatt-graphics"
+  ],
+  "features": [
+    "Author and publish a new graphics format spec to the Moatt catalog",
+    "Custom canvas dimensions (64–8192px) for surfaces beyond the seven defaults",
+    "Renders at least one example via the moatt-graphics Playwright pipeline",
+    "Publishes via npx moatt formats publish"
+  ]
+}
