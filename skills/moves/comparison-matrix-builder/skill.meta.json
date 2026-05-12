@@ -1,0 +1,15 @@
+{
+  "slug": "comparison-matrix-builder",
+  "category": "moves",
+  "tags": [
+    "competitive-intel"
+  ],
+  "installation": {
+    "base_command": "npx moatt install comparison-matrix-builder",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

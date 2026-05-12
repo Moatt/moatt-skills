@@ -1,0 +1,16 @@
+{
+  "slug": "champion-tracker",
+  "category": "moves",
+  "tags": [
+    "lead-generation"
+  ],
+  "requires_tools": ["apify_guard"],
+  "installation": {
+    "base_command": "npx moatt install champion-tracker",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

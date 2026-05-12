@@ -1,0 +1,16 @@
+{
+  "slug": "competitor-post-engagers",
+  "category": "moves",
+  "tags": [
+    "lead-generation"
+  ],
+  "requires_tools": ["apify_guard"],
+  "installation": {
+    "base_command": "npx moatt install competitor-post-engagers",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

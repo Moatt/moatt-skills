@@ -1,0 +1,15 @@
+{
+  "slug": "breakup-permission-close",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install breakup-permission-close",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

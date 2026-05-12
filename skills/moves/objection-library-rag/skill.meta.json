@@ -1,0 +1,15 @@
+{
+  "slug": "objection-library-rag",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install objection-library-rag",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

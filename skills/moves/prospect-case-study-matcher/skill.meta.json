@@ -1,0 +1,15 @@
+{
+  "slug": "prospect-case-study-matcher",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install prospect-case-study-matcher",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

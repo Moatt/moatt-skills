@@ -1,0 +1,15 @@
+{
+  "slug": "ai-cold-call-script-ab",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install ai-cold-call-script-ab",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

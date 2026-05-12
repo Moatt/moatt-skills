@@ -1,0 +1,15 @@
+{
+  "slug": "dynamic-roi-calculator",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install dynamic-roi-calculator",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

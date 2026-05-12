@@ -1,0 +1,15 @@
+{
+  "slug": "reply-classifier",
+  "category": "moves",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install reply-classifier",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
