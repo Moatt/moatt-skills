@@ -1,0 +1,14 @@
+{
+  "slug": "get-brand-assets",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install get-brand-assets",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

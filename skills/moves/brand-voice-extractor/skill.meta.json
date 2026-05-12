@@ -1,0 +1,15 @@
+{
+  "slug": "brand-voice-extractor",
+  "category": "moves",
+  "tags": [
+    "brand"
+  ],
+  "installation": {
+    "base_command": "npx moatt install brand-voice-extractor",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

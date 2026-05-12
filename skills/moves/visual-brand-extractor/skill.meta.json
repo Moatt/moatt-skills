@@ -1,0 +1,15 @@
+{
+  "slug": "visual-brand-extractor",
+  "category": "moves",
+  "tags": [
+    "brand"
+  ],
+  "installation": {
+    "base_command": "npx moatt install visual-brand-extractor",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
