@@ -1,0 +1,14 @@
+{
+  "slug": "web-search-exa",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install web-search-exa",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

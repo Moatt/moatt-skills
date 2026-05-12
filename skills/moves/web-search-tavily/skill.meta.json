@@ -1,0 +1,14 @@
+{
+  "slug": "web-search-tavily",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install web-search-tavily",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

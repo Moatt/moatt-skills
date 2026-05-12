@@ -1,0 +1,14 @@
+{
+  "slug": "web-search-jina",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install web-search-jina",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

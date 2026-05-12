@@ -1,0 +1,14 @@
+{
+  "slug": "web-search-valyu",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install web-search-valyu",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
