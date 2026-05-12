@@ -1,0 +1,28 @@
+{
+  "name": "moatt-skills",
+  "version": "0.1.0",
+  "description": "GTM skills for AI coding agents — installable via npx moatt install <slug>",
+  "bin": {
+    "moatt": "./bin/moatt.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Karmable-AI/moatt-skills-v3"
+  },
+  "scripts": {
+    "validate:skills": "node scripts/validate-skills.js",
+    "build:index": "node scripts/build-index.js",
+    "test": "node --test test/catalog.test.js",
+    "ci": "npm run validate:skills && npm run build:index && npm test"
+  },
+  "keywords": [
+    "claude-code",
+    "skills",
+    "gtm",
+    "sales",
+    "marketing",
+    "scraping"
+  ],
+  "author": "Adrian Cohen",
+  "license": "MIT"
+}

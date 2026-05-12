@@ -1,0 +1,14 @@
+node_modules/
+.env
+.DS_Store
+*.pyc
+.tmp/
+.cache/
+.omc/
+test/results/
+snapshots/
+
+# Skill output is excluded — may contain client/PII data
+skills/moves/*/output/
+skills/plays/*/output/
+skills/moats/*/output/
