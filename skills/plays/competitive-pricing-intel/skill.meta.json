@@ -1,0 +1,15 @@
+{
+  "slug": "competitive-pricing-intel",
+  "category": "plays",
+  "tags": [
+    "competitive-intel"
+  ],
+  "installation": {
+    "base_command": "npx moatt install competitive-pricing-intel",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

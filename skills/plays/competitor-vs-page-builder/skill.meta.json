@@ -1,0 +1,24 @@
+{
+  "slug": "competitor-vs-page-builder",
+  "category": "plays",
+  "tags": [
+    "seo",
+    "competitive-intel"
+  ],
+  "installation": {
+    "base_command": "npx moatt install competitor-vs-page-builder",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "competitor-research",
+    "review-site-scraper",
+    "seo-opportunity-finder"
+  ],
+  "requires_tools": [
+    "dataforseo_proxy"
+  ]
+}

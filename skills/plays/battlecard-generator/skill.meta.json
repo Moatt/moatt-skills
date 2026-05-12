@@ -1,0 +1,19 @@
+{
+  "slug": "battlecard-generator",
+  "category": "plays",
+  "tags": [
+    "competitive-intel"
+  ],
+  "installation": {
+    "base_command": "npx moatt install battlecard-generator",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "google-ad-scraper",
+    "review-site-scraper"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "slug": "alternatives-to-page-builder",
+  "category": "plays",
+  "tags": [
+    "seo",
+    "competitive-intel"
+  ],
+  "installation": {
+    "base_command": "npx moatt install alternatives-to-page-builder",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "competitor-research",
+    "review-site-scraper",
+    "competitor-vs-page-builder"
+  ],
+  "requires_tools": [
+    "dataforseo_proxy"
+  ]
+}
