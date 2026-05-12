@@ -1,0 +1,15 @@
+{
+  "slug": "aeo",
+  "category": "moves",
+  "tags": [
+    "seo"
+  ],
+  "installation": {
+    "base_command": "npx moatt install aeo",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "slug": "llm-txt-generator",
+  "category": "moves",
+  "tags": [
+    "seo"
+  ],
+  "installation": {
+    "base_command": "npx moatt install llm-txt-generator",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

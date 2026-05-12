@@ -1,0 +1,19 @@
+{
+  "slug": "seo-domain-analyzer",
+  "category": "moves",
+  "tags": [
+    "competitive-intel",
+    "seo"
+  ],
+  "installation": {
+    "base_command": "npx moatt install seo-domain-analyzer",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_tools": [
+    "dataforseo_proxy"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "slug": "glossary-page-generator",
+  "category": "moves",
+  "tags": [
+    "seo",
+    "content"
+  ],
+  "installation": {
+    "base_command": "npx moatt install glossary-page-generator",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_tools": [
+    "dataforseo_proxy"
+  ]
+}

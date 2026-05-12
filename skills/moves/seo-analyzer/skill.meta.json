@@ -1,0 +1,17 @@
+{
+  "slug": "seo-analyzer",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install seo-analyzer",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_tools": [
+    "dataforseo_proxy"
+  ]
+}

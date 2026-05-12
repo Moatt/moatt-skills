@@ -1,0 +1,18 @@
+{
+  "slug": "internal-link-optimizer",
+  "category": "moves",
+  "tags": [
+    "seo"
+  ],
+  "installation": {
+    "base_command": "npx moatt install internal-link-optimizer",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_tools": [
+    "dataforseo_proxy"
+  ]
+}

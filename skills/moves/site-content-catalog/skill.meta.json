@@ -1,0 +1,16 @@
+{
+  "slug": "site-content-catalog",
+  "category": "moves",
+  "tags": [
+    "content",
+    "seo"
+  ],
+  "installation": {
+    "base_command": "npx moatt install site-content-catalog",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

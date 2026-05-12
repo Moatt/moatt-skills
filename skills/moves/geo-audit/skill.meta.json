@@ -1,0 +1,15 @@
+{
+  "slug": "geo-audit",
+  "category": "moves",
+  "tags": [
+    "seo"
+  ],
+  "installation": {
+    "base_command": "npx moatt install geo-audit",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

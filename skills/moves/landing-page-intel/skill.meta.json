@@ -1,0 +1,15 @@
+{
+  "slug": "landing-page-intel",
+  "category": "moves",
+  "tags": [
+    "competitive-intel"
+  ],
+  "installation": {
+    "base_command": "npx moatt install landing-page-intel",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
