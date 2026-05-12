@@ -1,0 +1,15 @@
+{
+  "slug": "outbound-prospecting-engine",
+  "category": "moats",
+  "tags": [
+    "outreach"
+  ],
+  "installation": {
+    "base_command": "npx moatt install outbound-prospecting-engine",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

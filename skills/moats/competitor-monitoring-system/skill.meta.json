@@ -1,0 +1,15 @@
+{
+  "slug": "competitor-monitoring-system",
+  "category": "moats",
+  "tags": [
+    "competitive-intel"
+  ],
+  "installation": {
+    "base_command": "npx moatt install competitor-monitoring-system",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

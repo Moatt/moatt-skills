@@ -1,0 +1,15 @@
+{
+  "slug": "signal-detection-pipeline",
+  "category": "moats",
+  "tags": [
+    "lead-generation"
+  ],
+  "installation": {
+    "base_command": "npx moatt install signal-detection-pipeline",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

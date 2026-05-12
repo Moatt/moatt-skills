@@ -1,0 +1,15 @@
+{
+  "slug": "event-prospecting-pipeline",
+  "category": "moats",
+  "tags": [
+    "lead-generation"
+  ],
+  "installation": {
+    "base_command": "npx moatt install event-prospecting-pipeline",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "slug": "seo-content-engine",
+  "category": "moats",
+  "tags": [
+    "seo"
+  ],
+  "installation": {
+    "base_command": "npx moatt install seo-content-engine",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
