@@ -1,0 +1,14 @@
+{
+  "slug": "lead-enrichment-sixtyfour",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install lead-enrichment-sixtyfour",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

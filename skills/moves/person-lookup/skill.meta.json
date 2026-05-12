@@ -1,0 +1,14 @@
+{
+  "slug": "person-lookup",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install person-lookup",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

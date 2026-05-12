@@ -1,0 +1,15 @@
+{
+  "slug": "contact-cache",
+  "category": "moves",
+  "tags": [
+    "lead-generation"
+  ],
+  "installation": {
+    "base_command": "npx moatt install contact-cache",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "gtm-enrichment-deep",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install gtm-enrichment-deep",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "comprehensive-enrichment",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install comprehensive-enrichment",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

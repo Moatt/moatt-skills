@@ -1,0 +1,14 @@
+{
+  "slug": "people-company-search-fiber",
+  "category": "moves",
+  "tags": [],
+  "source": "orthogonal",
+  "installation": {
+    "base_command": "npx moatt install people-company-search-fiber",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
