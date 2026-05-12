@@ -1,0 +1,16 @@
+{
+  "slug": "generate-voice-guide",
+  "category": "moves",
+  "tags": [
+    "content",
+    "social"
+  ],
+  "installation": {
+    "base_command": "npx moatt install generate-voice-guide",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

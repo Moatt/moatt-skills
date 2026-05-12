@@ -1,0 +1,15 @@
+{
+  "slug": "create-workflow-diagram",
+  "category": "moves",
+  "tags": [
+    "content"
+  ],
+  "installation": {
+    "base_command": "npx moatt install create-workflow-diagram",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

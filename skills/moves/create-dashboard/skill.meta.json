@@ -1,0 +1,16 @@
+{
+  "slug": "create-dashboard",
+  "category": "moves",
+  "tags": [
+    "content",
+    "design"
+  ],
+  "installation": {
+    "base_command": "npx moatt install create-dashboard",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

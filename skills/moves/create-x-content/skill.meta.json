@@ -1,0 +1,16 @@
+{
+  "slug": "create-x-content",
+  "category": "moves",
+  "tags": [
+    "content",
+    "social"
+  ],
+  "installation": {
+    "base_command": "npx moatt install create-x-content",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

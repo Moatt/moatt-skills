@@ -1,0 +1,15 @@
+{
+  "slug": "content-asset-creator",
+  "category": "moves",
+  "tags": [
+    "content"
+  ],
+  "installation": {
+    "base_command": "npx moatt install content-asset-creator",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}
