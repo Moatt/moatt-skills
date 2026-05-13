@@ -1,116 +1,61 @@
 #!/usr/bin/env node
 
-/**
- * moatt — installer CLI for Moatt Skills.
- *
- * Pulls skill files from the public catalog and lands them in the layout
- * expected by your coding agent (Claude Code, Cursor, or Codex).
- *
- *   npx moatt install <slug> [--claude|--codex|--cursor] [--project-dir <path>]
- *   npx moatt list
- *   npx moatt info <slug>
- */
+const fs = require('node:fs');
+const path = require('node:path');
 
-const https = require('https');
-const fs = require('fs');
-const path = require('path');
-const {
-  parseInstallOptions,
-  placeForCodex,
-  placeForCursor,
-} = require('./lib/targets');
+const registry = require('./lib/registry');
+const installTargets = require('./lib/install-targets');
+const { parseInstallOptions } = require('./lib/targets');
+const { search } = require('./lib/search');
+const { update } = require('./lib/update');
+const { login } = require('./lib/login');
+const auth = require('./lib/auth-commands');
 
-const REPO = 'Karmable-AI/moatt-skills-v3';
-const BRANCH = 'main';
-const RAW_BASE = `https://raw.githubusercontent.com/${REPO}/${BRANCH}`;
-const INDEX_URL = `${RAW_BASE}/skills-index.json`;
+const REPO = registry.REPO;
+const BRANCH = registry.BRANCH;
+const RAW_BASE = registry.RAW_BASE;
 
-// ── HTTP helper ──────────────────────────────────────────────────────────
-//
-// Plain `https.get` with manual redirect chasing — keeps the CLI dependency-
-// free (no axios, no fetch polyfill) so `npx moatt` boots fast.
-function fetch(url) {
-  return new Promise((resolve, reject) => {
-    const get = (u) => {
-      https.get(u, { headers: { 'User-Agent': 'moatt-cli' } }, (res) => {
-        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-          get(res.headers.location);
-          return;
-        }
-        if (res.statusCode !== 200) {
-          reject(new Error(`HTTP ${res.statusCode} for ${u}`));
-          return;
-        }
-        let data = '';
-        res.on('data', (chunk) => (data += chunk));
-        res.on('end', () => resolve(data));
-      }).on('error', reject);
-    };
-    get(url);
-  });
-}
-
-async function fetchIndex() {
-  try {
-    const data = await fetch(INDEX_URL);
-    return JSON.parse(data);
-  } catch (err) {
-    console.error(`Failed to fetch skill index: ${err.message}`);
-    console.error('Make sure you have internet access.');
-    process.exit(1);
-  }
-}
-
-function getInstallDir(slug) {
-  const home = process.env.HOME || process.env.USERPROFILE;
-  return path.join(home, '.claude', 'skills', slug);
-}
-
-function getCodexSkillsRoot() {
-  const home = process.env.HOME || process.env.USERPROFILE;
-  return path.join(home, '.codex', 'skills');
-}
-
-// Shared Python helpers that some skills depend on. When a skill's metadata
-// declares `requires_tools: ["apify_guard"]`, we fetch and drop the listed
-// files into the install dir alongside the skill itself.
 const TOOL_FILE_MAP = {
   apify_guard: ['tools/apify_guard.py'],
   supabase: ['tools/supabase/__init__.py', 'tools/supabase/supabase_client.py'],
   dataforseo_proxy: ['tools/dataforseo_proxy.py'],
 };
 
-async function downloadSkillFiles(skill, installDir) {
+async function fetchIndexOrDie() {
+  try {
+    return await registry.fetchIndex();
+  } catch (err) {
+    console.error(err.message);
+    process.exit(1);
+  }
+}
+
+async function downloadSkillFiles(skill, canonical) {
   let downloaded = 0;
   for (const filePath of skill.files) {
-    const url = `${RAW_BASE}/${filePath}`;
-    const localPath = path.join(installDir, path.relative(skill.path, filePath));
-    const localDir = path.dirname(localPath);
-
-    fs.mkdirSync(localDir, { recursive: true });
-
+    const url = registry.rawUrl(filePath);
+    const localPath = path.join(canonical, path.relative(skill.path, filePath));
+    fs.mkdirSync(path.dirname(localPath), { recursive: true });
     try {
-      const content = await fetch(url);
+      const content = await registry.fetch(url);
       fs.writeFileSync(localPath, content);
       downloaded++;
-      console.log(`    ${path.relative(installDir, localPath)}`);
+      console.log(`    ${path.relative(canonical, localPath)}`);
     } catch (err) {
       console.error(`    [FAILED] ${filePath}: ${err.message}`);
     }
   }
 
-  // Pull any shared tool files the skill declares.
   const requiresTools = skill.metadata?.requires_tools || [];
   for (const toolName of requiresTools) {
     const toolFiles = TOOL_FILE_MAP[toolName];
     if (!toolFiles) continue;
     for (const toolPath of toolFiles) {
-      const url = `${RAW_BASE}/${toolPath}`;
-      const localPath = path.join(installDir, toolPath);
-      const localDir = path.dirname(localPath);
-      fs.mkdirSync(localDir, { recursive: true });
+      const url = registry.rawUrl(toolPath);
+      const localPath = path.join(canonical, toolPath);
+      fs.mkdirSync(path.dirname(localPath), { recursive: true });
       try {
-        const content = await fetch(url);
+        const content = await registry.fetch(url);
         fs.writeFileSync(localPath, content);
         downloaded++;
         console.log(`    ${toolPath} (shared tool)`);
@@ -123,69 +68,118 @@ async function downloadSkillFiles(skill, installDir) {
   return downloaded;
 }
 
+function resolveAgents({ target, projectDir }) {
+  if (target === 'claude') return ['claude'];
+  if (target === 'codex') return ['codex'];
+  if (target === 'cursor') return ['cursor'];
+
+  const detected = installTargets.detectInstalledAgents({ projectDir });
+  if (detected.length === 0) {
+
+    return ['claude'];
+  }
+  return detected;
+}
+
+function placeForAgents(slug, agents, { force, projectDir }) {
+  const placements = [];
+  for (const agent of agents) {
+    if (agent === 'claude') {
+      const result = installTargets.placeForClaude(slug, { force });
+      placements.push({ agent, result, path: installTargets.claudeLink(slug) });
+    } else if (agent === 'codex') {
+      const result = installTargets.placeForCodex(slug, { force });
+      placements.push({ agent, result, path: installTargets.codexLink(slug) });
+    } else if (agent === 'cursor') {
+      if (!projectDir) {
+        placements.push({
+          agent,
+          result: 'skipped-no-project-dir',
+          path: null,
+        });
+        continue;
+      }
+      const rulePath = installTargets.placeForCursor(slug, projectDir);
+      placements.push({ agent, result: 'created', path: rulePath });
+    }
+  }
+  return placements;
+}
+
+function printPlacementSummary(slug, placements) {
+  for (const p of placements) {
+    const label = `[${p.agent}]`.padEnd(10);
+    switch (p.result) {
+      case 'created':
+        console.log(`  ${label} ${p.path}`);
+        break;
+      case 'noop':
+        console.log(`  ${label} already linked (${p.path})`);
+        break;
+      case 'relinked':
+        console.log(`  ${label} relinked → ${p.path}`);
+        break;
+      case 'force-replaced':
+        console.log(`  ${label} replaced legacy copy → ${p.path}`);
+        break;
+      case 'skipped-legacy':
+        console.log(
+          `  ${label} legacy copy detected at ${p.path}. Re-run with --force to convert to a symlink.`
+        );
+        break;
+      case 'skipped-no-project-dir':
+        console.log(`  ${label} skipped (Cursor requires --project-dir)`);
+        break;
+      default:
+        console.log(`  ${label} ${p.result}`);
+    }
+  }
+}
+
 async function installKit(kit, options) {
-  const { target, projectDir } = options;
+  const { target, projectDir, force } = options;
 
   console.log(`Installing kit "${kit.name}" (${kit.skills.length} skills)...\n`);
 
-  // Grab any shared files at the kit root once — we'll fan them out into
-  // each kit-internal sub-skill below.
   const sharedContents = {};
   for (const sharedPath of kit.shared_files || []) {
-    const url = `${RAW_BASE}/${sharedPath}`;
+    const url = registry.rawUrl(sharedPath);
     try {
-      sharedContents[path.basename(sharedPath)] = await fetch(url);
+      sharedContents[path.basename(sharedPath)] = await registry.fetch(url);
     } catch (err) {
       console.error(`  [WARN] Could not fetch shared file ${sharedPath}: ${err.message}`);
     }
   }
 
+  const agents = resolveAgents({ target, projectDir });
+
   for (const subSkill of kit.skills) {
-    const installDir = getInstallDir(subSkill.slug);
+    const canonical = installTargets.canonicalDir(subSkill.slug);
     const isRegistry = subSkill.source === 'registry';
-    const label = isRegistry ? `${subSkill.slug} (registry)` : subSkill.slug;
-    console.log(`  ${label} → ${installDir}`);
-    fs.mkdirSync(installDir, { recursive: true });
+    const sourceLabel = isRegistry ? `${subSkill.slug} (registry)` : subSkill.slug;
+    console.log(`  ${sourceLabel} → ${canonical}`);
+    fs.mkdirSync(canonical, { recursive: true });
 
-    await downloadSkillFiles(subSkill, installDir);
+    await downloadSkillFiles(subSkill, canonical);
 
-    // Registry sub-skills are already self-contained; only kit-internal
-    // sub-skills get the shared-config copy.
     if (!isRegistry) {
       for (const [filename, content] of Object.entries(sharedContents)) {
-        fs.writeFileSync(path.join(installDir, filename), content);
+        fs.writeFileSync(path.join(canonical, filename), content);
         console.log(`    ${filename} (shared)`);
       }
     }
 
-    if (target === 'codex') {
-      placeForCodex(installDir, getCodexSkillsRoot());
-    } else if (target === 'cursor') {
-      placeForCursor(installDir, projectDir);
-    }
+    const placements = placeForAgents(subSkill.slug, agents, { force, projectDir });
+    printPlacementSummary(subSkill.slug, placements);
   }
 
   console.log(`\nInstalled ${kit.skills.length} skills from kit "${kit.name}".`);
-
-  if (target === 'codex') {
-    console.log('\nNext step (Codex):');
-    console.log('  Restart Codex to pick up the new skills.');
-  } else if (target === 'cursor') {
-    console.log('\nNext step (Cursor):');
-    console.log('  Open Cursor in that project to load the new rules.');
-  } else {
-    console.log(`\nNext step (Claude Code):`);
-    for (const subSkill of kit.skills) {
-      console.log(`  cp -r ${getInstallDir(subSkill.slug)}/SKILL.md .claude/skills/${subSkill.slug}.md`);
-    }
-  }
 }
 
 async function installSkill(options) {
-  const { slug, target, projectDir } = options;
-  const index = await fetchIndex();
+  const { slug, target, projectDir, force } = options;
+  const index = await fetchIndexOrDie();
 
-  // Kits get the kit-installer path; everything else is a single skill.
   const kit = (index.kits || []).find((p) => p.slug === slug);
   if (kit) {
     return installKit(kit, options);
@@ -195,12 +189,12 @@ async function installSkill(options) {
 
   if (!skill) {
     console.error(`Skill "${slug}" not found.`);
-    console.error(`Run "npx moatt list" to see available skills.`);
+    console.error(`Run "npx moatt search <query>" or "npx moatt list" to find skills.`);
     process.exit(1);
   }
 
-  // Walk `requires_skills` first and install any missing dependencies before
-  // we tackle the requested skill itself.
+  const agents = resolveAgents({ target, projectDir });
+
   const requiresSkills = skill.metadata?.requires_skills || [];
   const installedDeps = [];
   if (requiresSkills.length > 0) {
@@ -211,76 +205,50 @@ async function installSkill(options) {
         console.error(`  [WARN] Dependency "${depSlug}" not found in index, skipping.`);
         continue;
       }
-      const depDir = getInstallDir(depSlug);
-      if (fs.existsSync(path.join(depDir, 'SKILL.md'))) {
+      const depCanonical = installTargets.canonicalDir(depSlug);
+      if (fs.existsSync(path.join(depCanonical, 'SKILL.md'))) {
         console.log(`  ${depSlug} — already installed`);
         installedDeps.push(depSlug);
-        continue;
+      } else {
+        console.log(`  ${depSlug} → ${depCanonical}`);
+        fs.mkdirSync(depCanonical, { recursive: true });
+        await downloadSkillFiles(depSkill, depCanonical);
+        installedDeps.push(depSlug);
       }
-      console.log(`  ${depSlug} → ${depDir}`);
-      fs.mkdirSync(depDir, { recursive: true });
-      await downloadSkillFiles(depSkill, depDir);
-      installedDeps.push(depSlug);
-
-      if (target === 'codex') {
-        placeForCodex(depDir, getCodexSkillsRoot());
-      } else if (target === 'cursor') {
-        placeForCursor(depDir, projectDir);
-      }
+      const depPlacements = placeForAgents(depSlug, agents, { force, projectDir });
+      printPlacementSummary(depSlug, depPlacements);
     }
     console.log('');
   }
 
-  const installDir = getInstallDir(slug);
-  console.log(`Installing ${skill.name} to ${installDir}...`);
+  const canonical = installTargets.canonicalDir(slug);
+  console.log(`Installing ${skill.name} to ${canonical}...`);
+  fs.mkdirSync(canonical, { recursive: true });
 
-  // Make sure the destination exists before we start writing files into it.
-  fs.mkdirSync(installDir, { recursive: true });
-
-  const downloaded = await downloadSkillFiles(skill, installDir);
+  const downloaded = await downloadSkillFiles(skill, canonical);
 
   console.log(`\nInstalled ${downloaded}/${skill.files.length} files.`);
   if (installedDeps.length > 0) {
     console.log(`Dependencies installed: ${installedDeps.join(', ')}`);
   }
-  console.log(`Primary location: ${installDir}`);
+  console.log(`Canonical: ${canonical}`);
 
-  if (target === 'codex') {
-    const codexDir = placeForCodex(installDir, getCodexSkillsRoot());
-    console.log(`Codex location: ${codexDir}`);
-    console.log('\nNext step (Codex):');
-    console.log('  Restart Codex to pick up the new skill.');
-    return;
-  }
-
-  if (target === 'cursor') {
-    const cursorRule = placeForCursor(installDir, projectDir);
-    console.log(`Cursor rule: ${cursorRule}`);
-    console.log('\nNext step (Cursor):');
-    console.log('  Open Cursor in that project so it can load the new rule.');
-    return;
-  }
-
-  console.log(`\nNext step (Claude Code):`);
-  console.log(`  cp -r ${installDir}/SKILL.md .claude/skills/${slug}.md`);
-  console.log(`  # Or reference directly: ${installDir}/SKILL.md`);
+  console.log('');
+  const placements = placeForAgents(slug, agents, { force, projectDir });
+  printPlacementSummary(slug, placements);
 }
 
 async function listSkills() {
-  const index = await fetchIndex();
+  const index = await fetchIndexOrDie();
   const kits = index.kits || [];
 
   console.log(`Available skills (${index.skills.length}) and kits (${kits.length}):\n`);
 
-  // Kits get their own block at the top — they're the most discoverable
-  // unit for a new user, and we want to surface them before drilling into
-  // categories.
   if (kits.length > 0) {
     console.log(`  KITS (${kits.length})`);
     for (const kit of kits) {
-      const desc = kit.description.length > 70
-        ? kit.description.slice(0, 67) + '...'
-        : kit.description;
+      const desc =
+        kit.description.length > 70 ? kit.description.slice(0, 67) + '...' : kit.description;
       console.log(`    ${kit.slug.padEnd(35)} ${desc}`);
       console.log(`      Skills: ${kit.skills.map((s) => s.slug).join(', ')}`);
     }
@@ -296,9 +264,8 @@ async function listSkills() {
   for (const [cat, skills] of Object.entries(categories)) {
     console.log(`  ${cat.toUpperCase()} (${skills.length})`);
     for (const skill of skills) {
-      const desc = skill.description.length > 70
-        ? skill.description.slice(0, 67) + '...'
-        : skill.description;
+      const desc =
+        skill.description.length > 70 ? skill.description.slice(0, 67) + '...' : skill.description;
       console.log(`    ${skill.slug.padEnd(35)} ${desc}`);
     }
     console.log('');
@@ -308,7 +275,7 @@ async function listSkills() {
 }
 
 async function showInfo(slug) {
-  const index = await fetchIndex();
+  const index = await fetchIndexOrDie();
   const skill = index.skills.find((s) => s.slug === slug);
   const kit = (index.kits || []).find((p) => p.slug === slug);
 
@@ -326,9 +293,7 @@ async function showInfo(slug) {
     console.log(`Files: ${totalFiles} across ${kit.skills.length} skills`);
     console.log(`\nSkills (${kit.skills.length}):`);
     for (const s of kit.skills) {
-      const desc = s.description.length > 60
-        ? s.description.slice(0, 57) + '...'
-        : s.description;
+      const desc = s.description.length > 60 ? s.description.slice(0, 57) + '...' : s.description;
       console.log(`  ${s.slug.padEnd(25)} ${desc}`);
     }
     console.log(`\nInstall all: npx moatt install ${kit.slug}`);
@@ -346,44 +311,123 @@ async function showInfo(slug) {
   console.log(`GitHub: https://github.com/${REPO}/tree/${BRANCH}/${skill.path}`);
 }
 
-// ── Dispatch ─────────────────────────────────────────────────────────────
-const [,, command, ...args] = process.argv;
+function die(err) {
+  console.error(err.message || err);
+  process.exit(1);
+}
+
+const [, , command, ...args] = process.argv;
 
 switch (command) {
   case 'install':
     try {
       const options = parseInstallOptions(args);
-      installSkill(options).catch((err) => {
-        console.error(err.message);
-        process.exit(1);
-      });
+      installSkill(options).catch(die);
     } catch (err) {
       console.error(err.message);
-      console.error('Usage: npx moatt install <slug> [--claude|--codex|--cursor] [--project-dir <path>]');
+      console.error(
+        'Usage: npx moatt install <slug> [--claude|--codex|--cursor] [--project-dir <path>] [--force]'
+      );
       process.exit(1);
     }
     break;
   case 'list':
-    listSkills();
+    listSkills().catch(die);
     break;
   case 'info':
     if (!args[0]) {
       console.error('Usage: npx moatt info <slug>');
       process.exit(1);
     }
-    showInfo(args[0]);
+    showInfo(args[0]).catch(die);
     break;
+  case 'search': {
+
+    const queryParts = [];
+    let limit = 20;
+    let human = false;
+    for (let i = 0; i < args.length; i++) {
+      const a = args[i];
+      if (a === '--human') {
+        human = true;
+        continue;
+      }
+      if (a === '--limit') {
+        const n = parseInt(args[i + 1], 10);
+        if (Number.isFinite(n) && n > 0) limit = n;
+        i++;
+        continue;
+      }
+      queryParts.push(a);
+    }
+    const query = queryParts.join(' ');
+    search({ query, limit, human }).catch(die);
+    break;
+  }
+  case 'update': {
+
+    const specificSlug = args.find((a) => !a.startsWith('--')) || null;
+    update({ specificSlug }).catch(die);
+    break;
+  }
+  case 'login':
+    login().catch(die);
+    break;
+  case 'logout': {
+    const all = args.includes('--all');
+    auth.logout({ all }).catch(die);
+    break;
+  }
+  case 'whoami':
+    auth.whoami();
+    break;
+  case 'status':
+    auth.status().catch(die);
+    break;
+  case 'credits':
+    auth.credits({ human: args.includes('--human') }).catch(die);
+    break;
+  case 'switch':
+    auth.switchProject(args[0]);
+    break;
+  case 'projects': {
+    const sub = args[0] || 'list';
+    if (sub === 'list') {
+      auth.projectsList();
+    } else {
+      console.error(`Unknown projects subcommand: ${sub}`);
+      console.error('Usage: npx moatt projects list');
+      process.exit(1);
+    }
+    break;
+  }
   default:
-    console.log('moatt — GTM skills for AI coding agents\n');
-    console.log('Commands:');
-    console.log('  install <slug>   Install a skill or kit');
-    console.log('  list             List available skills and kits');
-    console.log('  info <slug>      Show skill or kit details');
-    console.log('\nExamples:');
-    console.log('  npx moatt list');
+    console.log('moatt — GTM skills for Claude Code, Cursor, and Codex\n');
+    console.log('Auth:');
+    console.log('  login              Authenticate via browser, pick a project');
+    console.log('  logout [--all]     Clear local credentials (--all also revokes the key)');
+    console.log('  whoami             Show current user and project');
+    console.log('  status             whoami + credit balance + last-used');
+    console.log('  credits [--human]  Print credit balance (JSON by default)');
+    console.log('  switch <slug>      Change the current project (local, no browser)');
+    console.log('  projects list      List all projects available to your CLI');
+    console.log('');
+    console.log('Skills:');
+    console.log('  search "<query>"   Find skills (JSON output for agents)');
+    console.log('                     --human for table form, --limit N to cap results');
+    console.log('  install <slug>     Install a skill or kit');
+    console.log('                     --claude / --codex / --cursor to target one agent');
+    console.log('                     --force to convert legacy copies to symlinks');
+    console.log('  update [<slug>]    Refresh installed skills against the registry');
+    console.log('  list               List available skills and kits');
+    console.log('  info <slug>        Show skill or kit details');
+    console.log('');
+    console.log('Examples:');
+    console.log('  npx moatt login');
+    console.log('  npx moatt search "reddit competitor" --human');
     console.log('  npx moatt install reddit-post-finder');
-    console.log('  npx moatt install reddit-post-finder --codex');
-    console.log('  npx moatt install reddit-post-finder --cursor --project-dir /path/to/project');
-    console.log('  npx moatt install lead-gen-devtools          # Install a kit');
+    console.log('  npx moatt update                              # refresh everything');
+    console.log('  npx moatt install reddit-post-finder --cursor --project-dir .');
+    console.log('  npx moatt install lead-gen-devtools           # install a kit');
     break;
 }

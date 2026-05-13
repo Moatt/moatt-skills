@@ -11,17 +11,36 @@ Catalog: [moatt.com](https://moatt.com)
 ## Quick Start
 
 ```bash
-npx moatt install <slug>                       # Claude Code (default)
+npx moatt install <slug>                       # Auto-detects Claude Code, Codex, Cursor
+npx moatt install <slug> --claude              # Force a single target
 npx moatt install <slug> --cursor --project-dir .
-npx moatt install <slug> --codex
 ```
 
-Browse and inspect:
+Find and refresh:
 
 ```bash
-npx moatt list             # Available skills + kits
-npx moatt info <slug>      # Show details for one skill
+npx moatt search "<query>"                     # JSON output (agent-friendly)
+npx moatt search "<query>" --human --limit 5   # Human-readable list
+npx moatt list                                 # Full catalog
+npx moatt info <slug>                          # Details for one skill / kit
+npx moatt update                               # Refresh every installed skill
+npx moatt update <slug>                        # Refresh one
 ```
+
+## Where skills go on disk
+
+Skills follow the `vercel-labs/skills` "canonical store + symlinks" layout so a single update reaches every agent:
+
+```
+~/.agents/skills/<slug>/                   ← canonical files (single source of truth)
+~/.claude/skills/<slug>     → symlink ──→ ~/.agents/skills/<slug>
+~/.codex/skills/<slug>      → symlink ──→ ~/.agents/skills/<slug>
+<project>/.cursor/rules/moatt-<slug>.mdc   ← real file (Cursor's rule format requires inline content)
+```
+
+`moatt install` is idempotent. Re-running it on an already-installed skill is a no-op. If you have a legacy installation (a literal copy in `~/.claude/skills/<slug>/` from an older version of the CLI), re-run `moatt install <slug> --force` to convert it to the new layout.
+
+`moatt update` refreshes the canonical copy; the symlinks pick up the new content automatically.
 
 ---
 
@@ -35,7 +54,39 @@ Most skills route their API calls through the Moatt proxy with usage-based billi
 npx moatt login                                 # Writes ~/.moatt/credentials.json
 ```
 
-After that, skills automatically pick up `MOATT_API_KEY` and `MOATT_API_BASE` from environment or the credentials file.
+This opens your browser, signs you in via Clerk, lets you pick which project the CLI defaults to, and writes the issued key to `~/.moatt/credentials.json` (`chmod 0600`). Skills read that file and send `Authorization: Bearer <key>` plus `X-Moatt-Project: <slug>` on every proxy call.
+
+### Auth commands
+
+```bash
+npx moatt login              # browser-based login + project picker
+npx moatt logout             # clear local credentials (key stays valid on server)
+npx moatt logout --all       # also revoke the key on the server
+npx moatt whoami             # email, org, current project
+npx moatt status             # whoami + credit balance + last-used
+npx moatt projects list      # list all projects your key can use
+npx moatt switch <slug>      # change the default project (local, no browser)
+```
+
+`moatt switch` is the GitHub-CLI-style flow: one login mints a single key for your org, then you can flip between any project you have access to without re-authenticating.
+
+Credentials file shape:
+
+```json
+{
+  "apiKey": "mk_...",
+  "email": "you@example.com",
+  "clerkOrgId": "org_...",
+  "orgName": "Acme",
+  "currentProject": "acme-marketing",
+  "projects": [
+    { "id": "...", "slug": "acme-marketing", "name": "Acme Marketing" },
+    { "id": "...", "slug": "acme-seo",       "name": "Acme SEO" }
+  ],
+  "apiBase": "https://moatt.com",
+  "loggedInAt": "..."
+}
+```
 
 ---
 

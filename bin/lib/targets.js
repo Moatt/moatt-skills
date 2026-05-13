@@ -1,29 +1,18 @@
-/**
- * Per-agent install adapters.
- *
- * Each supported coding agent has a different layout convention for where
- * skills live on disk. This module turns a single skill directory into the
- * shape each target expects — a copy under the agent's skills root for
- * Claude/Codex, or a synthesised .cursor rule for Cursor.
- */
+
 
 const fs = require('fs');
 const path = require('path');
 
-/**
- * Parse the positional + flag arguments handed to `moatt install`.
- *
- * Returns `{ slug, target, projectDir }`. Throws with a usage hint on any
- * malformed input — the CLI catches and prints those.
- */
 function parseInstallOptions(args) {
   if (!args[0] || args[0].startsWith('--')) {
-    throw new Error('Usage: npx moatt install <slug> [--claude|--codex|--cursor] [--project-dir <path>]');
+    throw new Error('Usage: npx moatt install <slug> [--claude|--codex|--cursor] [--project-dir <path>] [--force]');
   }
 
   const slug = args[0];
-  let target = 'claude';
+
+  let target = null;
   let projectDir = null;
+  let force = false;
   const targetFlags = [];
 
   for (let i = 1; i < args.length; i++) {
@@ -41,6 +30,10 @@ function parseInstallOptions(args) {
       i++;
       continue;
     }
+    if (arg === '--force') {
+      force = true;
+      continue;
+    }
     throw new Error(`Unknown option: ${arg}`);
   }
 
@@ -56,14 +49,9 @@ function parseInstallOptions(args) {
     throw new Error('--cursor needs a --project-dir <path> to know where to write the rule.');
   }
 
-  return { slug, target, projectDir };
+  return { slug, target, projectDir, force };
 }
 
-/**
- * Wrap a SKILL.md body in the Cursor rule envelope (frontmatter + a single
- * always-on instruction). Cursor reads `.cursor/rules/*.mdc` files at the
- * project root and surfaces them as agent-readable rules.
- */
 function renderCursorRule(slug, skillContent) {
   return [
     '---',
@@ -78,11 +66,6 @@ function renderCursorRule(slug, skillContent) {
   ].join('\n');
 }
 
-/**
- * Drop a skill directory into the Codex skills root by recursive copy.
- * Refuses to clobber an existing destination — the caller can blow it away
- * and retry if they actually want to overwrite.
- */
 function placeForCodex(sourceSkillDir, codexSkillsRoot) {
   const slug = path.basename(sourceSkillDir);
   const destinationDir = path.join(codexSkillsRoot, slug);
@@ -94,12 +77,6 @@ function placeForCodex(sourceSkillDir, codexSkillsRoot) {
   return destinationDir;
 }
 
-/**
- * Materialise a skill as a Cursor rule under <project>/.cursor/rules/.
- * The rule filename is namespaced with a `moatt-` prefix to avoid clashes
- * with rules the user wrote themselves — except when the slug already
- * carries the prefix, in which case we'd otherwise emit `moatt-moatt-foo`.
- */
 function placeForCursor(sourceSkillDir, projectDir) {
   const slug = path.basename(sourceSkillDir);
   const skillPath = path.join(sourceSkillDir, 'SKILL.md');
@@ -109,7 +86,7 @@ function placeForCursor(sourceSkillDir, projectDir) {
 
   const rulesDir = path.join(projectDir, '.cursor', 'rules');
   fs.mkdirSync(rulesDir, { recursive: true });
-  // Slugs already prefixed with "moatt-" don't need a second prefix.
+
   const fileName = slug.startsWith('moatt-') ? `${slug}.mdc` : `moatt-${slug}.mdc`;
   const rulePath = path.join(rulesDir, fileName);
   const skillContent = fs.readFileSync(skillPath, 'utf8');
