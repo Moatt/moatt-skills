@@ -50,14 +50,14 @@ function whoami() {
   console.log(`  Email:           ${creds.email || '(unknown)'}`);
   console.log(`  Organization:    ${creds.orgName || creds.clerkOrgId || '(none)'}`);
   console.log(`  Current project: ${creds.currentProject || '(none)'}`);
-  console.log(`  API base:        ${creds.apiBase}`);
+  console.log(`  API base:        ${creds.api_base}`);
   console.log(`  Logged in at:    ${creds.loggedInAt || '(unknown)'}`);
   console.log('');
 }
 
 async function fetchMe() {
   const creds = credentials.requireCreds();
-  return apiRequest('GET', `${creds.apiBase}/api/cli/me`, creds.apiKey);
+  return apiRequest('GET', `${creds.api_base}/api/cli/me`, creds.api_key);
 }
 
 async function status() {
@@ -152,7 +152,7 @@ async function logout({ all = false } = {}) {
   if (all) {
 
     try {
-      await apiRequest('POST', `${creds.apiBase}/api/cli/logout`, creds.apiKey);
+      await apiRequest('POST', `${creds.api_base}/api/cli/logout`, creds.api_key);
     } catch (err) {
 
       console.warn(`  Note: server revoke failed (${err.message}). Wiping local credentials anyway.`);

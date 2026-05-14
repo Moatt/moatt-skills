@@ -49,7 +49,7 @@ function clear() {
 
 function requireCreds() {
   const creds = read();
-  if (!creds || !creds.apiKey) {
+  if (!creds || !creds.api_key) {
     throw new Error(
       'Not logged in. Run "npx moatt login" first.'
     );

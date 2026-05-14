@@ -173,14 +173,14 @@ async function login(opts = {}) {
     : [];
 
   const record = {
-    apiKey: result.apiKey,
+    api_key: result.apiKey,
+    api_base: apiBase,
     email: result.email || '',
     userId: result.userId || '',
     clerkOrgId: result.clerkOrgId || '',
     orgName: result.orgName || '',
     currentProject: currentProjectSlug,
     projects: projectsArr,
-    apiBase,
     loggedInAt: new Date().toISOString(),
   };
 
