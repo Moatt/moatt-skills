@@ -4,38 +4,48 @@
 
 - Catalog: **[moatt.com](https://moatt.com)**
 - Docs: **[docs.moatt.com](https://docs.moatt.com)**
-- npm: **[`moattai`](https://www.npmjs.com/package/moattai)**
 
+[![npm version](https://img.shields.io/npm/v/moattai.svg?label=moattai)](https://www.npmjs.com/package/moattai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+> The CLI is published on npm as **`moattai`**. The binary on your PATH is **`moatt`**.
 
 ---
 
-## Quick Start
+## Install
 
 ```bash
-npx moatt login                                # Sign in, get free credits
-npx moatt install <slug>                       # Auto-detects Claude Code, Codex, Cursor
+# One-off (recommended for first try)
+npx moattai login
+npx moattai install <slug>
+
+# Or install globally so you can type `moatt` directly
+npm install -g moattai
+moatt login
+moatt install <slug>
 ```
 
-Then ask your AI coding agent to do something a skill covers — it picks the right skill and runs it.
+After install, ask your AI coding agent to do something a skill covers — it picks the right skill and runs it.
+
+> Commands below use `moatt` (global install) — prefix with `npx moattai` if you didn't install globally.
 
 ### Other install flags
 
 ```bash
-npx moatt install <slug> --claude              # Force a single target
-npx moatt install <slug> --cursor --project-dir .
-npx moatt install <slug> --force               # Convert legacy installs to symlinks
+moatt install <slug> --claude              # Force a single target
+moatt install <slug> --cursor --project-dir .
+moatt install <slug> --force               # Convert legacy installs to symlinks
 ```
 
 ### Find and refresh
 
 ```bash
-npx moatt search "<query>"                     # JSON output (agent-friendly)
-npx moatt search "<query>" --human --limit 5   # Human-readable list
-npx moatt list                                 # Full catalog
-npx moatt info <slug>                          # Details for one skill or kit
-npx moatt update                               # Refresh every installed skill
-npx moatt update <slug>                        # Refresh one
+moatt search "<query>"                     # JSON output (agent-friendly)
+moatt search "<query>" --human --limit 5   # Human-readable list
+moatt list                                 # Full catalog
+moatt info <slug>                          # Details for one skill or kit
+moatt update                               # Refresh every installed skill
+moatt update <slug>                        # Refresh one
 ```
 
 ---
@@ -62,7 +72,7 @@ Each skill ships as a self-contained directory: `SKILL.md` (agent-readable instr
 Most skills route API calls through the **Moatt proxy** with usage-based billing. One key (`MOATT_API_KEY`) covers every upstream — no juggling vendor accounts.
 
 ```bash
-npx moatt login
+moatt login
 ```
 
 This opens your browser, signs you in, lets you pick a default project, and writes the issued key to `~/.moatt/credentials.json` (`chmod 0600`). Skills read that file and send `Authorization: Bearer <key>` on every proxy call.
@@ -70,14 +80,14 @@ This opens your browser, signs you in, lets you pick a default project, and writ
 ### Auth commands
 
 ```bash
-npx moatt login              # Browser-based login + project picker
-npx moatt logout             # Clear local credentials (key stays valid on server)
-npx moatt logout --all       # Also revoke the key on the server
-npx moatt whoami             # Email, org, current project
-npx moatt status             # whoami + credit balance + key info
-npx moatt credits            # Print credit balance (JSON; --human for table)
-npx moatt projects list      # List all projects your key can use
-npx moatt switch <slug>      # Change the default project (local, no browser)
+moatt login              # Browser-based login + project picker
+moatt logout             # Clear local credentials (key stays valid on server)
+moatt logout --all       # Also revoke the key on the server
+moatt whoami             # Email, org, current project
+moatt status             # whoami + credit balance + key info
+moatt credits            # Print credit balance (JSON; --human for table)
+moatt projects list      # List all projects your key can use
+moatt switch <slug>      # Change the default project (local, no browser)
 ```
 
 `moatt switch` is the gh-CLI-style flow: one login mints a single key for your org, then flip between any project you have access to without re-authenticating.
@@ -169,7 +179,7 @@ tags: [lead-generation, research]
   "category": "moves",
   "tags": ["lead-generation", "research"],
   "installation": {
-    "base_command": "npx moatt install my-skill",
+    "base_command": "moatt install my-skill",
     "supports": ["claude", "cursor", "codex"]
   }
 }
