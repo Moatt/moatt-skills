@@ -2,7 +2,9 @@
 
 **Growth & GTM skills for AI coding agents.** Drop-in Markdown skills for sales, marketing, lead generation, competitive intelligence, SEO, content, and outreach — installable into [Claude Code](https://claude.ai/code), [Cursor](https://cursor.sh), and [Codex](https://openai.com/codex) with one command.
 
-Catalog: [moatt.com](https://moatt.com)
+- Catalog: **[moatt.com](https://moatt.com)**
+- Docs: **[docs.moatt.com](https://docs.moatt.com)**
+- npm: **[`moattai`](https://www.npmjs.com/package/moattai)**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
@@ -11,25 +13,36 @@ Catalog: [moatt.com](https://moatt.com)
 ## Quick Start
 
 ```bash
+npx moatt login                                # Sign in, get free credits
 npx moatt install <slug>                       # Auto-detects Claude Code, Codex, Cursor
-npx moatt install <slug> --claude              # Force a single target
-npx moatt install <slug> --cursor --project-dir .
 ```
 
-Find and refresh:
+Then ask your AI coding agent to do something a skill covers — it picks the right skill and runs it.
+
+### Other install flags
+
+```bash
+npx moatt install <slug> --claude              # Force a single target
+npx moatt install <slug> --cursor --project-dir .
+npx moatt install <slug> --force               # Convert legacy installs to symlinks
+```
+
+### Find and refresh
 
 ```bash
 npx moatt search "<query>"                     # JSON output (agent-friendly)
 npx moatt search "<query>" --human --limit 5   # Human-readable list
 npx moatt list                                 # Full catalog
-npx moatt info <slug>                          # Details for one skill / kit
+npx moatt info <slug>                          # Details for one skill or kit
 npx moatt update                               # Refresh every installed skill
 npx moatt update <slug>                        # Refresh one
 ```
 
+---
+
 ## Where skills go on disk
 
-Skills follow the `vercel-labs/skills` "canonical store + symlinks" layout so a single update reaches every agent:
+Skills follow a "canonical store + symlinks" layout so one update reaches every agent:
 
 ```
 ~/.agents/skills/<slug>/                   ← canonical files (single source of truth)
@@ -38,44 +51,45 @@ Skills follow the `vercel-labs/skills` "canonical store + symlinks" layout so a 
 <project>/.cursor/rules/moatt-<slug>.mdc   ← real file (Cursor's rule format requires inline content)
 ```
 
-`moatt install` is idempotent. Re-running it on an already-installed skill is a no-op. If you have a legacy installation (a literal copy in `~/.claude/skills/<slug>/` from an older version of the CLI), re-run `moatt install <slug> --force` to convert it to the new layout.
-
-`moatt update` refreshes the canonical copy; the symlinks pick up the new content automatically.
+`moatt install` is idempotent — re-running it on an already-installed skill is a no-op. `moatt update` refreshes the canonical copy and every symlink picks up the new content automatically.
 
 ---
 
 ## How it works
 
-Each skill ships as a self-contained directory: `SKILL.md` (agent-readable instructions), `skill.meta.json` (catalog metadata), and any helper scripts the skill needs. The CLI fetches them from this repo and lands them in the right place for your agent — `~/.claude/skills/` for Claude Code, `~/.codex/skills/` for Codex, `.cursor/rules/` for Cursor.
+Each skill ships as a self-contained directory: `SKILL.md` (agent-readable instructions), `skill.meta.json` (catalog metadata), and any helper scripts. The CLI fetches these from this repo and lands them in the right place for your agent.
 
-Most skills route their API calls through the Moatt proxy with usage-based billing. One key (`MOATT_API_KEY`) covers every upstream — no juggling vendor accounts.
+Most skills route API calls through the **Moatt proxy** with usage-based billing. One key (`MOATT_API_KEY`) covers every upstream — no juggling vendor accounts.
 
 ```bash
-npx moatt login                                 # Writes ~/.moatt/credentials.json
+npx moatt login
 ```
 
-This opens your browser, signs you in via Clerk, lets you pick which project the CLI defaults to, and writes the issued key to `~/.moatt/credentials.json` (`chmod 0600`). Skills read that file and send `Authorization: Bearer <key>` plus `X-Moatt-Project: <slug>` on every proxy call.
+This opens your browser, signs you in, lets you pick a default project, and writes the issued key to `~/.moatt/credentials.json` (`chmod 0600`). Skills read that file and send `Authorization: Bearer <key>` on every proxy call.
 
 ### Auth commands
 
 ```bash
-npx moatt login              # browser-based login + project picker
-npx moatt logout             # clear local credentials (key stays valid on server)
-npx moatt logout --all       # also revoke the key on the server
-npx moatt whoami             # email, org, current project
-npx moatt status             # whoami + credit balance + last-used
-npx moatt projects list      # list all projects your key can use
-npx moatt switch <slug>      # change the default project (local, no browser)
+npx moatt login              # Browser-based login + project picker
+npx moatt logout             # Clear local credentials (key stays valid on server)
+npx moatt logout --all       # Also revoke the key on the server
+npx moatt whoami             # Email, org, current project
+npx moatt status             # whoami + credit balance + key info
+npx moatt credits            # Print credit balance (JSON; --human for table)
+npx moatt projects list      # List all projects your key can use
+npx moatt switch <slug>      # Change the default project (local, no browser)
 ```
 
-`moatt switch` is the GitHub-CLI-style flow: one login mints a single key for your org, then you can flip between any project you have access to without re-authenticating.
+`moatt switch` is the gh-CLI-style flow: one login mints a single key for your org, then flip between any project you have access to without re-authenticating.
 
-Credentials file shape:
+### Credentials file shape
 
 ```json
 {
-  "apiKey": "mk_...",
+  "api_key": "mk_...",
+  "api_base": "https://moatt.com",
   "email": "you@example.com",
+  "userId": "user_...",
   "clerkOrgId": "org_...",
   "orgName": "Acme",
   "currentProject": "acme-marketing",
@@ -83,9 +97,14 @@ Credentials file shape:
     { "id": "...", "slug": "acme-marketing", "name": "Acme Marketing" },
     { "id": "...", "slug": "acme-seo",       "name": "Acme SEO" }
   ],
-  "apiBase": "https://moatt.com",
   "loggedInAt": "..."
 }
+```
+
+Keys use snake_case so skills can read them with one-line Python snippets like:
+
+```bash
+export MOATT_API_KEY=$(python3 -c "import json;print(json.load(open('$HOME/.moatt/credentials.json'))['api_key'])")
 ```
 
 ---
@@ -96,8 +115,8 @@ Skills are organised by composition level:
 
 | Level | What it is |
 |-------|------------|
-| **moves** | Atomic — one skill, one job (e.g., find an email, scrape a page, run a search). |
-| **plays** | Orchestrated chains of moves for a recurring workflow (e.g., mine ad angles from reviews + Reddit + competitor ads). |
+| **moves** | Atomic — one skill, one job (find an email, scrape a page, run a search). |
+| **plays** | Orchestrated chains of moves for a recurring workflow (mine ad angles from reviews + Reddit + competitor ads). |
 | **moats** | End-to-end systems that build sustained competitive advantage — full GTM pipelines you can run on a schedule. |
 | **kits** | Curated bundles of skills that ship together with shared config files. |
 
@@ -109,7 +128,7 @@ The full machine-readable catalog lives in [`skills-index.json`](skills-index.js
 
 ```
 moatt-skills/
-├── bin/                      # CLI entry-point
+├── bin/                      # CLI entry-point (published as `moattai` on npm)
 ├── schemas/                  # JSON Schema for skill + kit metadata
 ├── scripts/                  # validate-skills, build-index
 ├── skills/
@@ -163,8 +182,9 @@ Optional fields override auto-derived registry entries: `name` (display name), `
 ## Building from source
 
 ```bash
-git clone https://github.com/Karmable-AI/moatt-skills-v3.git
-cd moatt-skills-v3
+git clone https://github.com/Karmable-AI/moatt-skills.git
+cd moatt-skills
+npm install
 npm run validate:skills        # Lint every skill against the schema
 npm run build:index            # Regenerate skills-index.json + registry.json
 ```
@@ -176,6 +196,8 @@ The catalog builder reads `SKILL.md` frontmatter and `skill.meta.json`, walks an
 ## Contributing
 
 Adding a new skill takes three files: a directory under `skills/<level>/<slug>/`, a `SKILL.md`, and a `skill.meta.json`. Run `npm run validate:skills` to lint, `npm run build:index` to refresh the catalog, then open a PR.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide.
 
 ---
 
