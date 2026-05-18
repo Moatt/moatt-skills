@@ -19,6 +19,19 @@ If ~/.moatt/credentials.json does not exist, tell the user to run: `npx moatt lo
 
 All endpoints use Bearer auth: `-H "Authorization: Bearer $MOATT_API_KEY"`
 
+## Response Handling (READ FIRST)
+
+The proxy returns:
+- HTTP 200 + `{"success":true,"priceCents":N,"data":{...},"requestId":"..."}` on success.
+- HTTP 4xx + `{"success":false,"error":"<exact reason>"}` on validation/upstream errors.
+- HTTP 402 + `{"error":"insufficient_credits","balance":N,"required":1,...}` ONLY when the org wallet is below 1 credit.
+
+**Quote the raw response. Do not paraphrase, summarize, or invent error reasons.** If the body says `"Expected string, received number"`, that is a parameter-type bug — report it verbatim and retry with the fix. Never tell the user "out of credits" unless the response literally says `insufficient_credits`.
+
+## Parameter Types
+
+All values inside `query` are sent as URL query string and MUST be strings, even when the parameter is semantically numeric (e.g. `"limit":"20"`, not `"limit":20`). The Moatt proxy auto-coerces numbers/booleans → strings, but if you bypass the proxy, you must send strings yourself. Values inside `body` keep their native JSON types (use objects/arrays/numbers as documented).
+
 
 Find email addresses, verify deliverability, and discover companies.
 
@@ -80,7 +93,7 @@ curl -s -X POST $MOATT_API_BASE/v1/proxy/orthogonal/run \
 ### Discover Companies
 Find companies matching criteria using filters or natural language. Returns up to 100 companies per request. FREE endpoint.
 
-Parameters:
+Parameters (sent inside `body`, so native JSON types are OK here):
 - query (string) - Natural language search (e.g. Companies in Europe in Tech)
 - headquarters_location (object) - Filter by HQ location
 - industry (object) - Filter by industry
@@ -92,7 +105,7 @@ Parameters:
 curl -s -X POST $MOATT_API_BASE/v1/proxy/orthogonal/run \
   -H "Authorization: Bearer $MOATT_API_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"api":"hunter","path":"/v2/discover","body":{"query":"AI startups in San Francisco"}}'
+  -d '{"api":"hunter","path":"/v2/discover","body":{"query":"AI startups in San Francisco","limit":50}}'
 ```
 
 ### Company Enrichment
@@ -111,10 +124,10 @@ curl -s -X POST $MOATT_API_BASE/v1/proxy/orthogonal/run \
 ### Domain Search
 Find all email addresses for a domain. Returns emails with sources, confidence scores, and verification status.
 
-Parameters:
+Parameters (all query values are strings):
 - domain* (string) - Domain to search (e.g. stripe.com)
-- limit (integer) - Max emails to return (default 10)
-- offset (integer) - Skip N emails
+- limit (string, numeric) - Max emails to return (default "10")
+- offset (string, numeric) - Skip N emails
 - type (string) - Filter: personal or generic
 - seniority (string) - Filter: junior, senior, or executive
 - department (string) - Filter by department (sales, marketing, etc)
@@ -123,7 +136,7 @@ Parameters:
 curl -s -X POST $MOATT_API_BASE/v1/proxy/orthogonal/run \
   -H "Authorization: Bearer $MOATT_API_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"api":"hunter","path":"/v2/domain-search","query":{"domain":"stripe.com"}}'
+  -d '{"api":"hunter","path":"/v2/domain-search","query":{"domain":"stripe.com","limit":"20"}}'
 ```
 
 ### Email Finder
