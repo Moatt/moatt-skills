@@ -1,6 +1,9 @@
 # Moatt Skills
 
-**Growth & GTM skills for AI coding agents.** Drop-in Markdown skills for sales, marketing, lead generation, competitive intelligence, SEO, content, and outreach — installable into [Claude Code](https://claude.ai/code), [Cursor](https://cursor.sh), and [Codex](https://openai.com/codex) with one command.
+> **Cancel your growth SaaS stack.**
+> 228 skills your AI coding agent installs and runs through one key — across 24 vendors, one credit balance, one bill.
+
+17 categories of growth work — sales, SEO, AI search visibility, competitor intel, content, signals, inbound, video — refactored as open-source Markdown skills for [Claude Code](https://claude.ai/code), [Cursor](https://cursor.sh), and [Codex](https://openai.com/codex).
 
 - Catalog: **[moatt.com](https://moatt.com)**
 - Docs: **[docs.moatt.com](https://docs.moatt.com)**
@@ -9,6 +12,120 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 > The CLI is published on npm as **`moattai`**. The binary on your PATH is **`moatt`**.
+
+---
+
+## What this replaces
+
+| Category | Tools you can stop paying for |
+|---|---|
+| Sales prospecting | Apollo · ContactOut · LeadIQ |
+| Lead enrichment | Clay · Clearbit · People Data Labs |
+| Email finding | Hunter · Tomba · Snov |
+| Outbound campaigns | Smartlead · Lemlist · Instantly |
+| Inbound ops | UserGems · Pocus · Default · Chili Piper |
+| AI search visibility | Profound · AthenaHQ · Otterly |
+| SEO | Ahrefs · Semrush · Surfer · Frase |
+| Competitor intel | Crayon · Klue · SimilarWeb |
+| Brand monitoring | Brand24 · Mention · Brandwatch |
+| Ad intel | AdSpyder · Foreplay · Magic Brief |
+| Buying signals | UserGems · Crystal Knows · Champify |
+| Content creation | Jasper · Copy.ai · Lavender |
+| LinkedIn intel | PhantomBuster · Dripify · Surfe |
+| Pipeline ops | Gong · Chorus · Outreach |
+| Customer research | UserInterviews · Dovetail |
+| Influencers / KOLs | Aspire · Modash · Upfluence |
+| Video & voice | Synthesia · HeyGen · Tavus · Descript |
+
+[Browse the full catalog →](https://moatt.com)
+
+---
+
+## In 30 seconds
+
+```bash
+npx moattai login
+npx moattai install champion-departure-trigger
+```
+
+Then in Claude Code / Cursor / Codex:
+
+> *"Did any of our past champions change jobs recently?"*
+
+The skill scans LinkedIn and the web for role changes among past buyers, qualifies the new accounts against your ICP, and drafts a warm re-intro from you — both a retention nudge for the old account and a fresh expansion play for the new one.
+
+One install. One question. No vendor dashboards, no per-tool keys.
+
+---
+
+## The catalog at a glance
+
+- **148 moves** — atomic skills, one job each
+- **64 plays** — orchestrated workflows
+- **5 moats** — durable systems run on a schedule
+- **2 kits** — themed bundles (11 skills total)
+- **24 vendors** behind one proxy, one credit balance, one bill
+
+---
+
+## A few skills that show what it can do
+
+| Skill | Level | What it does |
+|---|---|---|
+| `ad-angle-miner` | play | Mines the highest-converting ad angles from customer reviews, Reddit complaints, support tickets, and competitor ads — ranked with proof quotes |
+| `champion-departure-trigger` | play | Detects when past customer champions take new jobs, then fires both retention + warm-expansion outreach |
+| `battlecard-generator` | play | Builds sales battlecards from competitor website + reviews + ads + pricing |
+| `funding-signal-outreach` | play | Detects fresh funding rounds in a company list, finds the right buyers, drafts personalized emails |
+| `meeting-brief` | play | Daily calendar scan → researches every external attendee → emails personalized briefs each morning |
+| `geo-audit` | move | Audits a site for AI-search (ChatGPT, Perplexity, Claude, Gemini) citation readiness with a prioritized fix list |
+| `alternatives-to-page-builder` | play | Builds "best alternatives to [Competitor]" SEO pages grounded in DataForSEO SERP data |
+| `outbound-prospecting-engine` | moat | Stands up the full outbound system: signal detection → research → contact finding → personalization → launch |
+
+[Search the catalog →](https://moatt.com) · [Full skills index →](skills-index.json)
+
+---
+
+## The four levels
+
+Skills compose in four levels. Each one wraps the level below — pick the right level for the job you're trying to do.
+
+### Moves (148)
+
+Atomic skills. One skill, one job: find an email, scrape a page, run a search, pull brand assets.
+
+> `email-finder-hunter` — finds emails for a domain via Hunter.io
+> `geo-audit` — scores your site's AI-search citation readiness
+> `linkedin-scraper` — pulls profiles, company pages, posts
+
+Reach for a move when you know the exact data you need.
+
+### Plays (64)
+
+Orchestrated workflows. A play chains multiple moves into one end-to-end job — input → processing → output.
+
+> `champion-departure-trigger` — detects when past customer champions take new jobs, then fires retention + warm-expansion outreach
+> `ad-angle-miner` — mines ad copy angles from reviews, Reddit, support tickets, and competitor ads
+> `battlecard-generator` — builds sales battlecards from competitor website, reviews, ads, and pricing
+
+Reach for a play when you want a recurring growth job done in one ask.
+
+### Moats (5)
+
+Durable systems run on a schedule. Moats take longer to set up, then keep producing for months. They're your AI agent's permanent job.
+
+> `outbound-prospecting-engine` — full outbound system: signal detection → research → contact finding → personalization → launch
+> `competitor-monitoring-system` — daily competitive intel across web, social, and news with delta reports
+
+Reach for a moat when you want a pipeline that keeps running without you.
+
+### Kits (2)
+
+Curated bundles. A kit ships several skills that go together for a specific motion — one install, the whole toolkit.
+
+> `lead-gen-devtools` (6 skills) — discovery orchestrator, GitHub repo signals, community signals, competitor signals, event signals, personalized demo builder
+> `video-production` (5 skills) — beat-synced reels, AI-animated product reels, talking-head videos, long-form to short-form clipping, screen-rec polish
+
+Reach for a kit when you're starting a new motion and want everything at once.
 
 ---
 
@@ -29,7 +146,7 @@ After install, ask your AI coding agent to do something a skill covers — it pi
 
 > Commands below use `moatt` (global install) — prefix with `npx moattai` if you didn't install globally.
 
-### Other install flags
+### Install flags
 
 ```bash
 moatt install <slug> --claude              # Force a single target
@@ -52,7 +169,7 @@ moatt update <slug>                        # Refresh one
 
 ## Where skills go on disk
 
-Skills follow a "canonical store + symlinks" layout so one update reaches every agent:
+Skills follow a canonical-store + symlinks layout so one update reaches every agent:
 
 ```
 ~/.agents/skills/<slug>/                   ← canonical files (single source of truth)
@@ -69,7 +186,10 @@ Skills follow a "canonical store + symlinks" layout so one update reaches every 
 
 Each skill ships as a self-contained directory: `SKILL.md` (agent-readable instructions), `skill.meta.json` (catalog metadata), and any helper scripts. The CLI fetches these from this repo and lands them in the right place for your agent.
 
-Most skills route API calls through the **Moatt proxy** with usage-based billing. One key (`MOATT_API_KEY`) covers every upstream — no juggling vendor accounts.
+Most skills route API calls through the **Moatt proxy** with usage-based billing. One key (`MOATT_API_KEY`) covers all 24 upstream vendors — no juggling vendor accounts, no separate bills.
+
+<details>
+<summary><b>Auth + credentials</b> — CLI commands, credentials file shape, multi-project flow</summary>
 
 ```bash
 moatt login
@@ -117,20 +237,7 @@ Keys use snake_case so skills can read them with one-line Python snippets like:
 export MOATT_API_KEY=$(python3 -c "import json;print(json.load(open('$HOME/.moatt/credentials.json'))['api_key'])")
 ```
 
----
-
-## Taxonomy
-
-Skills are organised by composition level:
-
-| Level | What it is |
-|-------|------------|
-| **moves** | Atomic — one skill, one job (find an email, scrape a page, run a search). |
-| **plays** | Orchestrated chains of moves for a recurring workflow (mine ad angles from reviews + Reddit + competitor ads). |
-| **moats** | End-to-end systems that build sustained competitive advantage — full GTM pipelines you can run on a schedule. |
-| **kits** | Curated bundles of skills that ship together with shared config files. |
-
-The full machine-readable catalog lives in [`skills-index.json`](skills-index.json) (every file path) and [`registry.json`](registry.json) (curated entries with vendor info, used by the consuming app).
+</details>
 
 ---
 
@@ -146,7 +253,7 @@ moatt-skills/
 │   ├── plays/                # orchestrated chains
 │   ├── moats/                # end-to-end systems
 │   └── kits/                 # curated bundles
-├── tools/                    # shared Python helpers (Apify guard, Supabase)
+├── tools/                    # shared Python helpers (Apify guard, DataForSEO proxy)
 ├── skills-index.json         # auto-generated full catalog
 └── registry.json             # auto-generated curated registry
 ```
@@ -192,7 +299,7 @@ Optional fields override auto-derived registry entries: `name` (display name), `
 ## Building from source
 
 ```bash
-git clone https://github.com/Karmable-AI/moatt-skills.git
+git clone https://github.com/Moatt/moatt-skills.git
 cd moatt-skills
 npm install
 npm run validate:skills        # Lint every skill against the schema
