@@ -11,6 +11,7 @@
 [![npm version](https://img.shields.io/npm/v/moattai.svg?label=moattai)](https://www.npmjs.com/package/moattai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
+> [!NOTE]
 > The CLI is published on npm as **`moattai`**. The binary on your PATH is **`moatt`**.
 
 ---
@@ -144,6 +145,10 @@ moatt install <slug>
 
 After install, ask your AI coding agent to do something a skill covers — it picks the right skill and runs it.
 
+> [!TIP]
+> Don't know the slug? `moatt search "your goal"` returns matching skills without needing to remember an exact name.
+
+> [!NOTE]
 > Commands below use `moatt` (global install) — prefix with `npx moattai` if you didn't install globally.
 
 ### Install flags
@@ -260,64 +265,4 @@ moatt-skills/
 
 ---
 
-## Skill metadata contract
-
-Every skill ships two required files.
-
-**`SKILL.md`** — Markdown with YAML frontmatter:
-
-```yaml
----
-name: my-skill
-description: >
-  One paragraph explaining what the skill does and when an agent
-  should reach for it.
-tags: [lead-generation, research]
----
-
-(skill body — instructions for the agent, code blocks, examples)
-```
-
-**`skill.meta.json`** — registry metadata:
-
-```json
-{
-  "slug": "my-skill",
-  "category": "moves",
-  "tags": ["lead-generation", "research"],
-  "installation": {
-    "base_command": "moatt install my-skill",
-    "supports": ["claude", "cursor", "codex"]
-  }
-}
-```
-
-Optional fields override auto-derived registry entries: `name` (display name), `version`, `argumentHint`, `domain`, `appName`, `changelog`. See [`schemas/skill-meta.schema.json`](schemas/skill-meta.schema.json) for the full contract.
-
----
-
-## Building from source
-
-```bash
-git clone https://github.com/Moatt/moatt-skills.git
-cd moatt-skills
-npm install
-npm run validate:skills        # Lint every skill against the schema
-npm run build:index            # Regenerate skills-index.json + registry.json
-```
-
-The catalog builder reads `SKILL.md` frontmatter and `skill.meta.json`, walks any helper files under each skill directory, and emits two JSON files at the repo root.
-
----
-
-## Contributing
-
-Adding a new skill takes three files: a directory under `skills/<level>/<slug>/`, a `SKILL.md`, and a `skill.meta.json`. Run `npm run validate:skills` to lint, `npm run build:index` to refresh the catalog, then open a PR.
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide.
-
----
-
-## License
-
-MIT — see [LICENSE](LICENSE).
+Adding a new skill, building locally, or filing a bug → see [CONTRIBUTING.md](CONTRIBUTING.md). Licensed under [MIT](LICENSE).
