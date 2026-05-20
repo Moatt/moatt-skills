@@ -1,379 +1,176 @@
 ---
 name: seo-content-audit
 description: >
-  Comprehensive SEO footprint analysis powered by DataForSEO. Catalogs every piece
-  of content, pulls real SEO metrics (domain rank, ranked keywords, top pages,
-  backlinks), runs an OnPage technical audit (Core Web Vitals, broken links,
-  duplicate tags), runs competitor comparison via DFS Labs, builds topic/keyword
-  and content-type gap matrices, and produces a prioritized recommendations
-  report. The complete SEO audit for any company.
+  Comprehensive SEO footprint audit for any domain via DataForSEO — domain
+  authority + ranking, top ranked keywords (100), top pages, backlink profile,
+  competitor discovery, OnPage technical crawl, and keyword-gap vs the top
+  competitor. Runs the full 7-phase pipeline through the Moatt proxy and writes
+  a single report.json the model summarizes inline. Pay-per-use, ~$0.20–0.40
+  per run.
 tags: [seo]
 ---
 
 # SEO Content Audit
 
-## Setup
+The full SEO footprint audit. One bash recipe runs seven DataForSEO phases
+through the Moatt proxy and writes a structured `report.json` covering
+authority, rankings, content, backlinks, competitors, technical health, and
+keyword-gap intel.
 
-Load credentials from ~/.moatt/credentials.json:
-```bash
-export MOATT_API_KEY=$(python3 -c "import json;print(json.load(open('$HOME/.moatt/credentials.json'))['api_key'])")
-export MOATT_API_BASE=$(python3 -c "import json;print(json.load(open('$HOME/.moatt/credentials.json')).get('api_base','https://api.moatt.com'))")
+## Steps
+
+This skill ships with an executable recipe — do NOT compose the curls yourself.
+
+1. Confirm `$MOATT_API_KEY` and `$MOATT_API_BASE` are set in the Box env
+   (they are, by default — sourced from `/tmp/moatt-env.sh`).
+2. Run the recipe via `boxExec`. **Set `timeoutMs` to at least 300000 (5 min)**
+   because the OnPage phase polls until the crawl finishes (up to ~4 min):
+
+   ```bash
+   bash /workspace/skills/seo-content-audit/scripts/run.sh <domain> [location_code] [language_code]
+   ```
+
+   Defaults: `location_code=2840` (US), `language_code=en`, crawl 50 pages.
+
+3. The script prints the absolute path of `report.json` on its last line
+   (e.g. `/workspace/home/projects/seo-content-audit-2026-05-20/stripe.com/report.json`).
+4. Read that `report.json` with `boxRead` and render a structured executive
+   summary inline. Cover, in this order:
+   - **Snapshot**: domain rank, organic ETV, total keywords, backlinks, refdomains.
+   - **Top performers**: top 5 ranked keywords (position, volume), top 3 pages.
+   - **Technical health**: OnPage score, broken-link count, duplicate titles/metas,
+     non-indexable pages. If `onpage_summary.skipped` is set, say so plainly.
+   - **Competitors**: list the 3–5 discovered competitors with overlap intensity.
+   - **Keyword gap**: top 10 keywords the top competitor ranks for that the
+     target does NOT — these are the highest-leverage content opportunities.
+   - **Recommendations**: 3 prioritized actions, tied directly to the data.
+5. Always end by telling the user where the full JSON + per-phase files live
+   so they can open them from the file panel.
+
+If the script exits non-zero, surface the JSON error from stderr verbatim.
+Do not retry by inventing curls or scraping.
+
+## When to use this skill
+
+- User wants the **full audit** with competitors, gap analysis, and
+  prioritized recommendations → this skill.
+- User wants a **lightweight snapshot** (rank + top keywords + opportunities)
+  → use `seo-analyzer` instead, which is ~$0.10 cheaper and ~30s faster.
+- User wants a **metrics-only deep dive** (backlinks + full keyword profile
+  without competitor work) → use `seo-domain-analyzer`.
+
+## How the recipe works
+
+`scripts/run.sh` POSTs to the **Moatt DataForSEO proxy** — never directly to
+`api.dataforseo.com`. The proxy contract is:
+
+```
+POST $MOATT_API_BASE/api/v1/proxy/dataforseo/rest
+Authorization: Bearer $MOATT_API_KEY
+Content-Type: application/json
+
+{ "endpoint": "/v3/...", "body": [ { ...DFS task spec... } ] }
 ```
 
-If ~/.moatt/credentials.json doesn't exist, tell the user to run: `npx moatt login`
+Phases (the script runs phase 1 first, then 2–7 sequentially while 1 is
+crawling, then polls 1 for completion at the end):
 
-All endpoints authenticate via Bearer: `-H "Authorization: Bearer $MOATT_API_KEY"`
+| Phase | DFS endpoint | File |
+|---|---|---|
+| 1. OnPage technical crawl (async) | `/v3/on_page/task_post` + `/v3/on_page/summary/{id}` | `onpage_post.json`, `onpage_summary.json` |
+| 2. Domain authority + rank | `/v3/dataforseo_labs/google/domain_rank_overview/live` | `domain_rank.json` |
+| 3. Top ranked keywords (100) | `/v3/dataforseo_labs/google/ranked_keywords/live` | `ranked_keywords.json` |
+| 4. Top pages (50) | `/v3/dataforseo_labs/google/relevant_pages/live` | `top_pages.json` |
+| 5. Backlinks summary | `/v3/backlinks/summary/live` | `backlinks_summary.json` |
+| 6. Competitor discovery (top 5) | `/v3/dataforseo_labs/google/competitors_domain/live` | `competitors.json` |
+| 7. Keyword gap (vs top competitor) | `/v3/dataforseo_labs/google/domain_intersection/live` | `keyword_gap.json` |
 
-The complete SEO footprint analysis — content inventory, real SEO metrics, OnPage technical health, competitor comparison, gap matrices, and prioritized recommendations in one report. Built on DataForSEO for production-grade data accuracy.
+All files plus a merged `report.json` land in
+`/workspace/home/projects/seo-content-audit-YYYY-MM-DD/<domain>/`.
 
-## Quick Start
+## Cost
 
-```
-Run an SEO content audit for [company]. Website: [url]. Competitors: [list].
-```
+| Phase | Est. cost (passthrough at 20% markup) |
+|---|---|
+| 1. OnPage crawl (50 pages) | ~$0.05 |
+| 2. domain_rank_overview | ~$0.01 |
+| 3. ranked_keywords (100) | ~$0.03 |
+| 4. relevant_pages (50) | ~$0.02 |
+| 5. backlinks summary | ~$0.02 |
+| 6. competitors_domain | ~$0.01 |
+| 7. domain_intersection | ~$0.03 |
+| **Typical audit** | **~$0.20–0.30** |
 
-## Prerequisites
-
-**Recommended:** DataForSEO credentials
-- Set `MOATT_API_KEY` — routes DFS through Moatt's proxy and meters usage on your platform credits
-
-**Fallback:** `APIFY_API_TOKEN` (Semrush/Ahrefs scrapers — used only when DFS is unset; data quality is lower).
+Credits are deducted via the proxy automatically. Each phase fails-soft —
+if e.g. OnPage doesn't finish in time, the report still ships with phases 2–7
+and flags `onpage_summary.skipped`.
 
 ## Inputs
 
-| Input | Required | Description |
-|---|---|---|
-| **Company name** | Yes | User provides |
-| **Company domain** | Yes | e.g., `example.com` |
-| **Seed competitors** | Recommended | 2–5 competitor domains; system also auto-discovers |
-| **Target keywords** | Optional | User provides; system also auto-discovers via DFS Labs |
-| **Location** | Optional | Default `2840` (US); use a country-level code |
+| Parameter | Required | Default | Description |
+|---|---|---|---|
+| domain | Yes | — | Domain to audit (e.g., `example.com`). Scheme + path stripped. |
+| location_code | No | `2840` (US) | DFS location code |
+| language_code | No | `en` | DFS language code |
 
-## Cost (DFS path)
+Env overrides (rarely needed):
+- `MAX_CRAWL_PAGES` (default 50) — bump for sites > 100 pages
+- `ONPAGE_POLL_INTERVAL` (default 20s)
+- `ONPAGE_MAX_POLLS` (default 12 — caps the wait at ~4 min)
 
-| Component | Endpoint | Est. Cost |
-|---|---|---|
-| Content catalog (target) | sitemap crawl | Free |
-| Domain overview (target) | `domain_rank_overview/live` | $0.01 |
-| Top ranked keywords (target, 100) | `ranked_keywords/live` | $0.02 |
-| Top pages (target, 50) | `relevant_pages/live` | $0.01 |
-| OnPage audit (target) | `on_page/task_post` + `summary` | $0.05–0.10 |
-| Backlink profile (target) | `backlinks/summary/live` + `referring_domains/live` + `anchors/live` | $0.05 |
-| Competitor discovery | `competitors_domain/live` | $0.01 |
-| Per-competitor light overview (3 competitors × Phase 1 only) | `domain_rank_overview/live` × 3 | $0.03 |
-| Keyword-gap analysis (3 competitors) | `domain_intersection/live` × 3 | $0.06 |
-| Search intent (top 50 keywords) | `search_intent/live` | $0.02 |
-| Brand voice extraction | WebFetch | Free |
-| **Total typical audit** | | **~$0.30–0.50** |
+Common location codes: `2840` US · `2826` UK · `2276` DE · `2036` AU · `2124` CA.
 
-Versus the Apify-scrape path: ~$3–8 per audit, fragile, ToS-violating.
+## What's in `report.json`
 
-## Step-by-Step Process
-
-### Phase 1: Context & Setup
-
-Gather basics from the user: company name, domain, seed competitors, target keywords, location.
-
-### Phase 2: Content Inventory
-
-Crawl the target domain to build a complete content inventory:
-
-1. Fetch sitemap.xml (or RSS, blog index as fallback)
-2. Catalog every page: URL, title, date, content type, topic cluster
-3. Group content by type (blog, landing, case studies, comparisons, etc.)
-4. Analyze publishing cadence (posts/month, trend, recency)
-5. Optionally deep-analyze the top 20 pages: word count, funnel stage, CTA presence
-
-### Phase 3: SEO Performance Data
-
-Pull SEO metrics for the target domain via `seo-domain-analyzer` (DFS-powered):
-
-1. **Domain overview** — rank, organic ETV, keyword count, top-10 distribution
-2. **Top ranked keywords (top 100)** — keyword, position, volume, KD, ranking URL
-3. **Top pages (top 50)** — URL, organic keywords, ETV, top keyword
-4. **Backlink profile** — total links, referring domains, dofollow ratio, top linking sites, anchor distribution
-5. **Competitor discovery** — `competitors_domain/live` returns the top 20 keyword-overlap competitors with metrics inline
-
-### Phase 4: OnPage Technical Audit
-
-DFS OnPage API runs a full crawl with JS rendering and Lighthouse:
-
-```
-POST /v3/on_page/task_post
+```json
 {
-  "target": "example.com",
-  "max_crawl_pages": 200,
-  "load_resources": true,
-  "enable_javascript": true,
-  "enable_browser_rendering": true,
-  "custom_js": "meta.scroll_depth = 3"
-}
-```
-
-Then poll for completion:
-
-```
-GET /v3/on_page/summary/{task_id}
-GET /v3/on_page/pages/{task_id}
-```
-
-Pull out:
-- **Broken links** (4xx/5xx)
-- **Redirect chains** (3+ hops)
-- **Duplicate title / meta description / H1** counts
-- **Non-indexable pages** (noindex, robots-blocked, canonical pointing elsewhere)
-- **Missing alt text / titles / metas**
-- **Page weight, render time, CWV** (LCP, CLS, INP via Lighthouse subendpoint)
-
-For Core Web Vitals specifically:
-
-```
-POST /v3/on_page/lighthouse/task_post
-{ "url": "https://example.com/", "for_mobile": true }
-```
-
-### Phase 5: Competitor Comparison
-
-For each competitor (3–5 max):
-
-1. **Lightweight domain snapshot** — `domain_rank_overview/live` (DR, ETV, keyword count)
-2. **Keyword gap** — `domain_intersection/live` with `intersections: false` (their keywords you don't rank for)
-3. **Content structure** — crawl their sitemap (no DFS cost), classify content types
-
-```
-POST /v3/dataforseo_labs/google/domain_intersection/live
-{
-  "target1": "competitor.com",
-  "target2": "yourcompany.com",
-  "intersections": false,
+  "domain": "stripe.com",
+  "analysis_date": "2026-05-20",
   "location_code": 2840,
   "language_code": "en",
-  "limit": 200,
-  "filters": [
-    ["keyword_data.keyword_info.search_volume", ">", 50]
-  ]
+  "data_source": "dataforseo_via_moatt_proxy",
+  "onpage_task_id": "07140248-...",
+  "top_competitor": "adyen.com",
+  "domain_rank_overview":          { ...raw DFS response... },
+  "ranked_keywords":               { ...raw DFS response... },
+  "top_pages":                     { ...raw DFS response... },
+  "backlinks_summary":             { ...raw DFS response... },
+  "competitors":                   { ...raw DFS response... },
+  "keyword_gap_vs_top_competitor": { ...raw DFS response... },
+  "onpage_summary":                { ...raw DFS response... }
 }
 ```
 
-That's structurally cleaner than the old Apify approach — no scraping, structured JSON output, ~$0.02 per competitor.
+DFS responses are kept verbatim — render summaries from the model, not from
+post-processed fields.
 
-### Phase 6: Build Gap Matrices
+Useful paths inside each block:
 
-#### A) Topic / Keyword Gap Matrix
+- `domain_rank_overview.tasks[0].result[0].metrics.organic` — `etv`, `count`, `pos_*`
+- `ranked_keywords.tasks[0].result[0].items[]` — sorted by volume desc
+- `top_pages.tasks[0].result[0].items[]` — `.page_address`, `.metrics.organic.etv`
+- `backlinks_summary.tasks[0].result[0]` — `.backlinks`, `.referring_domains`, `.referring_main_domains`
+- `competitors.tasks[0].result[0].items[]` — `.domain`, `.intersections`, `.full_domain_metrics`
+- `keyword_gap_vs_top_competitor.tasks[0].result[0].items[]` — competitor-only keywords
+- `onpage_summary.tasks[0].result[0]` — `.crawl_progress`, `.domain_info.checks`, `.page_metrics.onpage_score`, `.page_metrics.checks.*`
 
-Cross-reference target keyword rankings (Phase 3) and content topics against competitors:
+## Limits & fallbacks
 
-```markdown
-| Topic / Keyword | [Target] | [Comp 1] | [Comp 2] | [Comp 3] | DFS Volume | KD | Gap? |
-|---|---|---|---|---|---|---|---|
-| cloud cost optimization | #4, 3 posts | #1, 12 posts | #2, 8 posts | #7, 5 posts | 1,900 | 42 | Partial |
-| aws savings plans | No content | #3, 4 posts | No content | #1, 6 posts | 880 | 38 | YES |
-| finops best practices | 1 post, not ranking | #5, 3 posts | #2, 7 posts | — | 720 | 35 | YES |
-```
+- **No DFS credentials in the proxy?** Returns 503 `vendor_misconfigured`.
+- **Insufficient Moatt credits?** Returns 402 `insufficient_credits` with the
+  user's current balance. Tell them to top up at `/settings/billing`.
+- **OnPage crawl too slow?** Each poll is logged. If the crawl doesn't finish
+  within `ONPAGE_MAX_POLLS * ONPAGE_POLL_INTERVAL`, the report still ships
+  with `onpage_summary.skipped = "crawl_did_not_finish_in_time"` and the
+  `task_id` so a follow-up call can fetch it later.
+- **No top competitor identified?** Phase 7 (keyword gap) is skipped and
+  flagged in the report.
+- **Domain with zero ranked keywords?** Phases proceed but most blocks will
+  be near-empty. Surface this to the user as "the domain is not yet indexed
+  for measurable volume keywords" rather than reporting noise.
 
-Real volume + KD numbers come from DFS Labs `bulk_keyword_difficulty/live` (cheap — ~$0.01 per call covering up to 1,000 keywords):
+## Dependencies
 
-```
-POST /v3/dataforseo_labs/google/bulk_keyword_difficulty/live
-{
-  "keywords": ["cloud cost optimization", "aws savings plans", ...],
-  "location_code": 2840,
-  "language_code": "en"
-}
-```
-
-#### B) Content Type Gap Matrix
-
-```markdown
-| Content Type | [Target] | [Comp 1] | [Comp 2] | [Comp 3] | Gap? |
-|---|---|---|---|---|---|
-| Blog posts | 89 | 156 | 112 | 45 | Volume gap |
-| Comparison pages | 0 | 12 | 8 | 3 | YES |
-| Case studies | 5 | 22 | 15 | 8 | Weak |
-| Glossary / educational | 0 | 45 | 0 | 30 | YES |
-| Integration pages | 12 | 34 | 28 | 15 | Partial |
-| ROI calculator / tools | 0 | 1 | 2 | 0 | Opportunity |
-```
-
-### Phase 7: Brand Voice Extraction (Optional)
-
-If the audit feeds into content creation:
-
-1. From Phase 2, pick 10–15 of the strongest blog posts (recent, longest, diverse topics)
-2. Fetch each via WebFetch
-3. Produce brand voice guidelines: tone, vocabulary patterns, sentence structure, do's/don'ts
-
-### Phase 8: Synthesis & Report
-
-Roll every finding into the final report. Save to the current working directory.
-
----
-
-## Output Template
-
-```markdown
-# SEO Content Audit: [Company Name]
-
-**Date:** YYYY-MM-DD · **Data:** DataForSEO
-**Domain:** [domain]
-**Competitors analyzed:** [list]
-**Data sources:** DFS Labs (rankings, gaps, intent), DFS Backlinks, DFS OnPage (technical), DFS SERP (rank verification), sitemap crawl
-
----
-
-## Executive Summary
-
-[3–5 sentences. SEO health assessment. Biggest strength. Biggest gap. Most important recommendation. How they compare to competitors overall.]
-
----
-
-## 1. Content Inventory
-
-### Overview
-- **Total pages cataloged:** X
-- **Blog posts:** X
-- **Landing pages:** X
-- **Case studies:** X
-- **Comparison pages:** X
-- **Other:** X
-
-### Content by Topic Cluster
-| Topic | Posts | % of Content | Most Recent |
-|---|---|---|---|
-
-### Publishing Cadence
-- **Average:** X posts/month
-- **Trend:** [increasing / decreasing / stable]
-- **Most recent publish:** YYYY-MM-DD
-- **Unique authors:** X
-
----
-
-## 2. SEO Performance (DFS data)
-
-### Domain Metrics
-| Metric | [Target] |
-|---|---|
-| Domain Rank | X/100 |
-| Monthly Organic Traffic (ETV) | ~X |
-| Organic Keywords | X |
-| Top-10 Positions | X (pos 1: X, pos 2–3: X, pos 4–10: X) |
-| Backlinks | X |
-| Referring Domains | X |
-| Dofollow Ratio | X% |
-
-### Top Performing Pages
-| # | URL | Keywords | ETV | Top Keyword |
-|---|---|---|---|---|
-
-### Top Ranked Keywords
-| Keyword | Position | Volume | KD | URL |
-|---|---|---|---|---|
-
-### Backlink Profile
-- Domain Rank: X/100
-- Referring Domains: X
-- Top linking sites: [list]
-- Anchor distribution: X% branded / X% keyword / X% generic / X% URL
-
----
-
-## 3. Technical Health (DFS OnPage)
-
-| Issue | Count | Severity |
-|---|---|---|
-| Broken internal links (4xx) | X | High |
-| Redirect chains (3+ hops) | X | Medium |
-| Duplicate titles | X | Medium |
-| Duplicate meta descriptions | X | Low |
-| Non-indexable pages | X | Review |
-| Missing alt text | X | Low |
-
-### Core Web Vitals (Mobile)
-- **LCP:** X.Xs ([Pass/Fail] vs 2.5s threshold)
-- **CLS:** X.XX ([Pass/Fail] vs 0.1 threshold)
-- **INP:** Xms ([Pass/Fail] vs 200ms threshold)
-
----
-
-## 4. Competitor Comparison
-
-### Domain Metrics
-| Metric | [Target] | [Comp 1] | [Comp 2] | [Comp 3] |
-|---|---|---|---|---|
-| Domain Rank | | | | |
-| Organic ETV | | | | |
-| Keywords | | | | |
-| Blog Posts | | | | |
-
-### Topic / Keyword Gap Matrix
-[Per Phase 6A]
-
-### Content Type Gap Matrix
-[Per Phase 6B]
-
----
-
-## 5. Gaps & Opportunities
-
-### Critical Gaps (High Impact)
-1. **[Gap]:** [Description with DFS volume + KD numbers]
-
-### Quick Wins (Low Effort, Immediate Impact)
-1. **[Quick win]:** [Action + expected impact]
-
-### Keyword Opportunities (DFS-sourced)
-| Keyword | Volume | KD | Intent | Comp Position | Priority |
-|---|---|---|---|---|---|
-
----
-
-## 6. Brand Voice Profile
-
-[Per Phase 7]
-
----
-
-## 7. Recommendations (Prioritized)
-
-### Tier 1: High Impact, Do First
-1. **[Recommendation]**
-   - What: [specific action]
-   - Why: [evidence from DFS data]
-   - Expected impact: [traffic/ranking improvement]
-   - Effort: [Low/Medium/High]
-
-### Tier 2: Medium Impact, Plan For
-1. ...
-
-### Tier 3: Long-term Strategic
-1. ...
-
----
-
-## Appendix
-
-- A. Full content catalog (`content-inventory.md`)
-- B. Complete SEO profile (`seo-profile.md`)
-- C. OnPage technical report (`onpage-audit.md`)
-- D. Brand voice guidelines (`brand-voice.md`)
-- E. Raw DFS JSON exports
-```
-
----
-
-## Tips
-
-- **Run Phases 2–5 in parallel.** Content cataloging, DFS Labs calls, OnPage, and Backlinks are independent — fire them concurrently.
-- **OnPage is async — start it first.** The crawl takes 1–5 min depending on `max_crawl_pages`. Kick off the task at the start of Phase 4, work through Phases 2–3 in parallel, then poll for OnPage results.
-- **3 competitors > 5.** Each adds DFS cost; gap matrices get noisier past 3.
-- **Update quarterly.** SEO landscapes shift. Re-run to track progress and find new gaps.
-- **The gap matrices are the most valuable output.** Focus there — they directly drive content strategy.
-- **Combine with the `aeo` skill** for a complete organic search picture — traditional SEO + AI answer-engine coverage.
-
-## Tools Required
-
-- **DataForSEO** — `MOATT_API_KEY` env var (routes through Moatt's DataForSEO proxy)
-- **Upstream skills:** `site-content-catalog`, `seo-domain-analyzer`
-- **Optional fallback:** `APIFY_API_TOKEN` for Semrush/Ahrefs scrape when DFS is unset
-- Web search + web fetch capabilities
+- `curl` + `jq` (already installed in Upstash Box).
+- `$MOATT_API_KEY` and `$MOATT_API_BASE` in env (already set by Box bootstrap).
+- Pairs well with the upstream `seo-analyzer` skill (lighter, faster snapshot).
