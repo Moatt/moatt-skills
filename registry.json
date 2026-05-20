@@ -3440,14 +3440,15 @@
       "tags": [
         "seo"
       ],
-      "version": "0.2.0",
+      "version": "0.3.0",
       "path": "skills/plays/seo-content-audit",
       "argumentHint": "",
       "domain": "",
       "appName": "Seo Content Audit",
       "changelog": {
         "0.1.0": "Initial release.",
-        "0.2.0": "Rewrote recipe to call the Moatt DataForSEO proxy. Added executable scripts/run.sh that runs 7 phases including async OnPage polling, backlinks, competitor discovery, and keyword-gap vs top competitor. Fixed OnPage task_post field names (domain + max_pages_to_crawl, not target + max_crawl_pages). Switched the OnPage summary poll from POST to GET via the new proxy method:GET support. SKILL.md now has a real ## Steps section + documents the DFS Backlinks subscription requirement."
+        "0.2.0": "Rewrote recipe to call the Moatt DataForSEO proxy. Added executable scripts/run.sh that runs 7 phases including async OnPage polling, backlinks, competitor discovery, and keyword-gap vs top competitor. Fixed OnPage task_post field names (domain + max_pages_to_crawl, not target + max_crawl_pages). Switched the OnPage summary poll from POST to GET via the new proxy method:GET support. SKILL.md now has a real ## Steps section + documents the DFS Backlinks subscription requirement.",
+        "0.3.0": "Inlined the full bash recipe under a ## scripts/run.sh section in SKILL.md so the model can boxWrite it to /workspace/home/.skills-cache/seo-content-audit/run.sh and boxExec from there. Removes dependency on /workspace/skills/ which is sandboxed and unreachable to the model's shell."
       },
       "requires_skills": [
         "brand-voice-extractor",
