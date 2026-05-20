@@ -3415,16 +3415,19 @@
     {
       "slug": "seo-analyzer",
       "name": "Seo Analyzer",
-      "description": "General-purpose SEO analyzer for any domain via DataForSEO — technical health (OnPage API + Lighthouse CWV, broken links, meta issues), authority + ranking snapshot (Labs domain rank, ranked keywords), top content opportunities (keyword_ideas), and live competitive SERP for top keywords. The lightweight first-look \"analyze SEO for {domain}\" entry point. Pay-per-use, ~$0.10–0.20 per run.",
+      "description": "General-purpose SEO analyzer for any domain via DataForSEO — authority + ranking snapshot, top ranked keywords, content opportunities (keyword_ideas), and live competitive SERP for the top keyword. The lightweight first-look \"analyze SEO for {domain}\" entry point. Pay-per-use, ~$0.06–0.15 per run via the Moatt DataForSEO proxy.",
       "category": "moves",
-      "tags": [],
-      "version": "0.1.0",
+      "tags": [
+        "seo"
+      ],
+      "version": "0.2.0",
       "path": "skills/moves/seo-analyzer",
       "argumentHint": "",
       "domain": "",
       "appName": "Seo Analyzer",
       "changelog": {
-        "0.1.0": "Initial release."
+        "0.1.0": "Initial release.",
+        "0.2.0": "Rewrote recipe to call the Moatt DataForSEO proxy instead of api.dataforseo.com directly. Added executable scripts/run.sh that runs 4 phases (domain_rank_overview, ranked_keywords, keyword_ideas, serp/organic) and writes a structured report.json. SKILL.md now has a real ## Steps section so the chat orchestrator can boxExec the recipe end-to-end."
       },
       "requires_skills": [],
       "kit": null
@@ -3432,18 +3435,19 @@
     {
       "slug": "seo-content-audit",
       "name": "Seo Content Audit",
-      "description": "Comprehensive SEO footprint analysis powered by DataForSEO. Catalogs every piece of content, pulls real SEO metrics (domain rank, ranked keywords, top pages, backlinks), runs an OnPage technical audit (Core Web Vitals, broken links, duplicate tags), runs competitor comparison via DFS Labs, builds topic/keyword and content-type gap matrices, and produces a prioritized recommendations report. The complete SEO audit for any company.",
+      "description": "Comprehensive SEO footprint audit for any domain via DataForSEO — domain authority + ranking, top ranked keywords (100), top pages, backlink profile, competitor discovery, OnPage technical crawl, and keyword-gap vs the top competitor. Runs the full 7-phase pipeline through the Moatt proxy and writes a single report.json the chat summarizes inline. Pay-per-use, ~$0.20–0.40 per run.",
       "category": "plays",
       "tags": [
         "seo"
       ],
-      "version": "0.1.0",
+      "version": "0.2.0",
       "path": "skills/plays/seo-content-audit",
       "argumentHint": "",
       "domain": "",
       "appName": "Seo Content Audit",
       "changelog": {
-        "0.1.0": "Initial release."
+        "0.1.0": "Initial release.",
+        "0.2.0": "Rewrote recipe to call the Moatt DataForSEO proxy. Added executable scripts/run.sh that runs 7 phases including async OnPage polling, backlinks, competitor discovery, and keyword-gap vs top competitor. Fixed OnPage task_post field names (domain + max_pages_to_crawl, not target + max_crawl_pages). Switched the OnPage summary poll from POST to GET via the new proxy method:GET support. SKILL.md now has a real ## Steps section + documents the DFS Backlinks subscription requirement."
       },
       "requires_skills": [
         "brand-voice-extractor",
