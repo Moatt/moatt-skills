@@ -1,5 +1,5 @@
 ---
-name: setup-outreach-campaign-smartlead
+name: setup-outreach-campaign
 description: >
   Spin up a complete outbound email campaign inside Smartlead. Walks the user
   through campaign goal, audience, messaging, schedule, and mailbox allocation.
@@ -30,7 +30,7 @@ graph:
   capabilities: [smartlead-api]
 ---
 
-# setup-outreach-campaign-smartlead
+# setup-outreach-campaign
 
 Stand up a complete outbound email campaign in Smartlead: create the campaign, add the leads, write a 2-3 email sequence, set the schedule, and allocate the mailboxes.
 

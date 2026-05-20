@@ -3562,7 +3562,7 @@
       "kit": null
     },
     {
-      "slug": "setup-outreach-campaign-smartlead",
+      "slug": "setup-outreach-campaign",
       "name": "Setup Outreach Campaign Smartlead",
       "description": "Spin up a complete outbound email campaign inside Smartlead. Walks the user through campaign goal, audience, messaging, schedule, and mailbox allocation. Creates the campaign, adds the leads, saves the email sequence, sets the schedule, and assigns available mailboxes. Use when a user wants to launch email outreach via Smartlead.",
       "category": "moves",
@@ -3570,7 +3570,7 @@
         "outreach"
       ],
       "version": "0.1.0",
-      "path": "skills/moves/setup-outreach-campaign-smartlead",
+      "path": "skills/moves/setup-outreach-campaign",
       "argumentHint": "",
       "domain": "smartlead.ai",
       "appName": "Smartlead",

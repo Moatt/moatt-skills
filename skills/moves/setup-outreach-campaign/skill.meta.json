@@ -1,11 +1,11 @@
 {
-  "slug": "setup-outreach-campaign-smartlead",
+  "slug": "setup-outreach-campaign",
   "category": "moves",
   "tags": [
     "outreach"
   ],
   "installation": {
-    "base_command": "npx moatt install setup-outreach-campaign-smartlead",
+    "base_command": "npx moatt install setup-outreach-campaign",
     "supports": [
       "claude",
       "cursor",

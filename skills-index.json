@@ -5585,26 +5585,26 @@
       }
     },
     {
-      "slug": "setup-outreach-campaign-smartlead",
-      "name": "setup-outreach-campaign-smartlead",
+      "slug": "setup-outreach-campaign",
+      "name": "setup-outreach-campaign",
       "category": "moves",
       "description": "Spin up a complete outbound email campaign inside Smartlead. Walks the user through campaign goal, audience, messaging, schedule, and mailbox allocation. Creates the campaign, adds the leads, saves the email sequence, sets the schedule, and assigns available mailboxes. Use when a user wants to launch email outreach via Smartlead.",
       "tags": [
         "outreach"
       ],
-      "path": "skills/moves/setup-outreach-campaign-smartlead",
+      "path": "skills/moves/setup-outreach-campaign",
       "files": [
-        "skills/moves/setup-outreach-campaign-smartlead/SKILL.md",
-        "skills/moves/setup-outreach-campaign-smartlead/skill.meta.json"
+        "skills/moves/setup-outreach-campaign/SKILL.md",
+        "skills/moves/setup-outreach-campaign/skill.meta.json"
       ],
       "metadata": {
-        "slug": "setup-outreach-campaign-smartlead",
+        "slug": "setup-outreach-campaign",
         "category": "moves",
         "tags": [
           "outreach"
         ],
         "installation": {
-          "base_command": "npx moatt install setup-outreach-campaign-smartlead",
+          "base_command": "npx moatt install setup-outreach-campaign",
           "supports": [
             "claude",
             "cursor",
