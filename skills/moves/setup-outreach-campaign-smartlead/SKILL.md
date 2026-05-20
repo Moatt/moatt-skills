@@ -56,17 +56,30 @@ Stand up a complete outbound email campaign in Smartlead: create the campaign, a
 
 ## Setup
 
-Requires a Smartlead account with API access. **This skill does not use the Moatt proxy** — the user must supply their own Smartlead API key.
+**No setup, no env vars.** Outbound runs through the Moatt proxy. The user's
+connected Gmail/Outlook (attached via chat in the existing connect flow) is
+already wired as the sending mailbox — the agent must call
+`ensureOutboundReady` before invoking this skill and surface the
+`defaultEmail` if needed.
 
-```bash
-export SMARTLEAD_API_KEY=your_api_key_here
+Every API call shape:
+```
+<METHOD> $MOATT_API_BASE/v1/proxy/smartlead/<path>
+Authorization: Bearer $MOATT_API_KEY
+Content-Type: application/json
 ```
 
-The API key is in the Smartlead dashboard under **Settings → API Keys**. If `SMARTLEAD_API_KEY` isn't set, ask the user for it before proceeding.
+Both env vars are auto-injected into every agent Box. The proxy handles
+authentication, sub-account scoping, and credit metering server-side — the
+skill never sees the underlying credentials. If the user has not connected a
+mailbox yet, `ensureOutboundReady` returns empty and the agent should say
+"connect your gmail" rather than running this skill.
 
-All API calls hit `https://server.smartlead.ai/api/v1` with `?api_key=$SMARTLEAD_API_KEY` appended.
+Rate limit (enforced upstream): 10 requests per 2 seconds.
 
-Rate limit: 10 requests per 2 seconds.
+**User-facing language:** Never mention "Smartlead", "sub-account", "client
+id", "SMTP", "IMAP", or "App Password" to the user. Their connected Gmail is
+the sending mailbox, that's all they need to know.
 
 ## Procedure
 
@@ -103,7 +116,7 @@ After gathering answers, recap the plan and confirm before proceeding.
 ### Step 2: Create the Campaign
 
 ```
-POST https://server.smartlead.ai/api/v1/campaigns/create?api_key=$SMARTLEAD_API_KEY
+POST $MOATT_API_BASE/v1/proxy/smartlead/campaigns/create
 
 Body:
 {
@@ -124,60 +137,38 @@ Body:
 
 Capture `campaign_id` from `id`. Every subsequent call uses it.
 
-### Step 3: Find and Allocate Mailboxes
+### Step 3: Assign the User's Connected Mailbox
 
-This step finds which mailboxes are free and assigns them to the campaign.
+The user's connected Gmail/Outlook is already wired by `ensureOutboundReady`.
+By default, use the `defaultEmail` from that call's `available[]` list — that
+mailbox is healthy and ready to send.
 
-#### 3a: Fetch all email accounts
+**Sourcing the mailbox id:**
+- Call `listOutboundMailboxes` (the chat tool, NOT a Smartlead endpoint) to get
+  the available mailboxes for this project — each row contains
+  `smartleadMailboxId` and `email`.
+- Pick the one flagged `isDefault: true` unless the user has explicitly named
+  a different one in the conversation.
 
-```
-GET https://server.smartlead.ai/api/v1/email-accounts/?api_key=$SMARTLEAD_API_KEY&offset=0&limit=100
-```
+If `listOutboundMailboxes` returns zero rows: stop and tell the user "I don't
+see a connected sending email — connect your gmail and we'll resume." Do not
+proceed.
 
-Returns a list of every email account with `id`, `from_email`, `from_name`, `daily_sent_count`, `warmup_details`, `is_smtp_success`, `is_imap_success`.
-
-#### 3b: Identify which mailboxes are already in use
-
-Fetch all campaigns:
-
-```
-GET https://server.smartlead.ai/api/v1/campaigns?api_key=$SMARTLEAD_API_KEY
-```
-
-For each campaign with `status` = `"ACTIVE"` or `"STARTED"`, fetch its email accounts:
+**Assign the mailbox to the campaign:**
 
 ```
-GET https://server.smartlead.ai/api/v1/campaigns/{campaign_id}/email-accounts?api_key=$SMARTLEAD_API_KEY
-```
-
-Build the set of every `email_account_id` currently attached to an active campaign.
-
-#### 3c: Filter for free mailboxes
-
-A mailbox counts as "free" if:
-1. Its `id` is NOT in the active-campaign set from 3b
-2. `is_smtp_success` = true AND `is_imap_success` = true (the account works)
-
-Sort free mailboxes by `daily_sent_count` ascending (prefer the coolest/least-used mailboxes).
-
-#### 3d: Select and assign
-
-If `mailbox_selection` = "auto": grab the first N free mailboxes.
-
-If `mailbox_selection` = "manual": show every account in a table (name, email, daily_sent_count, status) and let the user pick.
-
-If fewer than N free mailboxes are available, tell the user: "Only X free mailboxes found. Proceed with X, or pick some currently-in-use mailboxes?"
-
-Assign the selected mailboxes:
-
-```
-POST https://server.smartlead.ai/api/v1/campaigns/{campaign_id}/email-accounts?api_key=$SMARTLEAD_API_KEY
+POST $MOATT_API_BASE/v1/proxy/smartlead/campaigns/{campaign_id}/email-accounts
+Authorization: Bearer $MOATT_API_KEY
 
 Body:
 {
-  "email_account_ids": [101, 204, 305, 412, 518]
+  "email_account_ids": [<smartleadMailboxId from the default row>]
 }
 ```
+
+For most users with one connected mailbox, this is a single-element array.
+Multi-mailbox sending is opt-in (user asks "use both my gmails"); in that
+case pass every `smartleadMailboxId` they confirm.
 
 ### Step 4: Ingest Leads
 
@@ -210,7 +201,7 @@ custom_fields <- { "title": title, "linkedin_url": linkedin_url }
 Smartlead accepts a maximum of 100 leads per call. Chunk the list and call once per batch:
 
 ```
-POST https://server.smartlead.ai/api/v1/campaigns/{campaign_id}/leads?api_key=$SMARTLEAD_API_KEY
+POST $MOATT_API_BASE/v1/proxy/smartlead/campaigns/{campaign_id}/leads
 
 Body:
 {
@@ -269,7 +260,7 @@ Show the full sequence to the user as a formatted table. Wait for approval or ed
 After the user approves, save:
 
 ```
-POST https://server.smartlead.ai/api/v1/campaigns/{campaign_id}/sequences?api_key=$SMARTLEAD_API_KEY
+POST $MOATT_API_BASE/v1/proxy/smartlead/campaigns/{campaign_id}/sequences
 
 Body:
 {
@@ -316,7 +307,7 @@ Note: an empty `subject` on emails 2+ causes them to send as replies inside the 
 ### Step 6: Set the Schedule
 
 ```
-POST https://server.smartlead.ai/api/v1/campaigns/{campaign_id}/schedule?api_key=$SMARTLEAD_API_KEY
+POST $MOATT_API_BASE/v1/proxy/smartlead/campaigns/{campaign_id}/schedule
 
 Body:
 {
@@ -350,7 +341,7 @@ Ask: "Do you want to START the campaign now, or leave it as a draft?"
 
 If start:
 ```
-POST https://server.smartlead.ai/api/v1/campaigns/{campaign_id}/status?api_key=$SMARTLEAD_API_KEY
+POST $MOATT_API_BASE/v1/proxy/smartlead/campaigns/{campaign_id}/status
 
 Body:
 { "status": "START" }
@@ -363,7 +354,7 @@ If draft: skip. The user can launch it from the Smartlead UI later.
 If the user wants to configure tracking or stop conditions, use:
 
 ```
-POST https://server.smartlead.ai/api/v1/campaigns/{campaign_id}/settings?api_key=$SMARTLEAD_API_KEY
+POST $MOATT_API_BASE/v1/proxy/smartlead/campaigns/{campaign_id}/settings
 
 Body:
 {
@@ -378,9 +369,9 @@ Body:
 Allowed `track_settings`: `DONT_TRACK_EMAIL_OPEN`, `DONT_TRACK_LINK_CLICK`, `DONT_TRACK_REPLY_TO_AN_EMAIL`
 Allowed `stop_lead_settings`: `REPLY_TO_AN_EMAIL`, `CLICK_ON_A_LINK`, `OPEN_AN_EMAIL`
 
-## Smartlead API Reference
+## Proxy API Reference
 
-Every endpoint uses the base URL `https://server.smartlead.ai/api/v1` with `?api_key=` as a query param.
+Every endpoint uses the Moatt proxy: base URL `$MOATT_API_BASE/v1/proxy/smartlead` with `Authorization: Bearer $MOATT_API_KEY`. Sub-account scoping, upstream auth, and credit metering are handled server-side — the skill never sees the underlying credentials.
 
 | Endpoint | Method | Purpose |
 |----------|--------|---------|
@@ -409,6 +400,6 @@ Every endpoint uses the base URL `https://server.smartlead.ai/api/v1` with `?api
 ```yaml
 metadata:
   requires:
-    env: ["SMARTLEAD_API_KEY"]
-  cost: "Free (Smartlead API included with plan that has API access)"
+    chat_tool: ["ensureOutboundReady", "listOutboundMailboxes"]
+  cost: "Per-action credits via the Moatt proxy. User pays nothing extra to the upstream provider."
 ```

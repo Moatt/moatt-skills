@@ -3,54 +3,56 @@ name: cold-email-outreach
 description: >
   Full-cycle cold email orchestration. Covers goal alignment, lead ingestion
   from any source (CSV, paste, CRM export, database), sequence design, email
-  generation, campaign setup in the user's outreach tool of choice, and
-  launch. Tool-agnostic — supports Smartlead (full MCP automation),
-  Instantly, Lemlist, Apollo, or a plain CSV export.
+  generation, campaign setup, and launch. Sends through the user's connected
+  outbound mailbox by default (auto-wired when they connected Gmail/Outlook
+  in chat); falls back to a plain CSV export when the user wants to run the
+  campaign in a tool they own.
 tags: [outreach]
 ---
 
 # Cold Email Outreach
 
-The last mile of the outbound pipeline. Takes leads wherever the user keeps them, builds email sequences, loads campaigns into their preferred outreach platform, and launches.
-
-**Tool-agnostic:** Asks which outreach platform the user runs. Defaults to Smartlead when MCP tools are configured. Falls back to CSV export for any other tool or manual workflow.
+The last mile of the outbound pipeline. Takes leads wherever the user keeps
+them, builds email sequences, and launches the campaign from the user's
+connected sending mailbox.
 
 ## When to Use
 
-Use this skill when:
 - User says "launch a campaign", "send outreach", "email these leads", "set up cold email"
-- User has a lead list and wants to run an outbound email campaign
-- User wants to create and configure a campaign in Smartlead or any other outreach tool
+- User has a lead list and wants to run an outbound campaign
 
-## Supported Outreach Tools
+## Two delivery modes
 
-This skill does NOT assume a specific tool. It asks first, then adapts.
-
-| Tool | Integration | How It Works |
-|------|------------|--------------|
-| **Smartlead** (default) | MCP tools (`mcp__smartlead__*`) | Full automation: create campaign, add sequences, import leads, allocate mailboxes, configure schedule, launch |
-| **Instantly** | CSV import | Generate CSV matching Instantly's import format, user uploads manually |
-| **Lemlist** | CSV import | Generate CSV with Lemlist-compatible columns |
-| **Apollo** | CSV import | Generate CSV matching Apollo sequence import format |
-| **Manual / Other** | CSV + instructions | Export leads + emails as a generic CSV with setup instructions |
-
-**Tool selection logic:**
-1. Ask the user in Phase 0: "Which outreach tool do you use?"
-2. If **Smartlead** → drive the MCP tools end-to-end
-3. If **Instantly / Lemlist / Apollo** → emit a tool-specific import CSV
-4. If **Other or unknown** → emit a generic CSV (`email`, `first_name`, `last_name`, `company`, `title`, `subject`, `body` per touch) and ask what format the user's tool needs
+| Mode | Trigger | How it works |
+|------|---------|--------------|
+| **Send through Moatt** (default) | `ensureOutboundReady` returns ≥ 1 available mailbox | Full automation through the Moatt proxy — create campaign, add sequence, import leads, attach the user's default mailbox, schedule, launch. The user never thinks about the underlying provider. |
+| **CSV export** | User asks for a CSV, OR has no connected mailbox AND prefers not to connect one | Generate a generic CSV (`email, first_name, last_name, company, title, subject, body` per touch) the user can import into any external tool. |
 
 ## Prerequisites
 
-### Environment Variables
+Before invoking any sending step, the calling agent MUST have called
+`ensureOutboundReady`. That chat tool wires the user's connected
+Gmail/Outlook to outbound. Outcomes:
 
-**For Smartlead (full automation):**
-```
-SMARTLEAD_API_KEY=your_api_key_here
-```
-Every Smartlead API call hits `https://server.smartlead.ai/api/v1` with `?api_key=$SMARTLEAD_API_KEY` appended. Rate limit: 10 requests per 2 seconds.
+- `available[]` has ≥ 1 entry → use **Send through Moatt**.
+- `available[]` empty AND `attached[]` empty → ask the user to "connect your
+  gmail" (existing chat connect flow handles OAuth), or offer **CSV export**.
 
-**For CSV-based tools:** No env vars needed.
+Every API call this skill makes goes through the Moatt proxy:
+
+```
+<METHOD> $MOATT_API_BASE/v1/proxy/smartlead/<path>
+Authorization: Bearer $MOATT_API_KEY
+```
+
+Both env vars are auto-injected into every agent Box. The proxy handles auth,
+sub-account scoping, and credit metering server-side — the skill never sees
+upstream credentials. Rate limit: 10 req / 2s.
+
+**User-facing language:** Never mention the underlying provider name
+(Smartlead, Instantly, etc.), "sub-account", "client_id", "SMTP", "IMAP", or
+"App Password". The connected Gmail/Outlook is the sending mailbox — that's
+all the user needs to know.
 
 ## Phase 0: Intake
 
@@ -61,8 +63,8 @@ Send all questions at once. Group by category. Skip any already answered.
 2. What's the outreach angle or hook? (hiring signal, competitor displacement, event-based, pain-based, cold database)
 3. What should this campaign be called?
 
-### Outreach Tool
-4. Which outreach tool do you use? (Smartlead / Instantly / Lemlist / Apollo / Other / Just give me a CSV)
+### Delivery mode
+4. By default, the campaign will send from your connected mailbox (`<defaultEmail>` from `ensureOutboundReady`). If you'd rather export to a CSV and run it in your own tool, say so. Otherwise, we proceed with the connected mailbox.
 
 ### Lead Source
 5. Where are your leads? Accept any of:
@@ -338,7 +340,7 @@ Tool: {smartlead/instantly/etc.}
 
 ## Smartlead API Reference
 
-Every endpoint sits at base URL `https://server.smartlead.ai/api/v1` with `?api_key=` query param.
+Every endpoint sits at base URL `$MOATT_API_BASE/v1/proxy/smartlead` with `?api_key=` query param.
 
 | Endpoint | Method | Purpose |
 |----------|--------|---------|
@@ -367,7 +369,7 @@ Every endpoint sits at base URL `https://server.smartlead.ai/api/v1` with `?api_
 
 | Error | Fix |
 |-------|-----|
-| `SMARTLEAD_API_KEY` not set | Ask the user to add it to `.env` or export it |
+| Proxy returns `412 vendor_not_connected` or empty mailbox list | Tell the user "connect your gmail" and stop until they do |
 | Smartlead rate limit (429) | Wait 2 seconds and retry |
 | Lead upload fails | Check the email format, retry the batch |
 | No free mailboxes | Show all accounts and ask the user which to use |
