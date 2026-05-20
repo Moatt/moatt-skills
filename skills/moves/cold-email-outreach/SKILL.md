@@ -21,12 +21,17 @@ connected sending mailbox.
 - User says "launch a campaign", "send outreach", "email these leads", "set up cold email"
 - User has a lead list and wants to run an outbound campaign
 
-## Two delivery modes
+## Delivery
 
-| Mode | Trigger | How it works |
-|------|---------|--------------|
-| **Send through Moatt** (default) | `ensureOutboundReady` returns ≥ 1 available mailbox | Full automation through the Moatt proxy — create campaign, add sequence, import leads, attach the user's default mailbox, schedule, launch. The user never thinks about the underlying provider. |
-| **CSV export** | User asks for a CSV, OR has no connected mailbox AND prefers not to connect one | Generate a generic CSV (`email, first_name, last_name, company, title, subject, body` per touch) the user can import into any external tool. |
+The campaign sends from the user's connected mailbox via the Moatt proxy.
+The user does not pick between providers — the proxy handles everything
+server-side and the user only thinks in terms of their connected Gmail or
+Outlook.
+
+If the user has no connected mailbox and does not want to connect one, fall
+back to a CSV export at the end of the run (see "CSV fallback" in Phase 4).
+Do not present this as a choice up front — only offer it if the user blocks
+on connecting a mailbox.
 
 ## Prerequisites
 
@@ -34,9 +39,10 @@ Before invoking any sending step, the calling agent MUST have called
 `ensureOutboundReady`. That chat tool wires the user's connected
 Gmail/Outlook to outbound. Outcomes:
 
-- `available[]` has ≥ 1 entry → use **Send through Moatt**.
+- `available[]` has ≥ 1 entry → proceed with the campaign.
 - `available[]` empty AND `attached[]` empty → ask the user to "connect your
-  gmail" (existing chat connect flow handles OAuth), or offer **CSV export**.
+  gmail" (existing chat connect flow handles OAuth). Only fall back to a CSV
+  export if the user explicitly refuses to connect a mailbox.
 
 Every API call this skill makes goes through the Moatt proxy:
 
@@ -62,9 +68,6 @@ Send all questions at once. Group by category. Skip any already answered.
 1. What's the objective? (book meetings, drive demo requests, get replies, nurture)
 2. What's the outreach angle or hook? (hiring signal, competitor displacement, event-based, pain-based, cold database)
 3. What should this campaign be called?
-
-### Delivery mode
-4. By default, the campaign will send from your connected mailbox (`<defaultEmail>` from `ensureOutboundReady`). If you'd rather export to a CSV and run it in your own tool, say so. Otherwise, we proceed with the connected mailbox.
 
 ### Lead Source
 5. Where are your leads? Accept any of:
@@ -175,108 +178,24 @@ Hook (1 sentence) → Evidence (1-2 sentences) → Offer (1 sentence)
 
 ## Phase 4: Campaign Setup
 
-### If Smartlead (MCP Automation)
+The actual launch (create campaign, attach the user's mailbox, import leads,
+save sequences, set schedule) is handled by the `setup-outreach-campaign`
+skill. Hand off the finalized inputs (campaign_name, lead_list, sequence
+drafts, schedule) to that skill and let it execute the proxy calls.
 
-Full automation through MCP tools. Execute in this order:
+Every call goes through the Moatt proxy with the master key and the org's
+sub-account already scoped server-side. The skill never sees upstream
+credentials and never names the underlying provider to the user.
 
-**Step 1: Find and allocate mailboxes**
+Merge variable mapping when handing off sequence drafts: convert
+`{first_name}` → `{{first_name}}` and `{company}` → `{{company}}`. Leave
+the `subject` field blank on emails 2+ so they send as replies inside the
+same thread.
 
-```
-mcp__smartlead__get_email_accounts
-```
+### CSV fallback (only when the user refuses to connect a mailbox)
 
-Returns every email account with `id`, `from_email`, `from_name`, `daily_sent_count`, `is_smtp_success`, `is_imap_success`.
-
-To find **free mailboxes** (not already assigned to active campaigns):
-
-1. Fetch all campaigns: `mcp__smartlead__get_campaigns`
-2. For each campaign with status `ACTIVE` or `STARTED`, fetch its email accounts: `mcp__smartlead__get_campaign_email_accounts`
-3. Build a set of all `email_account_id` values currently assigned to active campaigns
-4. A mailbox is "free" if its `id` is NOT in the active set AND `is_smtp_success` = true AND `is_imap_success` = true
-5. Sort free mailboxes by `daily_sent_count` ascending (prefer the least-used)
-6. Select the requested number of free mailboxes
-
-If there are fewer free mailboxes than requested, tell the user and ask how to proceed.
-
-Present available/selected accounts to the user for confirmation.
-
-**Step 2: Create campaign**
-
-```
-mcp__smartlead__create_campaign
-  name: {campaign_name}
-```
-
-Save the returned `campaign_id`.
-
-**Step 3: Add sequence steps**
-
-```
-mcp__smartlead__save_campaign_sequences
-  campaign_id: {campaign_id}
-  sequences: [
-    { seq_number: 1, subject: "...", email_body: "...", seq_delay_details: { delay_in_days: 0 } },
-    { seq_number: 2, subject: "...", email_body: "...", seq_delay_details: { delay_in_days: 4 } },
-    { seq_number: 3, subject: "...", email_body: "...", seq_delay_details: { delay_in_days: 7 } }
-  ]
-```
-
-**Merge variable mapping:** Convert `{first_name}` → `{{first_name}}`, `{company}` → `{{company}}` (Smartlead uses double-brace syntax).
-
-**Note:** Blank `subject` on emails 2+ causes them to send as replies in the same thread.
-
-**Step 4: Import leads (batch 100)**
-
-```
-mcp__smartlead__add_leads_to_campaign
-  campaign_id: {campaign_id}
-  lead_list: [{ email: "...", first_name: "...", last_name: "...", company_name: "...", ... }]
-```
-
-Smartlead accepts a max of 100 leads per call. Chunk the list and call once per batch. Extra columns become `custom_fields`.
-
-**Step 5: Assign sending accounts**
-
-```
-mcp__smartlead__add_email_accounts_to_campaign
-  campaign_id: {campaign_id}
-  email_account_ids: [...]
-```
-
-**Step 6: Set schedule**
-
-```
-mcp__smartlead__update_campaign_schedule
-  campaign_id: {campaign_id}
-  schedule: {
-    timezone: "America/New_York",
-    days_of_the_week: [1, 2, 3, 4, 5],
-    start_hour: "08:00",
-    end_hour: "18:00",
-    min_time_btw_emails: 10,
-    max_new_leads_per_day: 20
-  }
-```
-
-`days_of_the_week`: 0=Sunday, 1=Monday, ..., 6=Saturday.
-
-**Step 7: Configure settings**
-
-```
-mcp__smartlead__update_campaign_settings
-  campaign_id: {campaign_id}
-  settings: {
-    track_settings: [],
-    stop_lead_settings: "REPLY_TO_AN_EMAIL",
-    send_as_plain_text: false,
-    follow_up_percentage: 100
-  }
-```
-
-Allowed `track_settings`: `DONT_TRACK_EMAIL_OPEN`, `DONT_TRACK_LINK_CLICK`, `DONT_TRACK_REPLY_TO_AN_EMAIL`
-Allowed `stop_lead_settings`: `REPLY_TO_AN_EMAIL`, `CLICK_ON_A_LINK`, `OPEN_AN_EMAIL`
-
-### If CSV-Based Tool (Instantly, Lemlist, Apollo, Other)
+If the user explicitly opts out of the connected-mailbox flow, generate a
+CSV they can import into whatever outreach tool they own.
 
 **Step 1: Generate CSV**
 
@@ -296,27 +215,11 @@ Save to the current working directory:
 {campaign-name}-{YYYY-MM-DD}.csv
 ```
 
-**Step 3: Provide tool-specific import instructions**
+**Step 3: Hand off**
 
-**Instantly:**
-- Upload CSV → Sequences → Create new sequence
-- Map columns: Email → email, First Name → first_name, etc.
-- Paste sequence templates into each step
-- Set delays between steps
-
-**Lemlist:**
-- People → Import → Upload CSV
-- Map custom variables to columns
-- Create campaign → add email steps → insert variables
-
-**Apollo:**
-- Sequences → Create Sequence → add email steps
-- Contacts → Import → Upload CSV
-- Add imported contacts to the sequence
-
-**Other / Manual:**
-- Hand over the CSV path and walk through the column structure
-- Ask the user what format their tool expects and adjust as needed
+Hand the user the file path and the sequence template. Tell them they can
+import it into any outreach tool they already use. Do not recommend or name
+specific tools — let the user decide.
 
 ## Phase 5: Review & Launch
 
@@ -328,19 +231,25 @@ Leads: {count}
 Sequence: {touches} touches over {days} days
 Sending: {accounts} accounts × {daily_limit}/day = {daily_volume} emails/day
 Estimated completion: {date}
-Tool: {smartlead/instantly/etc.}
+Sending from: {connected_mailbox_email}
 ```
 
 ### Hard Approval Gate
 
-**Do NOT activate the campaign without explicit user confirmation.** Present the summary, then ask: "Ready to launch? Type 'yes' to activate."
+**Do NOT activate the campaign without explicit user confirmation.** Present
+the summary, then ask: "Ready to launch? Type 'yes' to activate."
 
-- **Smartlead:** `mcp__smartlead__update_campaign_status` → set status to `START`
-- **CSV tools:** Tell the user the file is ready for import and provide the file path
+- **Connected-mailbox path:** delegate the status flip to
+  `setup-outreach-campaign` (it issues the proxy call that starts the
+  campaign).
+- **CSV fallback:** tell the user the file is ready for import and provide
+  the file path.
 
-## Smartlead API Reference
+## Outbound API Reference (internal)
 
-Every endpoint sits at base URL `$MOATT_API_BASE/v1/proxy/smartlead` with `?api_key=` query param.
+The launch steps are executed by `setup-outreach-campaign` against the Moatt
+proxy. This reference is for internal handoff only — do not surface URLs or
+endpoint names to the user.
 
 | Endpoint | Method | Purpose |
 |----------|--------|---------|
@@ -361,7 +270,7 @@ Every endpoint sits at base URL `$MOATT_API_BASE/v1/proxy/smartlead` with `?api_
 
 | Component | Cost |
 |-----------|------|
-| Smartlead campaign setup | Free (API is included with the Smartlead plan) |
+| Campaign setup via the proxy | Per-action credits, metered server-side |
 | CSV export | Free |
 | Email copy generation | Free (LLM reasoning) |
 
@@ -370,7 +279,7 @@ Every endpoint sits at base URL `$MOATT_API_BASE/v1/proxy/smartlead` with `?api_
 | Error | Fix |
 |-------|-----|
 | Proxy returns `412 vendor_not_connected` or empty mailbox list | Tell the user "connect your gmail" and stop until they do |
-| Smartlead rate limit (429) | Wait 2 seconds and retry |
+| Proxy rate limit (429) | Wait 2 seconds and retry |
 | Lead upload fails | Check the email format, retry the batch |
 | No free mailboxes | Show all accounts and ask the user which to use |
 | Campaign creation fails | Check the API key is valid |

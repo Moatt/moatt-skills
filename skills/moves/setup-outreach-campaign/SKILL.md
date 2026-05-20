@@ -1,11 +1,11 @@
 ---
 name: setup-outreach-campaign
 description: >
-  Spin up a complete outbound email campaign inside Smartlead. Walks the user
-  through campaign goal, audience, messaging, schedule, and mailbox allocation.
+  Spin up a complete outbound email campaign for the user. Walks them through
+  campaign goal, audience, messaging, schedule, and mailbox allocation.
   Creates the campaign, adds the leads, saves the email sequence, sets the
-  schedule, and assigns available mailboxes. Use when a user wants to launch
-  email outreach via Smartlead.
+  schedule, and assigns the user's connected mailbox. Use when a user wants
+  to launch email outreach.
 tags: [outreach]
 
 graph:
@@ -32,7 +32,7 @@ graph:
 
 # setup-outreach-campaign
 
-Stand up a complete outbound email campaign in Smartlead: create the campaign, add the leads, write a 2-3 email sequence, set the schedule, and allocate the mailboxes.
+Stand up a complete outbound email campaign: create the campaign, add the leads, write a 2-3 email sequence, set the schedule, and allocate the mailboxes.
 
 ## Inputs
 
@@ -144,7 +144,7 @@ By default, use the `defaultEmail` from that call's `available[]` list — that
 mailbox is healthy and ready to send.
 
 **Sourcing the mailbox id:**
-- Call `listOutboundMailboxes` (the chat tool, NOT a Smartlead endpoint) to get
+- Call `listOutboundMailboxes` (the chat tool, NOT a proxy endpoint) to get
   the available mailboxes for this project — each row contains
   `smartleadMailboxId` and `email`.
 - Pick the one flagged `isDefault: true` unless the user has explicitly named
@@ -174,7 +174,7 @@ case pass every `smartleadMailboxId` they confirm.
 
 #### 4a: Parse the lead list
 
-**From CSV:** read the file, map columns to Smartlead fields. Flexible column matching:
+**From CSV:** read the file, map columns to the campaign fields. Flexible column matching:
 - `email` (required) — also matches `Email`, `email_address`
 - `first_name` — also matches `firstname`, `first`, `First Name`
 - `last_name` — also matches `lastname`, `last`, `Last Name`
@@ -198,7 +198,7 @@ custom_fields <- { "title": title, "linkedin_url": linkedin_url }
 
 #### 4c: Upload in batches
 
-Smartlead accepts a maximum of 100 leads per call. Chunk the list and call once per batch:
+Each upload batch supports up to 100 leads. Chunk the list and call once per batch:
 
 ```
 POST $MOATT_API_BASE/v1/proxy/smartlead/campaigns/{campaign_id}/leads
@@ -347,7 +347,7 @@ Body:
 { "status": "START" }
 ```
 
-If draft: skip. The user can launch it from the Smartlead UI later.
+If draft: skip. The user can launch it from chat later by saying "start the campaign".
 
 ## Optional: Update Campaign Settings
 
@@ -390,10 +390,10 @@ Every endpoint uses the Moatt proxy: base URL `$MOATT_API_BASE/v1/proxy/smartlea
 
 ## Example Prompts
 
-- "Set up a Smartlead campaign for Truewind targeting accounting firms"
+- "Set up an outreach campaign for Truewind targeting accounting firms"
 - "Create an outreach campaign — I have a CSV of leads"
 - "Launch a cold email campaign to CFOs at mid-market companies"
-- "Set up a 3-email sequence in Smartlead and allocate 5 free mailboxes"
+- "Set up a 3-email sequence and allocate 5 free mailboxes"
 
 ## Metadata
 
