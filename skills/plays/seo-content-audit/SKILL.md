@@ -159,6 +159,13 @@ Useful paths inside each block:
 - **No DFS credentials in the proxy?** Returns 503 `vendor_misconfigured`.
 - **Insufficient Moatt credits?** Returns 402 `insufficient_credits` with the
   user's current balance. Tell them to top up at `/settings/billing`.
+- **DFS Backlinks subscription not enabled?** Phase 5 (`/v3/backlinks/summary/live`)
+  requires the DFS Backlinks API tier, which is sold separately from Labs,
+  SERP, and OnPage. If the org's DataForSEO account doesn't include it, the
+  phase returns an error and `backlinks_summary.json` will contain the
+  upstream error message instead of metrics. The report still ships — the
+  field is just empty. Surface this to the user as "backlink data isn't on
+  your DFS plan" rather than treating it as a script failure.
 - **OnPage crawl too slow?** Each poll is logged. If the crawl doesn't finish
   within `ONPAGE_MAX_POLLS * ONPAGE_POLL_INTERVAL`, the report still ships
   with `onpage_summary.skipped = "crawl_did_not_finish_in_time"` and the

@@ -47,6 +47,18 @@ dfs() {
     -d "$(jq -nc --arg ep "$endpoint" --argjson b "$body" '{endpoint:$ep, body:$b}')"
 }
 
+# GET-equivalent — for DFS endpoints that carry the task_id in the path and
+# don't accept a request body (e.g. on_page/summary/{id}, on_page/pages/{id}).
+# The proxy honors `method:"GET"` and forwards as GET to api.dataforseo.com.
+dfs_get() {
+  local endpoint="$1"
+  curl -sS -X POST "$PROXY" \
+    -H "Authorization: Bearer $MOATT_API_KEY" \
+    -H "Content-Type: application/json" \
+    --max-time 60 \
+    -d "$(jq -nc --arg ep "$endpoint" '{endpoint:$ep, method:"GET"}')"
+}
+
 log() { echo "[seo-content-audit] $*" >&2; }
 
 log "domain=$DOMAIN location=$LOCATION_CODE language=$LANGUAGE_CODE"
@@ -54,9 +66,11 @@ log "proxy=$PROXY"
 log "out=$OUT_DIR"
 
 # ─── Phase 1 (async): kick off OnPage crawl ────────────────────────────────
+# DFS on_page/task_post expects `domain` (NOT `target`) and `max_pages_to_crawl`
+# (NOT `max_crawl_pages`). Field names verified against Context7 v3 docs 2026-05-23.
 log "phase 1/7: on_page/task_post (crawl up to $MAX_CRAWL_PAGES pages)"
-ONPAGE_POST_BODY=$(jq -nc --arg t "$DOMAIN" --argjson n "$MAX_CRAWL_PAGES" \
-  '[{target:$t, max_crawl_pages:$n, load_resources:true, enable_javascript:true, enable_browser_rendering:true}]')
+ONPAGE_POST_BODY=$(jq -nc --arg d "$DOMAIN" --argjson n "$MAX_CRAWL_PAGES" \
+  '[{domain:$d, max_pages_to_crawl:$n, load_resources:true, enable_javascript:true, enable_browser_rendering:true}]')
 ONPAGE_POST_JSON="$(dfs "/v3/on_page/task_post" "$ONPAGE_POST_BODY")"
 echo "$ONPAGE_POST_JSON" > "$OUT_DIR/onpage_post.json"
 ONPAGE_TASK_ID="$(echo "$ONPAGE_POST_JSON" | jq -r '.tasks[0].id // empty')"
@@ -117,7 +131,7 @@ if [ -n "$ONPAGE_TASK_ID" ]; then
   while [ $POLLS -lt $ONPAGE_MAX_POLLS ]; do
     sleep "$ONPAGE_POLL_INTERVAL"
     POLLS=$((POLLS + 1))
-    SUMMARY="$(dfs "/v3/on_page/summary/$ONPAGE_TASK_ID" "[]")"
+    SUMMARY="$(dfs_get "/v3/on_page/summary/$ONPAGE_TASK_ID")"
     STATUS="$(echo "$SUMMARY" | jq -r '.tasks[0].result[0].crawl_progress // empty')"
     log "  poll $POLLS/$ONPAGE_MAX_POLLS: crawl_progress=$STATUS"
     if [ "$STATUS" = "finished" ]; then
