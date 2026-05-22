@@ -137,38 +137,29 @@ Body:
 
 Capture `campaign_id` from `id`. Every subsequent call uses it.
 
-### Step 3: Assign the User's Connected Mailbox
+### Step 3: Identify the User's Sending Mailbox (no Smartlead-side assign)
 
-The user's connected Gmail/Outlook is already wired by `ensureOutboundReady`.
-By default, use the `defaultEmail` from that call's `available[]` list — that
-mailbox is healthy and ready to send.
+The actual sends do NOT go through Smartlead's mailer — karmableai dispatches
+through the user's connected Gmail/Outlook on a cron. So we do NOT call
+Smartlead's `/campaigns/{id}/email-accounts` endpoint. Smartlead just holds
+the leads + sequence + schedule.
 
-**Sourcing the mailbox id:**
-- Call `listOutboundMailboxes` (the chat tool, NOT a proxy endpoint) to get
-  the available mailboxes for this project — each row contains
-  `smartleadMailboxId` and `email`.
-- Pick the one flagged `isDefault: true` unless the user has explicitly named
-  a different one in the conversation.
+**Sourcing the mailbox:**
+- Call `listOutboundMailboxes` (chat tool) — each row has `email`, `provider`,
+  `composioConnectionId`, `isDefault`.
+- Pick the one flagged `isDefault: true` unless the user named a different
+  email in the conversation. Remember this `email` for Step 6.5.
 
 If `listOutboundMailboxes` returns zero rows: stop and tell the user "I don't
 see a connected sending email — connect your gmail and we'll resume." Do not
 proceed.
 
-**Assign the mailbox to the campaign:**
-
-```
-POST $MOATT_API_BASE/v1/proxy/smartlead/campaigns/{campaign_id}/email-accounts
-Authorization: Bearer $MOATT_API_KEY
-
-Body:
-{
-  "email_account_ids": [<smartleadMailboxId from the default row>]
-}
-```
-
-For most users with one connected mailbox, this is a single-element array.
-Multi-mailbox sending is opt-in (user asks "use both my gmails"); in that
-case pass every `smartleadMailboxId` they confirm.
+> **Why no `/email-accounts` POST?** Smartlead's mailbox-assign endpoint
+> expects a Smartlead-side mailbox id. Karmableai does not register the user's
+> mailbox on the Smartlead side — sends are dispatched server-side via the
+> Composio Gmail/Outlook tool. Calling `/email-accounts` here would either
+> fail (no Smartlead-side mailbox row) or hand authority to a sender we
+> don't control. Skip it.
 
 ### Step 4: Ingest Leads
 
@@ -323,6 +314,37 @@ Body:
 
 `days_of_the_week`: 0=Sunday, 1=Monday, ..., 6=Saturday.
 
+### Step 6.5: Register the Campaign on the Karmableai Side
+
+Smartlead now holds the full campaign — leads, sequence, schedule. Hand the
+campaign off to karmableai's dispatcher by calling the chat tool
+`attachCampaignToMailbox` with the exact same schedule you posted in Step 6
+(translate snake_case to camelCase):
+
+```
+attachCampaignToMailbox({
+  smartleadCampaignId: "<campaign_id from Step 2>",
+  name: "<campaign_name>",
+  mailboxEmail: "<email from Step 3>",   // omit to use the project default
+  schedule: {
+    timezone: "America/New_York",
+    daysOfWeek: [1, 2, 3, 4, 5],
+    startHour: "08:00",
+    endHour: "18:00",
+    maxLeadsPerDay: 20,
+    minTimeBtwEmails: 10,
+    scheduleStartTime: "2026-02-25T00:00:00.000Z"
+  }
+})
+```
+
+This writes the `outbound_campaign` row in DRAFT status. The dispatcher does
+not pick it up yet — Step 7 flips it on.
+
+If `attachCampaignToMailbox` returns `ok: false`, the user has no connected
+mailbox on this project. Stop and tell them to connect Gmail. Do not flip the
+Smartlead campaign to START.
+
 ### Step 7: Confirm and Optionally Start
 
 Present a full summary:
@@ -339,15 +361,24 @@ Status: DRAFTED
 
 Ask: "Do you want to START the campaign now, or leave it as a draft?"
 
-If start:
-```
-POST $MOATT_API_BASE/v1/proxy/smartlead/campaigns/{campaign_id}/status
+If start: call the karmableai chat tool — do NOT POST to Smartlead's `/status`.
 
-Body:
-{ "status": "START" }
+```
+activateCampaign({ smartleadCampaignId: "<campaign_id>" })
 ```
 
-If draft: skip. The user can launch it from chat later by saying "start the campaign".
+This flips the `outbound_campaign` row from DRAFT → ACTIVE; the karmableai
+dispatcher starts firing emails through the user's connected mailbox on the
+schedule from Step 6.
+
+> **Do NOT call `POST /campaigns/{id}/status { status: "START" }` on
+> Smartlead.** That asks Smartlead to send the campaign from a Smartlead-side
+> mailbox we never registered — it will either error or send from a wrong
+> sender. Karmableai owns the sender; Smartlead is just the sequence/lead
+> store.
+
+If draft: skip — the user can flip it on from chat later by saying
+"start the X campaign" (the model will call `activateCampaign`).
 
 ## Optional: Update Campaign Settings
 
@@ -382,9 +413,9 @@ Every endpoint uses the Moatt proxy: base URL `$MOATT_API_BASE/v1/proxy/smartlea
 | `/campaigns/{id}/settings` | POST | Update tracking/stop settings |
 | `/campaigns/{id}/sequences` | POST | Save email sequences |
 | `/campaigns/{id}/leads` | POST | Add leads (max 100 per call) |
-| `/campaigns/{id}/email-accounts` | GET | List mailboxes on a campaign |
-| `/campaigns/{id}/email-accounts` | POST | Assign mailboxes to a campaign |
-| `/campaigns/{id}/status` | POST | Change campaign status (START/PAUSED/STOPPED) |
+| `/campaigns/{id}/email-accounts` | GET | List mailboxes on a campaign (rarely used — karmableai owns the sender) |
+| ~~`/campaigns/{id}/email-accounts` POST~~ | — | **Do not call.** Karmableai dispatches via Composio; Smartlead never holds the user's mailbox. |
+| ~~`/campaigns/{id}/status` POST~~ | — | **Do not call.** Use the `activateCampaign` / `pauseCampaign` / `stopCampaign` chat tools instead. |
 | `/campaigns/{id}/analytics` | GET | Top-level campaign analytics |
 | `/email-accounts/` | GET | List all email accounts (offset/limit) |
 
@@ -400,6 +431,10 @@ Every endpoint uses the Moatt proxy: base URL `$MOATT_API_BASE/v1/proxy/smartlea
 ```yaml
 metadata:
   requires:
-    chat_tool: ["ensureOutboundReady", "listOutboundMailboxes"]
+    chat_tool:
+      - ensureOutboundReady          # confirm a connected Gmail/Outlook exists
+      - listOutboundMailboxes        # pick the sending mailbox
+      - attachCampaignToMailbox      # register the Smartlead campaign on the karmableai side (Step 6.5)
+      - activateCampaign             # flip campaign to ACTIVE so the dispatcher picks it up (Step 7)
   cost: "Per-action credits via the Moatt proxy. User pays nothing extra to the upstream provider."
 ```
