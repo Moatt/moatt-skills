@@ -68,12 +68,15 @@
     {
       "slug": "aeo",
       "name": "Aeo",
-      "description": "Check and improve your brand's visibility across AI search engines (ChatGPT, Perplexity, Gemini, Grok, Claude, DeepSeek). Set up tracking, run visibility analyses, audit your website for AI readability, and get actionable recommendations. Uses the npx moatt-aeo@latest CLI.",
+      "description": "Check and improve your brand's visibility across AI search engines (ChatGPT, Claude, Gemini, Perplexity). Powered by DataForSEO's AI Optimization endpoints through the Moatt proxy — no user API keys required. Sets up tracking, runs visibility analyses, audits the site for AI-readability, and produces actionable recommendations.",
       "category": "moves",
       "tags": [
-        "seo"
+        "seo",
+        "aeo",
+        "geo",
+        "llm"
       ],
-      "version": "0.1.0",
+      "version": "0.2.0",
       "path": "skills/moves/aeo",
       "argumentHint": "",
       "domain": "",
