@@ -29,10 +29,7 @@ HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; ContentCatalogBot/1.0)"}
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
 
-if MOATT_API_KEY:
-    APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
-else:
-    APIFY_BASE = "https://api.apify.com/v2"
+APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
 SITEMAP_ACTOR = "onescales~sitemap-url-extractor"
 
 # --- Content Type Classification ---
@@ -656,14 +653,14 @@ def main():
     parser.add_argument("--output", help="Path to save JSON output (default: stdout)")
     parser.add_argument("--markdown", help="Path to save Markdown summary")
     parser.add_argument("--no-non-blog", action="store_true", help="Only catalog blog posts")
-    parser.add_argument("--apify-token", help="Apify API token for fallback (or set APIFY_API_TOKEN)")
+    parser.add_argument("--apify-token", help="Apify API token for fallback (or set MOATT_API_KEY)")
 
     args = parser.parse_args()
 
     # Strip protocol if provided
     domain = args.domain.replace("https://", "").replace("http://", "").rstrip("/")
 
-    apify_token = args.apify_token or MOATT_API_KEY or os.environ.get("APIFY_API_TOKEN")
+    apify_token = args.apify_token or MOATT_API_KEY or os.environ.get("MOATT_API_KEY")
 
     result = catalog_domain(
         domain=domain,

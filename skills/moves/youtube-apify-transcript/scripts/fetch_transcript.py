@@ -11,7 +11,7 @@ Usage:
     python3 fetch_transcript.py --clear-cache
 
 Requires:
-    - APIFY_API_TOKEN environment variable
+    - MOATT_API_KEY environment variable
     - requests library
 """
 
@@ -36,18 +36,15 @@ APIFY_ACTOR_ID = "pintostudio~youtube-transcript-scraper"
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
 
-if MOATT_API_KEY:
-    APIFY_API_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
-else:
-    APIFY_API_BASE = "https://api.apify.com/v2"
+APIFY_API_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
 CACHE_DIR = Path(os.environ.get("YT_TRANSCRIPT_CACHE_DIR", os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".cache")))
 
 
 def get_api_token():
     """Get API token, preferring Moatt proxy key."""
-    token = MOATT_API_KEY or os.environ.get("APIFY_API_TOKEN")
+    token = MOATT_API_KEY
     if not token:
-        print("Error: Set MOATT_API_KEY or APIFY_API_TOKEN env var.", file=sys.stderr)
+        print("Error: Set MOATT_API_KEY env var (run `npx moatt login`).", file=sys.stderr)
         sys.exit(1)
     return token
 

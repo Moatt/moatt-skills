@@ -44,17 +44,6 @@ curl -s -X POST $MOATT_API_BASE/v1/proxy/orthogonal/run \
   -d '{"api":"contactout","path":"/v1/linkedin/enrich","query":{"profile":"https://www.linkedin.com/in/williamhgates"}}'
 ```
 
-<details>
-<summary>curl equivalent</summary>
-
-```bash
-curl -X POST "https://api.orth.sh/v1/run" \
-
-  -H "Content-Type: application/json" \
-  -d '{"api":"contactout","path":"/v1/linkedin/enrich","query":{"profile":"https://www.linkedin.com/in/williamhgates"}}'
-```
-</details>
-
 **Parameters:**
 - **profile** (required) - LinkedIn profile URL (must start with http and contain linkedin.com/in/)
 - **profile_only** (optional, boolean) - If true, returns profile without contact info (cheaper)
@@ -73,17 +62,6 @@ curl -s -X POST $MOATT_API_BASE/v1/proxy/orthogonal/run \
   -H "Content-Type: application/json" \
   -d '{"api":"contactout","path":"/v1/people/linkedin","query":{"profile":"https://www.linkedin.com/in/williamhgates","include_phone":"true"}}'
 ```
-
-<details>
-<summary>curl equivalent</summary>
-
-```bash
-curl -X POST "https://api.orth.sh/v1/run" \
-
-  -H "Content-Type: application/json" \
-  -d '{"api":"contactout","path":"/v1/people/linkedin","query":{"profile":"https://www.linkedin.com/in/williamhgates","include_phone":"true"}}'
-```
-</details>
 
 **Parameters:**
 - **profile** (required) - LinkedIn profile URL

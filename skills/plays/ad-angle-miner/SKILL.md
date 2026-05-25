@@ -51,7 +51,8 @@ Use the Apify Amazon Reviews Scraper (or web_search for G2/Capterra/TrustRadius 
 Kick off a run of the `web_wanderer/amazon-reviews-extractor` actor:
 
 ```
-POST https://api.apify.com/v2/acts/web_wanderer~amazon-reviews-extractor/runs?token=$APIFY_API_TOKEN
+POST $MOATT_API_BASE/v1/proxy/apify/acts/web_wanderer~amazon-reviews-extractor/runs
+Authorization: Bearer $MOATT_API_KEY
 Content-Type: application/json
 
 {
@@ -65,13 +66,15 @@ Content-Type: application/json
 Poll until the run finishes:
 
 ```
-GET https://api.apify.com/v2/acts/web_wanderer~amazon-reviews-extractor/runs/{RUN_ID}?token=$APIFY_API_TOKEN
+GET $MOATT_API_BASE/v1/proxy/apify/acts/web_wanderer~amazon-reviews-extractor/runs/{RUN_ID}
+Authorization: Bearer $MOATT_API_KEY
 ```
 
 When `status` is `SUCCEEDED`, fetch the results:
 
 ```
-GET https://api.apify.com/v2/datasets/{DATASET_ID}/items?token=$APIFY_API_TOKEN
+GET $MOATT_API_BASE/v1/proxy/apify/datasets/{DATASET_ID}/items
+Authorization: Bearer $MOATT_API_KEY
 ```
 
 **Output fields:** Each review has `rating` (1-5), `reviewTitle`, `reviewText`, `reviewDate`, `verifiedPurchase` (bool), `productAsin`, `productTitle`, `helpfulVoteCount`.
@@ -99,7 +102,8 @@ Use the `trudax/reddit-scraper-lite` actor to search Reddit for relevant threads
 
 **Search by keyword:**
 ```
-POST https://api.apify.com/v2/acts/trudax~reddit-scraper-lite/runs?token=$APIFY_API_TOKEN
+POST $MOATT_API_BASE/v1/proxy/apify/acts/trudax~reddit-scraper-lite/runs
+Authorization: Bearer $MOATT_API_KEY
 Content-Type: application/json
 
 {
@@ -112,7 +116,8 @@ Content-Type: application/json
 
 **Browse a specific subreddit:**
 ```
-POST https://api.apify.com/v2/acts/trudax~reddit-scraper-lite/runs?token=$APIFY_API_TOKEN
+POST $MOATT_API_BASE/v1/proxy/apify/acts/trudax~reddit-scraper-lite/runs
+Authorization: Bearer $MOATT_API_KEY
 Content-Type: application/json
 
 {
@@ -126,13 +131,15 @@ Content-Type: application/json
 Poll until complete:
 
 ```
-GET https://api.apify.com/v2/acts/trudax~reddit-scraper-lite/runs/{RUN_ID}?token=$APIFY_API_TOKEN
+GET $MOATT_API_BASE/v1/proxy/apify/acts/trudax~reddit-scraper-lite/runs/{RUN_ID}
+Authorization: Bearer $MOATT_API_KEY
 ```
 
 Fetch results when `status` is `SUCCEEDED`:
 
 ```
-GET https://api.apify.com/v2/datasets/{DATASET_ID}/items?token=$APIFY_API_TOKEN
+GET $MOATT_API_BASE/v1/proxy/apify/datasets/{DATASET_ID}/items
+Authorization: Bearer $MOATT_API_KEY
 ```
 
 **Output fields:** Each item has `dataType` ("post" or "comment"), `title` (posts only), `body`, `communityName`, `upVotes`, `numberOfComments` (posts), `url`, `createdAt`.

@@ -71,6 +71,7 @@ async function downloadSkillFiles(skill, canonical) {
 function resolveAgents({ target, projectDir }) {
   if (target === 'claude') return ['claude'];
   if (target === 'codex') return ['codex'];
+  if (target === 'openclaw') return ['openclaw'];
   if (target === 'cursor') return ['cursor'];
 
   const detected = installTargets.detectInstalledAgents({ projectDir });
@@ -90,6 +91,9 @@ function placeForAgents(slug, agents, { force, projectDir }) {
     } else if (agent === 'codex') {
       const result = installTargets.placeForCodex(slug, { force });
       placements.push({ agent, result, path: installTargets.codexLink(slug) });
+    } else if (agent === 'openclaw') {
+      const result = installTargets.placeForOpenclaw(slug, { force });
+      placements.push({ agent, result, path: installTargets.openclawLink(slug) });
     } else if (agent === 'cursor') {
       if (!projectDir) {
         placements.push({

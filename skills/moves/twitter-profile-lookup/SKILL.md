@@ -54,17 +54,6 @@ curl -s -X POST $MOATT_API_BASE/v1/proxy/orthogonal/run \
   -d '{"api":"scrapecreators","path":"/v1/twitter/user-tweets","query":{"handle":"openai"}}'
 ```
 
-<details>
-<summary>curl equivalent</summary>
-
-```bash
-curl -X POST "https://api.orth.sh/v1/run" \
-
-  -H "Content-Type: application/json" \
-  -d '{"api":"scrapecreators","path":"/v1/twitter/user-tweets","query":{"handle":"openai"}}'
-```
-</details>
-
 ## Parameters
 
 ### Profile

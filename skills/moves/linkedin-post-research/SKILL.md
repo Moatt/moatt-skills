@@ -99,7 +99,8 @@ python3 skills/capabilities/linkedin-post-research/scripts/search_posts.py \
 
 **API call:**
 ```bash
-curl -X POST "https://api.apify.com/v2/acts/apimaestro~linkedin-posts-search-scraper-no-cookies/runs?token=$APIFY_API_TOKEN" \
+curl -X POST "$MOATT_API_BASE/v1/proxy/apify/acts/apimaestro~linkedin-posts-search-scraper-no-cookies/runs" \
+  -H "Authorization: Bearer $MOATT_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "keyword": "AI agents",
@@ -111,10 +112,9 @@ curl -X POST "https://api.apify.com/v2/acts/apimaestro~linkedin-posts-search-scr
 **Polling for results:**
 ```bash
 # Check run status
-curl "https://api.apify.com/v2/acts/apimaestro~linkedin-posts-search-scraper-no-cookies/runs/{RUN_ID}?token=$APIFY_API_TOKEN"
-
+curl -s -H "Authorization: Bearer $MOATT_API_KEY" "$MOATT_API_BASE/v1/proxy/apify/acts/apimaestro~linkedin-posts-search-scraper-no-cookies/runs/{RUN_ID}"
 # When status is SUCCEEDED, fetch results
-curl "https://api.apify.com/v2/datasets/{DATASET_ID}/items?token=$APIFY_API_TOKEN"
+curl -s -H "Authorization: Bearer $MOATT_API_KEY" "$MOATT_API_BASE/v1/proxy/apify/datasets/{DATASET_ID}/items"
 ```
 
 ## Output Schema

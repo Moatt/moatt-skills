@@ -9,7 +9,7 @@ Usage:
     python3 search_posts.py --keyword "AI agents" --max-items 100 --output-file results.json
 
 Environment:
-    APIFY_API_TOKEN  — Required. Your Apify API token.
+    MOATT_API_KEY  — Required. Your Apify API token.
 """
 
 import argparse
@@ -28,10 +28,7 @@ except ImportError:
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
 
-if MOATT_API_KEY:
-    APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
-else:
-    APIFY_BASE = "https://api.apify.com/v2"
+APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
 
 ACTOR_ID = "apimaestro~linkedin-posts-search-scraper-no-cookies"
 
@@ -41,10 +38,10 @@ ACTOR_ID = "apimaestro~linkedin-posts-search-scraper-no-cookies"
 # ---------------------------------------------------------------------------
 
 def get_apify_token(token_arg=None):
-    """Get API token from arg, MOATT_API_KEY, or APIFY_API_TOKEN env var."""
-    token = token_arg or MOATT_API_KEY or os.environ.get("APIFY_API_TOKEN")
+    """Get API token from arg, MOATT_API_KEY, or MOATT_API_KEY env var."""
+    token = token_arg or MOATT_API_KEY or os.environ.get("MOATT_API_KEY")
     if not token:
-        print("Error: Set MOATT_API_KEY or APIFY_API_TOKEN env var.", file=sys.stderr)
+        print("Error: Set MOATT_API_KEY env var (run `npx moatt login`).", file=sys.stderr)
         sys.exit(1)
     return token
 

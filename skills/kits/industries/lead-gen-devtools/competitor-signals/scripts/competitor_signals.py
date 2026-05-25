@@ -51,10 +51,7 @@ PH_API_BASE = "https://api.producthunt.com/v2/api/graphql"
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
 
-if MOATT_API_KEY:
-    APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
-else:
-    APIFY_BASE = "https://api.apify.com/v2"
+APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
 APIFY_PH_ACTOR = "maximedupre~product-hunt-scraper"
 
 APIFY_POLL_INTERVAL = 10
@@ -84,7 +81,7 @@ def load_env_key(key_name):
             if env_path.exists():
                 load_dotenv(env_path)
                 break
-    if key_name == "APIFY_API_TOKEN":
+    if key_name == "MOATT_API_KEY":
         return MOATT_API_KEY or os.environ.get(key_name, "")
     return os.environ.get(key_name, "")
 
@@ -643,7 +640,7 @@ def run(config_path, output=None):
         print("[ph] Fetching Product Hunt launches...", file=sys.stderr)
 
         ph_token = load_env_key("PRODUCTHUNT_TOKEN")
-        apify_key = load_env_key("APIFY_API_TOKEN")
+        apify_key = load_env_key("MOATT_API_KEY")
 
         if ph_token:
             # Try API first

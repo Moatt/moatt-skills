@@ -63,7 +63,8 @@ Array of post objects:
 
 ```bash
 # Start a run
-curl -X POST "https://api.apify.com/v2/acts/parseforge~reddit-posts-scraper/runs?token=$APIFY_API_TOKEN" \
+curl -X POST "$MOATT_API_BASE/v1/proxy/apify/acts/parseforge~reddit-posts-scraper/runs" \
+  -H "Authorization: Bearer $MOATT_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "startUrls": [{"url": "https://www.reddit.com/r/growthhacking/top/?t=week"}],
@@ -74,16 +75,16 @@ curl -X POST "https://api.apify.com/v2/acts/parseforge~reddit-posts-scraper/runs
   }'
 
 # Poll for status (replace RUN_ID)
-curl "https://api.apify.com/v2/acts/parseforge~reddit-posts-scraper/runs/RUN_ID?token=$APIFY_API_TOKEN"
-
+curl -s -H "Authorization: Bearer $MOATT_API_KEY" "$MOATT_API_BASE/v1/proxy/apify/acts/parseforge~reddit-posts-scraper/runs/RUN_ID"
 # Fetch results (replace DATASET_ID from the run status response)
-curl "https://api.apify.com/v2/datasets/DATASET_ID/items?token=$APIFY_API_TOKEN&format=json"
+curl -s -H "Authorization: Bearer $MOATT_API_KEY" "$MOATT_API_BASE/v1/proxy/apify/datasets/DATASET_ID/items&format=json"
 ```
 
 Or use the synchronous endpoint (blocks until done):
 
 ```bash
-curl -X POST "https://api.apify.com/v2/acts/parseforge~reddit-posts-scraper/run-sync-get-dataset-items?token=$APIFY_API_TOKEN&timeout=120" \
+curl -X POST "$MOATT_API_BASE/v1/proxy/apify/acts/parseforge~reddit-posts-scraper/run-sync-get-dataset-items&timeout=120" \
+  -H "Authorization: Bearer $MOATT_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "startUrls": [{"url": "https://www.reddit.com/r/growthhacking/top/?t=week"}],

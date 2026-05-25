@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * Research a person for meeting brief
- * This generates a research prompt for OpenClaw to execute
- * 
+ * Research a person for a meeting brief.
+ * This emits a research prompt the agent then executes.
+ *
  * Usage: node research_person.js <name> <email> <company> <research_depth>
  */
 
@@ -16,7 +16,7 @@ if (!name) {
   process.exit(1);
 }
 
-// Generate research prompt for OpenClaw
+// Generate research prompt for the agent
 const prompt = `Research this person for a meeting brief:
 
 **Person:** ${name}

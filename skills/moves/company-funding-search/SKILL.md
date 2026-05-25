@@ -58,41 +58,14 @@ curl -s -X POST $MOATT_API_BASE/v1/proxy/orthogonal/run \
   -d '{"api":"nyne","path":"/company/funding","query":{"request_id":"YOUR_REQUEST_ID"}}'
 ```
 
-<details>
-<summary>curl equivalent</summary>
-
-```bash
-# Step 1: Start lookup
-curl -X POST https://api.orth.sh/v1/run/nyne/company/funding \
-
-  -H "Content-Type: application/json" \
-  -d '{"company_name":"Anthropic"}'
-
-# Step 2: Poll for results
-curl "https://api.orth.sh/v1/run/nyne/company/funding?request_id=YOUR_REQUEST_ID" \
-
-```
-</details>
-
 ### Get Company Investors/Funders
 
 ```bash
 curl -s -X POST $MOATT_API_BASE/v1/proxy/orthogonal/run \
   -H "Authorization: Bearer $MOATT_API_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"api":"","path":"","body":{"company_domain":"stripe.com"}}'
+  -d '{"api":"nyne","path":"/company/funders","body":{"company_domain":"stripe.com"}}'
 ```
-
-<details>
-<summary>curl equivalent</summary>
-
-```bash
-curl -X POST https://api.orth.sh/v1/run/nyne/company/funders \
-
-  -H "Content-Type: application/json" \
-  -d '{"company_domain":"stripe.com"}'
-```
-</details>
 
 ### Nyne Parameters
 - **company_name** - Company name (e.g., "Anthropic") - works better
@@ -110,19 +83,8 @@ Best for: Finding companies by funding stage, industry, location, etc.
 curl -s -X POST $MOATT_API_BASE/v1/proxy/orthogonal/run \
   -H "Authorization: Bearer $MOATT_API_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"api":"","path":"","body":{"query":"AI companies that raised Series B in 2024","limit":10}}'
+  -d '{"api":"fiber","path":"/v1/natural-language-search/companies","body":{"query":"AI companies that raised Series B in 2024","limit":10}}'
 ```
-
-<details>
-<summary>curl equivalent</summary>
-
-```bash
-curl -X POST https://api.orth.sh/v1/run/fiber/v1/natural-language-search/companies \
-
-  -H "Content-Type: application/json" \
-  -d '{"query":"AI companies that raised Series B in 2024","limit":10}'
-```
-</details>
 
 ### Investor Search
 
@@ -132,19 +94,8 @@ Search for investors/VCs (filter-based, not natural language):
 curl -s -X POST $MOATT_API_BASE/v1/proxy/orthogonal/run \
   -H "Authorization: Bearer $MOATT_API_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"api":"","path":"","body":{"searchParams":{},"limit":10}}'
+  -d '{"api":"fiber","path":"/v1/investor-search","body":{"searchParams":{},"limit":10}}'
 ```
-
-<details>
-<summary>curl equivalent</summary>
-
-```bash
-curl -X POST https://api.orth.sh/v1/run/fiber/v1/investor-search \
-
-  -H "Content-Type: application/json" \
-  -d '{"searchParams":{},"limit":10}'
-```
-</details>
 
 Returns top investors with:
 - Total investments, lead rate

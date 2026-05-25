@@ -18,7 +18,7 @@ Usage:
     python3 champion_tracker.py status
 
 Environment:
-    APIFY_API_TOKEN: Required for LinkedIn enrichment.
+    MOATT_API_KEY: Required for LinkedIn enrichment.
 """
 
 import argparse
@@ -102,7 +102,7 @@ else:
     if _MOATT_API_KEY:
         _BASE_URL = f"{_MOATT_API_BASE}/v1/proxy/apify"
     else:
-        _BASE_URL = "https://api.apify.com/v2"
+        _BASE_URL = f"{MOATT_API_BASE}/v1/proxy/apify"
     _COST_PER_1K = 3.00
 
     def normalize_linkedin_url(url: str) -> str:
@@ -609,9 +609,9 @@ def cmd_init(args):
         return
 
     # Check API token
-    api_token = os.getenv("MOATT_API_KEY") or os.getenv("APIFY_API_TOKEN")
+    api_token = os.environ.get("MOATT_API_KEY")
     if not api_token:
-        print("Error: Set MOATT_API_KEY or APIFY_API_TOKEN env var.", file=sys.stderr)
+        print("Error: Set MOATT_API_KEY env var (run `npx moatt login`).", file=sys.stderr)
         sys.exit(1)
 
     # Cost confirmation
@@ -739,9 +739,9 @@ def cmd_check(args):
         return
 
     # Check API token
-    api_token = os.getenv("MOATT_API_KEY") or os.getenv("APIFY_API_TOKEN")
+    api_token = os.environ.get("MOATT_API_KEY")
     if not api_token:
-        print("Error: Set MOATT_API_KEY or APIFY_API_TOKEN env var.", file=sys.stderr)
+        print("Error: Set MOATT_API_KEY env var (run `npx moatt login`).", file=sys.stderr)
         sys.exit(1)
 
     if not unique_urls:
@@ -880,7 +880,7 @@ Examples:
     python3 champion_tracker.py status
 
 Environment:
-    APIFY_API_TOKEN: Required for LinkedIn enrichment.
+    MOATT_API_KEY: Required for LinkedIn enrichment.
         """,
     )
 

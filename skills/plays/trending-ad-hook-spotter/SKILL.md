@@ -72,7 +72,8 @@ Use the `trudax/reddit-scraper-lite` actor to scan relevant subreddits for hot p
 
 **Browse specific subreddits (for trending/hot posts):**
 ```
-POST https://api.apify.com/v2/acts/trudax~reddit-scraper-lite/runs?token=$APIFY_API_TOKEN
+POST $MOATT_API_BASE/v1/proxy/apify/acts/trudax~reddit-scraper-lite/runs
+Authorization: Bearer $MOATT_API_KEY
 Content-Type: application/json
 
 {
@@ -86,7 +87,8 @@ Content-Type: application/json
 
 **Search by keyword (for specific topics):**
 ```
-POST https://api.apify.com/v2/acts/trudax~reddit-scraper-lite/runs?token=$APIFY_API_TOKEN
+POST $MOATT_API_BASE/v1/proxy/apify/acts/trudax~reddit-scraper-lite/runs
+Authorization: Bearer $MOATT_API_KEY
 Content-Type: application/json
 
 {
@@ -98,13 +100,15 @@ Content-Type: application/json
 Poll until the run wraps up:
 
 ```
-GET https://api.apify.com/v2/acts/trudax~reddit-scraper-lite/runs/{RUN_ID}?token=$APIFY_API_TOKEN
+GET $MOATT_API_BASE/v1/proxy/apify/acts/trudax~reddit-scraper-lite/runs/{RUN_ID}
+Authorization: Bearer $MOATT_API_KEY
 ```
 
 Once `status` is `SUCCEEDED`, pull results:
 
 ```
-GET https://api.apify.com/v2/datasets/{DATASET_ID}/items?token=$APIFY_API_TOKEN
+GET $MOATT_API_BASE/v1/proxy/apify/datasets/{DATASET_ID}/items
+Authorization: Bearer $MOATT_API_KEY
 ```
 
 **Output fields:** Each item has `dataType` ("post" or "comment"), `title` (posts only), `body`, `communityName`, `upVotes`, `numberOfComments` (posts), `url`, `createdAt`.
