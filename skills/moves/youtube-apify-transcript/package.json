@@ -10,7 +10,7 @@
     "transcript",
     "apify"
   ],
-  "openclaw": {
+  "moatt": {
     "skill": true,
     "triggers": [
       "youtube transcript",

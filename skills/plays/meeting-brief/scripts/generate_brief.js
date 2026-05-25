@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * Generate AI brief for a person based on research data
- * This generates a prompt for OpenClaw to execute
- * 
+ * Generate AI brief for a person based on research data.
+ * This emits a prompt the agent then executes.
+ *
  * Usage: node generate_brief.js <research_json_file> <meeting_context_json>
  */
 
