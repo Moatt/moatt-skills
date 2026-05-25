@@ -89,7 +89,13 @@ npx moatt install lead-discovery
 npx moatt install email-finder-hunter && cat ~/.claude/skills/email-finder-hunter/SKILL.md
 ```
 
-Skills are installed to `~/.claude/skills/<slug>/` for Claude Code, `~/.codex/skills/<slug>/` for Codex, or `.cursor/rules/moatt-<slug>.mdc` for Cursor. The canonical location is `~/.agents/skills/<slug>/` with a symlink per detected agent.
+Skills install to the path your AI agent reads from:
+- Claude Code: `~/.claude/skills/<slug>/`
+- Codex: `~/.codex/skills/<slug>/`
+- OpenClaw: `~/.openclaw/skills/<slug>/`
+- Cursor: `<project>/.cursor/rules/moatt-<slug>.mdc`
+
+The canonical location is `~/.agents/skills/<slug>/` with a symlink per detected agent. The CLI auto-detects which agents you have installed; pass `--claude`, `--codex`, `--openclaw`, or `--cursor` to target a specific one.
 
 ## Using Installed Skills
 

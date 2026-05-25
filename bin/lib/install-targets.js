@@ -10,6 +10,7 @@ const HOME = os.homedir();
 const CANONICAL_ROOT = path.join(HOME, '.agents', 'skills');
 const CLAUDE_ROOT = path.join(HOME, '.claude', 'skills');
 const CODEX_ROOT = path.join(HOME, '.codex', 'skills');
+const OPENCLAW_ROOT = path.join(HOME, '.openclaw', 'skills');
 
 function canonicalDir(slug) {
   return path.join(CANONICAL_ROOT, slug);
@@ -23,10 +24,15 @@ function codexLink(slug) {
   return path.join(CODEX_ROOT, slug);
 }
 
+function openclawLink(slug) {
+  return path.join(OPENCLAW_ROOT, slug);
+}
+
 function detectInstalledAgents({ projectDir = null } = {}) {
   const agents = [];
   if (fs.existsSync(path.join(HOME, '.claude'))) agents.push('claude');
   if (fs.existsSync(path.join(HOME, '.codex'))) agents.push('codex');
+  if (fs.existsSync(path.join(HOME, '.openclaw'))) agents.push('openclaw');
 
   if (projectDir && fs.existsSync(path.join(projectDir, '.cursor'))) {
     agents.push('cursor');
@@ -99,6 +105,10 @@ function placeForCodex(slug, { force = false } = {}) {
   return ensureSymlink(codexLink(slug), canonicalDir(slug), { force });
 }
 
+function placeForOpenclaw(slug, { force = false } = {}) {
+  return ensureSymlink(openclawLink(slug), canonicalDir(slug), { force });
+}
+
 function placeForCursor(slug, projectDir) {
   if (!projectDir) {
     throw new Error('placeForCursor requires a projectDir.');
@@ -143,14 +153,17 @@ module.exports = {
   CANONICAL_ROOT,
   CLAUDE_ROOT,
   CODEX_ROOT,
+  OPENCLAW_ROOT,
   canonicalDir,
   claudeLink,
   codexLink,
+  openclawLink,
   detectInstalledAgents,
   ensureSymlink,
   inspectTarget,
   placeForClaude,
   placeForCodex,
+  placeForOpenclaw,
   placeForCursor,
   listInstalledCanonical,
   detectLegacyClaudeCopy,
