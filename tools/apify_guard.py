@@ -24,6 +24,11 @@ if MOATT_API_KEY:
 else:
     _APIFY_BASE = "https://api.apify.com/v2"
 
+
+def _proxy_auth_headers():
+    """Bearer header when routing via Moatt proxy. Empty dict in direct mode."""
+    return {"Authorization": f"Bearer {MOATT_API_KEY}"} if MOATT_API_KEY else {}
+
 # ── Session state ───────────────────────────────────────────────────────────
 
 _run_count = 0
@@ -104,6 +109,8 @@ def guarded_apify_run(actor_id, run_input, token, timeout=300):
     data = json.dumps(run_input).encode("utf-8")
     req = urllib.request.Request(url, data=data, method="POST")
     req.add_header("Content-Type", "application/json")
+    for header_name, header_value in _proxy_auth_headers().items():
+        req.add_header(header_name, header_value)
 
     resp = urllib.request.urlopen(req, timeout=timeout)
     result = json.loads(resp.read().decode("utf-8"))
@@ -116,7 +123,10 @@ def guarded_apify_run(actor_id, run_input, token, timeout=300):
     deadline = time.time() + timeout
     while status in ("READY", "RUNNING") and time.time() < deadline:
         time.sleep(5)
-        poll_resp = urllib.request.urlopen(poll_url, timeout=30)
+        poll_req = urllib.request.Request(poll_url, method="GET")
+        for header_name, header_value in _proxy_auth_headers().items():
+            poll_req.add_header(header_name, header_value)
+        poll_resp = urllib.request.urlopen(poll_req, timeout=30)
         poll_data = json.loads(poll_resp.read().decode("utf-8"))
         status = poll_data["data"]["status"]
 
@@ -140,5 +150,7 @@ def fetch_dataset(dataset_id, token, limit=1000):
     """
     url = f"{_APIFY_BASE}/datasets/{dataset_id}/items?token={token}&format=json&limit={limit}"
     req = urllib.request.Request(url, method="GET")
+    for header_name, header_value in _proxy_auth_headers().items():
+        req.add_header(header_name, header_value)
     resp = urllib.request.urlopen(req, timeout=60)
     return json.loads(resp.read().decode("utf-8"))
