@@ -241,9 +241,9 @@ the summary, then ask: "Ready to launch? Type 'yes' to activate."
 
 - **Connected-mailbox path:** delegate to `setup-outreach-campaign`. After
   it returns, the agent calls `attachCampaignToMailbox` (registers the
-  campaign for the karmableai dispatcher) and then `activateCampaign`
+  campaign for the moatt dispatcher) and then `activateCampaign`
   (flips it on). Do NOT POST to Smartlead's `/campaigns/{id}/status` —
-  karmableai owns the actual sender, not Smartlead.
+  moatt owns the actual sender, not Smartlead.
 - **CSV fallback:** tell the user the file is ready for import and provide
   the file path.
 

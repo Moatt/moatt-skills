@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-05-12",
+  "generated": "2026-05-25",
   "skills": [
     {
       "slug": "ad-angle-miner",
@@ -102,7 +102,7 @@
       "slug": "aeo",
       "name": "aeo",
       "category": "moves",
-      "description": "Check and improve your brand's visibility across AI search engines (ChatGPT, Perplexity, Gemini, Grok, Claude, DeepSeek). Set up tracking, run visibility analyses, audit your website for AI readability, and get actionable recommendations. Uses the npx moatt-aeo@latest CLI.",
+      "description": "Check and improve a brand's visibility across AI search engines (ChatGPT, Claude, Gemini, Perplexity). Calls DataForSEO's AI Optimization endpoints through the Moatt proxy — no user API keys required, billed via Moatt credits. Verified live 2026-05-24.",
       "tags": [
         "seo"
       ],
@@ -773,7 +773,7 @@
       "slug": "cold-email-outreach",
       "name": "cold-email-outreach",
       "category": "moves",
-      "description": "Full-cycle cold email orchestration. Covers goal alignment, lead ingestion from any source (CSV, paste, CRM export, database), sequence design, email generation, campaign setup in the user's outreach tool of choice, and launch. Tool-agnostic — supports Smartlead (full MCP automation), Instantly, Lemlist, Apollo, or a plain CSV export.",
+      "description": "Full-cycle cold email orchestration. Covers goal alignment, lead ingestion from any source (CSV, paste, CRM export, database), sequence design, email generation, campaign setup, and launch. Sends through the user's connected outbound mailbox by default (auto-wired when they connected Gmail/Outlook in chat); falls back to a plain CSV export when the user wants to run the campaign in a tool they own.",
       "tags": [
         "outreach"
       ],
@@ -2191,7 +2191,7 @@
       "slug": "find-skill",
       "name": "find-skill",
       "category": "moves",
-      "description": "Find and install skills from the Orthogonal skill library. Use when you need capabilities you don't have, want to discover available skills, or need to add new tools to your agent.",
+      "description": "Find and install skills from the Moatt catalog. Use when you need capabilities you don't have, want to discover available skills, or need to add new tools to your agent.",
       "tags": [],
       "path": "skills/moves/find-skill",
       "files": [
@@ -4992,8 +4992,7 @@
           ]
         },
         "requires_skills": [
-          "create-html-slides",
-          "data-charts-tako"
+          "create-html-slides"
         ]
       }
     },
@@ -5354,11 +5353,12 @@
       "slug": "seo-analyzer",
       "name": "seo-analyzer",
       "category": "moves",
-      "description": "General-purpose SEO analyzer for any domain via DataForSEO — technical health (OnPage API + Lighthouse CWV, broken links, meta issues), authority + ranking snapshot (Labs domain rank, ranked keywords), top content opportunities (keyword_ideas), and live competitive SERP for top keywords. The lightweight first-look \"analyze SEO for {domain}\" entry point. Pay-per-use, ~$0.10–0.20 per run.",
+      "description": "General-purpose SEO analyzer for any domain via DataForSEO — authority + ranking snapshot, top ranked keywords, content opportunities (keyword_ideas), and live competitive SERP for the top keyword. The lightweight first-look \"analyze SEO for {domain}\" entry point. Pay-per-use, ~$0.06–0.15 per run via the Moatt DataForSEO proxy.",
       "tags": [],
       "path": "skills/moves/seo-analyzer",
       "files": [
         "skills/moves/seo-analyzer/SKILL.md",
+        "skills/moves/seo-analyzer/scripts/run.sh",
         "skills/moves/seo-analyzer/skill.meta.json"
       ],
       "metadata": {
@@ -5383,17 +5383,19 @@
       "slug": "seo-content-audit",
       "name": "seo-content-audit",
       "category": "plays",
-      "description": "Comprehensive SEO footprint analysis powered by DataForSEO. Catalogs every piece of content, pulls real SEO metrics (domain rank, ranked keywords, top pages, backlinks), runs an OnPage technical audit (Core Web Vitals, broken links, duplicate tags), runs competitor comparison via DFS Labs, builds topic/keyword and content-type gap matrices, and produces a prioritized recommendations report. The complete SEO audit for any company.",
+      "description": "Comprehensive SEO footprint audit for any domain via DataForSEO — domain authority + ranking, top ranked keywords (100), top pages, backlink profile, competitor discovery, OnPage technical crawl, and keyword-gap vs the top competitor. Runs the full 7-phase pipeline through the Moatt proxy and writes a single report.json the model summarizes inline. Pay-per-use, ~$0.20–0.40 per run.",
       "tags": [
         "seo"
       ],
       "path": "skills/plays/seo-content-audit",
       "files": [
         "skills/plays/seo-content-audit/SKILL.md",
+        "skills/plays/seo-content-audit/scripts/run.sh",
         "skills/plays/seo-content-audit/skill.meta.json"
       ],
       "metadata": {
         "slug": "seo-content-audit",
+        "version": "0.3.0",
         "category": "plays",
         "tags": [
           "seo"
@@ -5588,7 +5590,7 @@
       "slug": "setup-outreach-campaign",
       "name": "setup-outreach-campaign",
       "category": "moves",
-      "description": "Spin up a complete outbound email campaign inside Smartlead. Walks the user through campaign goal, audience, messaging, schedule, and mailbox allocation. Creates the campaign, adds the leads, saves the email sequence, sets the schedule, and assigns available mailboxes. Use when a user wants to launch email outreach via Smartlead.",
+      "description": "Spin up a complete outbound email campaign for the user. Walks them through campaign goal, audience, messaging, schedule, and mailbox allocation. Creates the campaign, adds the leads, saves the email sequence, sets the schedule, and assigns the user's connected mailbox. Use when a user wants to launch email outreach.",
       "tags": [
         "outreach"
       ],
@@ -5743,7 +5745,7 @@
       "slug": "skill-creator",
       "name": "skill-creator",
       "category": "moves",
-      "description": "Create, structure, and package agent skills. Use when designing new skills, updating existing skills, or helping users build skills with scripts, references, and assets. Triggers on requests to create skills, write SKILL.md files, or structure skill directories.",
+      "description": "Create new skills for the Moatt catalog. Use when designing new skills, updating existing skills, or helping users build skills with scripts, references, and assets. Triggers on requests to create skills, write SKILL.md files, or structure skill directories.",
       "tags": [],
       "path": "skills/moves/skill-creator",
       "files": [

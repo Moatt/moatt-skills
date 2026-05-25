@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "updatedAt": "2026-05-12T07:24:26Z",
+  "updatedAt": "2026-05-25T10:09:26Z",
   "skills": [
     {
       "slug": "ad-angle-miner",
@@ -68,15 +68,12 @@
     {
       "slug": "aeo",
       "name": "Aeo",
-      "description": "Check and improve your brand's visibility across AI search engines (ChatGPT, Claude, Gemini, Perplexity). Powered by DataForSEO's AI Optimization endpoints through the Moatt proxy — no user API keys required. Sets up tracking, runs visibility analyses, audits the site for AI-readability, and produces actionable recommendations.",
+      "description": "Check and improve a brand's visibility across AI search engines (ChatGPT, Claude, Gemini, Perplexity). Calls DataForSEO's AI Optimization endpoints through the Moatt proxy — no user API keys required, billed via Moatt credits. Verified live 2026-05-24.",
       "category": "moves",
       "tags": [
-        "seo",
-        "aeo",
-        "geo",
-        "llm"
+        "seo"
       ],
-      "version": "0.2.0",
+      "version": "0.1.0",
       "path": "skills/moves/aeo",
       "argumentHint": "",
       "domain": "",
@@ -507,7 +504,7 @@
     {
       "slug": "cold-email-outreach",
       "name": "Cold Email Outreach",
-      "description": "Full-cycle cold email orchestration. Covers goal alignment, lead ingestion from any source (CSV, paste, CRM export, database), sequence design, email generation, campaign setup in the user's outreach tool of choice, and launch. Tool-agnostic — supports Smartlead (full MCP automation), Instantly, Lemlist, Apollo, or a plain CSV export.",
+      "description": "Full-cycle cold email orchestration. Covers goal alignment, lead ingestion from any source (CSV, paste, CRM export, database), sequence design, email generation, campaign setup, and launch. Sends through the user's connected outbound mailbox by default (auto-wired when they connected Gmail/Outlook in chat); falls back to a plain CSV export when the user wants to run the campaign in a tool they own.",
       "category": "moves",
       "tags": [
         "outreach"
@@ -1415,7 +1412,7 @@
     {
       "slug": "find-skill",
       "name": "Find Skill",
-      "description": "Find and install skills from the Orthogonal skill library. Use when you need capabilities you don't have, want to discover available skills, or need to add new tools to your agent.",
+      "description": "Find and install skills from the Moatt catalog. Use when you need capabilities you don't have, want to discover available skills, or need to add new tools to your agent.",
       "category": "moves",
       "tags": [],
       "version": "0.1.0",
@@ -3182,8 +3179,7 @@
         "0.1.0": "Initial release."
       },
       "requires_skills": [
-        "create-html-slides",
-        "data-charts-tako"
+        "create-html-slides"
       ],
       "kit": null
     },
@@ -3420,17 +3416,14 @@
       "name": "Seo Analyzer",
       "description": "General-purpose SEO analyzer for any domain via DataForSEO — authority + ranking snapshot, top ranked keywords, content opportunities (keyword_ideas), and live competitive SERP for the top keyword. The lightweight first-look \"analyze SEO for {domain}\" entry point. Pay-per-use, ~$0.06–0.15 per run via the Moatt DataForSEO proxy.",
       "category": "moves",
-      "tags": [
-        "seo"
-      ],
-      "version": "0.2.0",
+      "tags": [],
+      "version": "0.1.0",
       "path": "skills/moves/seo-analyzer",
       "argumentHint": "",
       "domain": "",
       "appName": "Seo Analyzer",
       "changelog": {
-        "0.1.0": "Initial release.",
-        "0.2.0": "Rewrote recipe to call the Moatt DataForSEO proxy instead of api.dataforseo.com directly. Added executable scripts/run.sh that runs 4 phases (domain_rank_overview, ranked_keywords, keyword_ideas, serp/organic) and writes a structured report.json. SKILL.md now has a real ## Steps section so the chat orchestrator can boxExec the recipe end-to-end."
+        "0.1.0": "Initial release."
       },
       "requires_skills": [],
       "kit": null
@@ -3438,7 +3431,7 @@
     {
       "slug": "seo-content-audit",
       "name": "Seo Content Audit",
-      "description": "Comprehensive SEO footprint audit for any domain via DataForSEO — domain authority + ranking, top ranked keywords (100), top pages, backlink profile, competitor discovery, OnPage technical crawl, and keyword-gap vs the top competitor. Runs the full 7-phase pipeline through the Moatt proxy and writes a single report.json the chat summarizes inline. Pay-per-use, ~$0.20–0.40 per run.",
+      "description": "Comprehensive SEO footprint audit for any domain via DataForSEO — domain authority + ranking, top ranked keywords (100), top pages, backlink profile, competitor discovery, OnPage technical crawl, and keyword-gap vs the top competitor. Runs the full 7-phase pipeline through the Moatt proxy and writes a single report.json the model summarizes inline. Pay-per-use, ~$0.20–0.40 per run.",
       "category": "plays",
       "tags": [
         "seo"
@@ -3449,9 +3442,7 @@
       "domain": "",
       "appName": "Seo Content Audit",
       "changelog": {
-        "0.1.0": "Initial release.",
-        "0.2.0": "Rewrote recipe to call the Moatt DataForSEO proxy. Added executable scripts/run.sh that runs 7 phases including async OnPage polling, backlinks, competitor discovery, and keyword-gap vs top competitor. Fixed OnPage task_post field names (domain + max_pages_to_crawl, not target + max_crawl_pages). Switched the OnPage summary poll from POST to GET via the new proxy method:GET support. SKILL.md now has a real ## Steps section + documents the DFS Backlinks subscription requirement.",
-        "0.3.0": "Inlined the full bash recipe under a ## scripts/run.sh section in SKILL.md so the model can boxWrite it to /workspace/home/.skills-cache/seo-content-audit/run.sh and boxExec from there. Removes dependency on /workspace/skills/ which is sandboxed and unreachable to the model's shell."
+        "0.1.0": "Initial release."
       },
       "requires_skills": [
         "brand-voice-extractor",
@@ -3566,8 +3557,8 @@
     },
     {
       "slug": "setup-outreach-campaign",
-      "name": "Setup Outreach Campaign Smartlead",
-      "description": "Spin up a complete outbound email campaign inside Smartlead. Walks the user through campaign goal, audience, messaging, schedule, and mailbox allocation. Creates the campaign, adds the leads, saves the email sequence, sets the schedule, and assigns available mailboxes. Use when a user wants to launch email outreach via Smartlead.",
+      "name": "Setup Outreach Campaign",
+      "description": "Spin up a complete outbound email campaign for the user. Walks them through campaign goal, audience, messaging, schedule, and mailbox allocation. Creates the campaign, adds the leads, saves the email sequence, sets the schedule, and assigns the user's connected mailbox. Use when a user wants to launch email outreach.",
       "category": "moves",
       "tags": [
         "outreach"
@@ -3575,8 +3566,8 @@
       "version": "0.1.0",
       "path": "skills/moves/setup-outreach-campaign",
       "argumentHint": "",
-      "domain": "smartlead.ai",
-      "appName": "Smartlead",
+      "domain": "",
+      "appName": "Setup Outreach Campaign",
       "changelog": {
         "0.1.0": "Initial release."
       },
@@ -3663,7 +3654,7 @@
     {
       "slug": "skill-creator",
       "name": "Skill Creator",
-      "description": "Create, structure, and package agent skills. Use when designing new skills, updating existing skills, or helping users build skills with scripts, references, and assets. Triggers on requests to create skills, write SKILL.md files, or structure skill directories.",
+      "description": "Create new skills for the Moatt catalog. Use when designing new skills, updating existing skills, or helping users build skills with scripts, references, and assets. Triggers on requests to create skills, write SKILL.md files, or structure skill directories.",
       "category": "moves",
       "tags": [],
       "version": "0.1.0",
