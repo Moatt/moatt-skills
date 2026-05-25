@@ -24,6 +24,7 @@ MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
 
 BASE_URL = f"{MOATT_API_BASE}/v1/proxy/apify"
+HEADERS = {"Authorization": f"Bearer {MOATT_API_KEY}"} if MOATT_API_KEY else {}
 
 
 def get_token(cli_token=None):
@@ -87,6 +88,7 @@ def run_apify_actor(token, start_urls, max_posts=100, timeout=300):
         f"{BASE_URL}/acts/{ACTOR_ID}/runs",
         json=run_input,
         params={"token": token},
+        headers=HEADERS,
     )
     resp.raise_for_status()
     run_data = resp.json()
@@ -97,8 +99,9 @@ def run_apify_actor(token, start_urls, max_posts=100, timeout=300):
     deadline = time_mod.time() + timeout
     while time_mod.time() < deadline:
         status_resp = requests.get(
-            f"{BASE_URL}/acts/{ACTOR_ID}/runs/{run_id}",
+            f"{BASE_URL}/actor-runs/{run_id}",
             params={"token": token},
+            headers=HEADERS,
         )
         status_resp.raise_for_status()
         status_data = status_resp.json()
@@ -121,6 +124,7 @@ def run_apify_actor(token, start_urls, max_posts=100, timeout=300):
     dataset_resp = requests.get(
         f"{BASE_URL}/datasets/{dataset_id}/items",
         params={"token": token, "format": "json"},
+        headers=HEADERS,
     )
     dataset_resp.raise_for_status()
     posts = dataset_resp.json()

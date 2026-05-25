@@ -21,7 +21,7 @@ Scrape Reddit posts and comments using the Apify `trudax/reddit-scraper-lite` ac
 
 ## Quick Start
 
-Needs the `APIFY_API_TOKEN` env var (or `--token` flag).
+Requires `MOATT_API_KEY` env var (Karmable proxy auth — Apify usage billed to your org). The script reads it automatically from the environment; no `--token` flag needed.
 
 ```bash
 # Top posts from r/growthhacking in the last week
@@ -62,7 +62,6 @@ python3 skills/reddit-post-finder/scripts/search_reddit.py \
 | `--sort` | top | Sort: `hot`, `top`, `new`, `rising` |
 | `--time` | week | Time window for `top` sort: `hour`, `day`, `week`, `month`, `year`, `all` |
 | `--output` | json | Output format: `json` or `summary` |
-| `--token` | env var | Apify token (prefer the `APIFY_API_TOKEN` env var) |
 | `--timeout` | 300 | Max seconds to wait for the Apify run |
 
 ## Tips for Small Subreddits
