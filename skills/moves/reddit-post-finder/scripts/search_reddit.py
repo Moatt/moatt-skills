@@ -193,6 +193,8 @@ def format_summary(posts):
         upvotes = p.get("upVotes", 0)
         comments = p.get("numberOfComments", 0)
         sub = p.get("communityName", "")
+        if sub.startswith("r/"):
+            sub = sub[2:]
         lines.append(f"{i:<4} {upvotes:<9} {comments:<10} r/{sub:<18} {title}")
     return "\n".join(lines)
 
