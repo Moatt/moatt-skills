@@ -27,7 +27,8 @@ MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
 
 APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
 
-HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; SEOAnalyzerBot/1.0)"}
+HEADERS = {
+    **({"Authorization": f"Bearer {MOATT_API_KEY}"} if MOATT_API_KEY else {}),"User-Agent": "Mozilla/5.0 (compatible; SEOAnalyzerBot/1.0)"}
 
 # Apify actor IDs
 SEMRUSH_ACTOR = "devnaz~semrush-scraper"
@@ -43,7 +44,8 @@ def run_apify_actor(actor_id, input_data, token, timeout=120):
         resp = requests.post(
             f"{APIFY_BASE}/acts/{actor_id}/runs",
             json=input_data,
-            params={"token": token},
+            headers=HEADERS,
+        params={"token": token},
             timeout=30,
         )
         resp.raise_for_status()
@@ -56,7 +58,8 @@ def run_apify_actor(actor_id, input_data, token, timeout=120):
         while time_mod.time() < deadline:
             status_resp = requests.get(
                 f"{APIFY_BASE}/acts/{actor_id}/runs/{run_id}",
-                params={"token": token},
+                headers=HEADERS,
+        params={"token": token},
                 timeout=15,
             )
             status_resp.raise_for_status()
@@ -78,7 +81,8 @@ def run_apify_actor(actor_id, input_data, token, timeout=120):
         dataset_id = status_data["data"]["defaultDatasetId"]
         items_resp = requests.get(
             f"{APIFY_BASE}/datasets/{dataset_id}/items",
-            params={"token": token, "format": "json"},
+            headers=HEADERS,
+        params={"token": token, "format": "json"},
             timeout=30,
         )
         items_resp.raise_for_status()

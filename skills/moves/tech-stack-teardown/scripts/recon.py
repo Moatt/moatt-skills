@@ -25,6 +25,7 @@ from datetime import datetime, timezone
 
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
+HEADERS = {"Authorization": f"Bearer {MOATT_API_KEY}"} if MOATT_API_KEY else {}
 
 APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
 
@@ -317,7 +318,8 @@ def scan_apify_profiler(domains, token):
         resp = requests.post(
             f"{APIFY_BASE}/acts/justa~technology-profiling-engine/runs",
             json=payload,
-            params={"token": token, "waitForFinish": 300},
+            headers=HEADERS,
+        params={"token": token, "waitForFinish": 300},
             timeout=330,
         )
         if resp.status_code != 201:
@@ -333,7 +335,8 @@ def scan_apify_profiler(domains, token):
                 time.sleep(5)
                 check = requests.get(
                     f"{APIFY_BASE}/actor-runs/{run_id}",
-                    params={"token": token},
+                    headers=HEADERS,
+        params={"token": token},
                 ).json()
                 status = check["data"]["status"]
                 if status == "SUCCEEDED":
@@ -346,7 +349,8 @@ def scan_apify_profiler(domains, token):
         dataset_id = run_data["defaultDatasetId"]
         ds_resp = requests.get(
             f"{APIFY_BASE}/datasets/{dataset_id}/items",
-            params={"token": token},
+            headers=HEADERS,
+        params={"token": token},
         )
         items = ds_resp.json()
 

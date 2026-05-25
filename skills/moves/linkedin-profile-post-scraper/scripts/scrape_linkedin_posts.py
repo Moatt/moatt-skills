@@ -21,6 +21,7 @@ ACTOR_ID = "harvestapi~linkedin-profile-posts"
 
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
+HEADERS = {"Authorization": f"Bearer {MOATT_API_KEY}"} if MOATT_API_KEY else {}
 
 BASE_URL = f"{MOATT_API_BASE}/v1/proxy/apify"
 
@@ -60,6 +61,7 @@ def run_apify_actor(token, profile_urls, max_posts=20, timeout=300):
     resp = requests.post(
         f"{BASE_URL}/acts/{ACTOR_ID}/runs",
         json=run_input,
+        headers=HEADERS,
         params={"token": token},
     )
     resp.raise_for_status()
@@ -73,7 +75,8 @@ def run_apify_actor(token, profile_urls, max_posts=20, timeout=300):
     while time_mod.time() < deadline:
         status_resp = requests.get(
             f"{BASE_URL}/acts/{ACTOR_ID}/runs/{run_id}",
-            params={"token": token},
+            headers=HEADERS,
+        params={"token": token},
         )
         status_resp.raise_for_status()
         status_data = status_resp.json()
@@ -95,6 +98,7 @@ def run_apify_actor(token, profile_urls, max_posts=20, timeout=300):
     dataset_id = status_data["data"]["defaultDatasetId"]
     dataset_resp = requests.get(
         f"{BASE_URL}/datasets/{dataset_id}/items",
+        headers=HEADERS,
         params={"token": token, "format": "json"},
     )
     dataset_resp.raise_for_status()

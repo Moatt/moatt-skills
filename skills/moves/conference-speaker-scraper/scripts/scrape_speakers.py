@@ -27,6 +27,7 @@ except ImportError:
     sys.exit(1)
 
 HEADERS = {
+    **({"Authorization": f"Bearer {MOATT_API_KEY}"} if MOATT_API_KEY else {}),
     "User-Agent": "ConferenceSpeakerScraper/1.0"
 }
 
@@ -303,6 +304,7 @@ async function pageFunction(context) {
     # Start actor
     start_resp = requests.post(
         f"{APIFY_BASE}/acts/{actor_id}/runs",
+        headers=HEADERS,
         params={"token": token},
         json=actor_input,
     )
@@ -316,7 +318,8 @@ async function pageFunction(context) {
     while time.time() - start_time < timeout:
         status_resp = requests.get(
             f"{APIFY_BASE}/actor-runs/{run_id}",
-            params={"token": token},
+            headers=HEADERS,
+        params={"token": token},
         )
         status_data = status_resp.json()["data"]
         status = status_data["status"]
@@ -332,6 +335,7 @@ async function pageFunction(context) {
     dataset_id = status_data["defaultDatasetId"]
     dataset_resp = requests.get(
         f"{APIFY_BASE}/datasets/{dataset_id}/items",
+        headers=HEADERS,
         params={"token": token, "format": "json"},
     )
     dataset_resp.raise_for_status()

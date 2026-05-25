@@ -35,6 +35,7 @@ except ImportError:
 APIFY_ACTOR_ID = "pintostudio~youtube-transcript-scraper"
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
+HEADERS = {"Authorization": f"Bearer {MOATT_API_KEY}"} if MOATT_API_KEY else {}
 
 APIFY_API_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
 CACHE_DIR = Path(os.environ.get("YT_TRANSCRIPT_CACHE_DIR", os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".cache")))

@@ -42,6 +42,7 @@ except ImportError:
 ACTOR_ID = "harvestapi~linkedin-profile-scraper"
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
+HEADERS = {"Authorization": f"Bearer {MOATT_API_KEY}"} if MOATT_API_KEY else {}
 
 BASE_URL = f"{MOATT_API_BASE}/v1/proxy/apify"
 COST_PER_1K = 3.00  # $3 per 1,000 profiles
@@ -121,7 +122,8 @@ class LinkedInEnricher:
         response = requests.post(
             f"{BASE_URL}/acts/{ACTOR_ID}/runs",
             json={"urls": urls},
-            params={"token": self.api_token},
+            headers=HEADERS,
+        params={"token": self.api_token},
             timeout=30,
         )
 
@@ -143,7 +145,8 @@ class LinkedInEnricher:
 
             response = requests.get(
                 f"{BASE_URL}/acts/{ACTOR_ID}/runs/{run_id}",
-                params={"token": self.api_token},
+                headers=HEADERS,
+        params={"token": self.api_token},
                 timeout=30,
             )
             response.raise_for_status()
@@ -162,7 +165,8 @@ class LinkedInEnricher:
         """Fetch results from an Apify dataset."""
         response = requests.get(
             f"{BASE_URL}/datasets/{dataset_id}/items",
-            params={"token": self.api_token, "format": "json"},
+            headers=HEADERS,
+        params={"token": self.api_token, "format": "json"},
             timeout=30,
         )
         response.raise_for_status()

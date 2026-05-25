@@ -31,6 +31,7 @@ APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
 ACTOR_ID = "harvestapi~linkedin-post-comments"
 
 HEADERS = {
+    **({"Authorization": f"Bearer {MOATT_API_KEY}"} if MOATT_API_KEY else {}),
     "Content-Type": "application/json",
 }
 
@@ -59,7 +60,8 @@ def extract_comments_from_post(post_url, token, max_comments=100, timeout=120):
     try:
         start_resp = requests.post(
             f"{APIFY_BASE}/acts/{ACTOR_ID}/runs",
-            params={"token": token},
+            headers=HEADERS,
+        params={"token": token},
             json=actor_input,
             timeout=30,
         )
@@ -83,7 +85,8 @@ def extract_comments_from_post(post_url, token, max_comments=100, timeout=120):
         try:
             status_resp = requests.get(
                 f"{APIFY_BASE}/actor-runs/{run_id}",
-                params={"token": token},
+                headers=HEADERS,
+        params={"token": token},
                 timeout=15,
             )
             status_data = status_resp.json().get("data", {})
@@ -107,7 +110,8 @@ def extract_comments_from_post(post_url, token, max_comments=100, timeout=120):
     try:
         dataset_resp = requests.get(
             f"{APIFY_BASE}/datasets/{dataset_id}/items",
-            params={"token": token, "format": "json", "limit": max_comments},
+            headers=HEADERS,
+        params={"token": token, "format": "json", "limit": max_comments},
             timeout=30,
         )
         dataset_resp.raise_for_status()

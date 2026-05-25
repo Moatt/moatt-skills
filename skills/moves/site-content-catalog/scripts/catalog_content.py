@@ -25,7 +25,8 @@ except ImportError:
     print("Error: requests library required. Install with: pip install requests", file=sys.stderr)
     sys.exit(1)
 
-HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; ContentCatalogBot/1.0)"}
+HEADERS = {
+    **({"Authorization": f"Bearer {MOATT_API_KEY}"} if MOATT_API_KEY else {}),"User-Agent": "Mozilla/5.0 (compatible; ContentCatalogBot/1.0)"}
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
 
@@ -345,7 +346,8 @@ def fetch_sitemap_apify(domain, token, timeout=120):
         resp = requests.post(
             f"{APIFY_BASE}/acts/{SITEMAP_ACTOR}/runs",
             json=run_input,
-            params={"token": token},
+            headers=HEADERS,
+        params={"token": token},
         )
         resp.raise_for_status()
         run_id = resp.json()["data"]["id"]
@@ -354,7 +356,8 @@ def fetch_sitemap_apify(domain, token, timeout=120):
         while time_mod.time() < deadline:
             status_resp = requests.get(
                 f"{APIFY_BASE}/acts/{SITEMAP_ACTOR}/runs/{run_id}",
-                params={"token": token},
+                headers=HEADERS,
+        params={"token": token},
             )
             status_data = status_resp.json()
             status = status_data["data"]["status"]
@@ -372,7 +375,8 @@ def fetch_sitemap_apify(domain, token, timeout=120):
         dataset_id = status_data["data"]["defaultDatasetId"]
         items_resp = requests.get(
             f"{APIFY_BASE}/datasets/{dataset_id}/items",
-            params={"token": token, "format": "json"},
+            headers=HEADERS,
+        params={"token": token, "format": "json"},
         )
         items = items_resp.json()
 

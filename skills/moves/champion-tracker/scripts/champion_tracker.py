@@ -99,6 +99,7 @@ else:
     _ACTOR_ID = "harvestapi~linkedin-profile-scraper"
     _MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
     _MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
+HEADERS = {"Authorization": f"Bearer {MOATT_API_KEY}"} if MOATT_API_KEY else {}
     if _MOATT_API_KEY:
         _BASE_URL = f"{_MOATT_API_BASE}/v1/proxy/apify"
     else:
@@ -161,19 +162,22 @@ else:
             resp = requests.post(
                 f"{_BASE_URL}/acts/{_ACTOR_ID}/runs",
                 json={"urls": urls},
-                params={"token": self.api_token},
+                headers=HEADERS,
+        params={"token": self.api_token},
                 timeout=30,
             )
             resp.raise_for_status()
             run_id = resp.json()["data"]["id"]
             start = time.time()
             while time.time() - start < timeout:
-                r = requests.get(f"{_BASE_URL}/acts/{_ACTOR_ID}/runs/{run_id}", params={"token": self.api_token}, timeout=30)
+                r = requests.get(f"{_BASE_URL}/acts/{_ACTOR_ID}/runs/{run_id}", headers=HEADERS,
+        params={"token": self.api_token}, timeout=30)
                 r.raise_for_status()
                 status = r.json()["data"]["status"]
                 if status == "SUCCEEDED":
                     dataset_id = r.json()["data"]["defaultDatasetId"]
-                    dr = requests.get(f"{_BASE_URL}/datasets/{dataset_id}/items", params={"token": self.api_token, "format": "json"}, timeout=30)
+                    dr = requests.get(f"{_BASE_URL}/datasets/{dataset_id}/items", headers=HEADERS,
+        params={"token": self.api_token, "format": "json"}, timeout=30)
                     dr.raise_for_status()
                     return dr.json()
                 elif status in ["FAILED", "ABORTED", "TIMED-OUT"]:

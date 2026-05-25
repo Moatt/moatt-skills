@@ -27,6 +27,7 @@ except ImportError:
 
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
+HEADERS = {"Authorization": f"Bearer {MOATT_API_KEY}"} if MOATT_API_KEY else {}
 
 APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
 
@@ -59,7 +60,8 @@ def search_posts(token, keyword, max_items=50, sort_by="relevance", timeout=120)
     try:
         start_resp = requests.post(
             f"{APIFY_BASE}/acts/{ACTOR_ID}/runs",
-            params={"token": token},
+            headers=HEADERS,
+        params={"token": token},
             json=actor_input,
             timeout=30,
         )
@@ -84,7 +86,8 @@ def search_posts(token, keyword, max_items=50, sort_by="relevance", timeout=120)
         try:
             status_resp = requests.get(
                 f"{APIFY_BASE}/actor-runs/{run_id}",
-                params={"token": token},
+                headers=HEADERS,
+        params={"token": token},
                 timeout=15,
             )
             status_data = status_resp.json().get("data", {})
@@ -108,7 +111,8 @@ def search_posts(token, keyword, max_items=50, sort_by="relevance", timeout=120)
     try:
         dataset_resp = requests.get(
             f"{APIFY_BASE}/datasets/{dataset_id}/items",
-            params={"token": token, "format": "json"},
+            headers=HEADERS,
+        params={"token": token, "format": "json"},
             timeout=30,
         )
         dataset_resp.raise_for_status()

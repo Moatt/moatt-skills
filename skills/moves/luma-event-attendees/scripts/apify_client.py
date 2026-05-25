@@ -147,6 +147,7 @@ class LumaApifyClient:
     ACTOR_ID = "lexis-solutions~lu-ma-scraper"
     _MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
     _MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
+HEADERS = {"Authorization": f"Bearer {MOATT_API_KEY}"} if MOATT_API_KEY else {}
 
     if _MOATT_API_KEY:
         BASE_URL = f"{_MOATT_API_BASE}/v1/proxy/apify"
@@ -167,7 +168,8 @@ class LumaApifyClient:
         response = requests.post(
             f"{self.BASE_URL}/acts/{self.ACTOR_ID}/runs",
             json=run_input,
-            params={"token": self.api_token},
+            headers=HEADERS,
+        params={"token": self.api_token},
         )
 
         if response.status_code == 402:
@@ -188,7 +190,8 @@ class LumaApifyClient:
 
             status_response = requests.get(
                 f"{self.BASE_URL}/acts/{self.ACTOR_ID}/runs/{run_id}",
-                params={"token": self.api_token},
+                headers=HEADERS,
+        params={"token": self.api_token},
             )
             status_response.raise_for_status()
             status_data = status_response.json()
@@ -204,7 +207,8 @@ class LumaApifyClient:
         dataset_id = status_data["data"]["defaultDatasetId"]
         dataset_response = requests.get(
             f"{self.BASE_URL}/datasets/{dataset_id}/items",
-            params={"token": self.api_token, "format": "json"},
+            headers=HEADERS,
+        params={"token": self.api_token, "format": "json"},
         )
         dataset_response.raise_for_status()
         return dataset_response.json()
