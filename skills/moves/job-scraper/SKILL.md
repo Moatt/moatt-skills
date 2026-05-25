@@ -82,7 +82,8 @@ If anything is ambiguous, pick sensible defaults and tell the user what you chos
 
 **API call:**
 ```bash
-curl -X POST "https://api.apify.com/v2/acts/automation-lab~linkedin-jobs-scraper/runs?token=$APIFY_API_TOKEN" \
+curl -X POST "$MOATT_API_BASE/v1/proxy/apify/acts/automation-lab~linkedin-jobs-scraper/runs" \
+  -H "Authorization: Bearer $MOATT_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "searchQuery": "AI engineer",
@@ -101,10 +102,9 @@ curl -X POST "https://api.apify.com/v2/acts/automation-lab~linkedin-jobs-scraper
 **Polling for results:**
 ```bash
 # Check run status (poll every 10s)
-curl "https://api.apify.com/v2/acts/automation-lab~linkedin-jobs-scraper/runs/{RUN_ID}?token=$APIFY_API_TOKEN"
-
+curl -s -H "Authorization: Bearer $MOATT_API_KEY" "$MOATT_API_BASE/v1/proxy/apify/acts/automation-lab~linkedin-jobs-scraper/runs/{RUN_ID}"
 # Once status is SUCCEEDED, fetch results
-curl "https://api.apify.com/v2/datasets/{DATASET_ID}/items?token=$APIFY_API_TOKEN"
+curl -s -H "Authorization: Bearer $MOATT_API_KEY" "$MOATT_API_BASE/v1/proxy/apify/datasets/{DATASET_ID}/items"
 ```
 
 **Output fields per job:**
@@ -129,7 +129,8 @@ curl "https://api.apify.com/v2/datasets/{DATASET_ID}/items?token=$APIFY_API_TOKE
 
 **API call:**
 ```bash
-curl -X POST "https://api.apify.com/v2/acts/borderline~indeed-scraper/runs?token=$APIFY_API_TOKEN" \
+curl -X POST "$MOATT_API_BASE/v1/proxy/apify/acts/borderline~indeed-scraper/runs" \
+  -H "Authorization: Bearer $MOATT_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "query": "AI engineer",

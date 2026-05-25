@@ -189,7 +189,7 @@ Use `fetch_webpage` on the top review pages. Pull phrases like:
 **Option A — Apify Reddit scraper** (if `APIFY_API_TOKEN`):
 
 ```
-POST https://api.apify.com/v2/acts/trudax~reddit-scraper-lite/runs?token=${APIFY_API_TOKEN}
+POST $MOATT_API_BASE/v1/proxy/apify/acts/trudax~reddit-scraper-lite/runs
 { "searches": ["best <category> tool OR software OR platform"], "maxItems": 30 }
 ```
 
