@@ -19,29 +19,24 @@ keyword-gap intel.
 
 ## Steps
 
-This recipe runs through `boxExec` only. The model writes the script once into
-`/workspace/home/.skills-cache/seo-content-audit/run.sh`, then executes it.
-**Do NOT try `bash /workspace/skills/...` — that path is sandboxed and unreachable
-to `boxExec`.**
+The script `run.sh` ships with this skill — it lives at
+`$HOME/skills/plays/seo-content-audit/scripts/run.sh` on disk after install
+(`$HOME` resolves to `/home/boxuser/`). No `boxWrite` step needed.
 
 1. Confirm `$MOATT_API_KEY` and `$MOATT_API_BASE` are set in the Box env
    (they are by default, sourced from `/tmp/moatt-env.sh`).
-2. Write the recipe to a writable path inside the Box via `boxWrite`, exactly
-   once per session. Path: `/workspace/home/.skills-cache/seo-content-audit/run.sh`.
-   The body is the full bash script reproduced at the bottom of this SKILL.md
-   under "## scripts/run.sh" — copy it verbatim.
-3. Run the recipe via `boxExec`. **Set `timeoutMs` to at least 300000 (5 min)**
-   because the OnPage phase polls until the crawl finishes (up to ~4 min):
+2. Run the recipe directly via `boxExec`. **Set `timeoutMs` to at least 300000
+   (5 min)** because the OnPage phase polls until the crawl finishes (up to ~4 min):
 
    ```bash
-   bash /workspace/home/.skills-cache/seo-content-audit/run.sh <domain> [location_code] [language_code]
+   bash $HOME/skills/plays/seo-content-audit/scripts/run.sh <domain> [location_code] [language_code]
    ```
 
    Defaults: `location_code=2840` (US), `language_code=en`, crawl 50 pages.
 
-4. The script prints the absolute path of `report.json` on its last line
+3. The script prints the absolute path of `report.json` on its last line
    (e.g. `/workspace/home/projects/seo-content-audit-2026-05-20/stripe.com/report.json`).
-5. Read that `report.json` with `boxRead` and render a structured executive
+4. Read that `report.json` with `boxRead` and render a structured executive
    summary inline. Cover, in this order:
    - **Snapshot**: domain rank, organic ETV, total keywords, backlinks, refdomains.
    - **Top performers**: top 5 ranked keywords (position, volume), top 3 pages.
@@ -51,7 +46,7 @@ to `boxExec`.**
    - **Keyword gap**: top 10 keywords the top competitor ranks for that the
      target does NOT — these are the highest-leverage content opportunities.
    - **Recommendations**: 3 prioritized actions, tied directly to the data.
-6. Always end by telling the user where the full JSON + per-phase files live
+5. Always end by telling the user where the full JSON + per-phase files live
    so they can open them from the file panel.
 
 If the script exits non-zero, surface the JSON error from stderr verbatim.
@@ -191,7 +186,10 @@ Useful paths inside each block:
 
 ## scripts/run.sh
 
-The full recipe. Write this verbatim to `/workspace/home/.skills-cache/seo-content-audit/run.sh` via `boxWrite`, then `boxExec` to run it:
+The full recipe — this is the same content that ships on disk at
+`$HOME/skills/plays/seo-content-audit/scripts/run.sh`. Reference only; you
+don't need to copy or re-write it. Just run the on-disk path directly per
+the Steps section above.
 
 ```bash
 #!/usr/bin/env bash
