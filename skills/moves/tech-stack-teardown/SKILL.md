@@ -130,31 +130,31 @@ APIFY_API_TOKEN=apify_api_YOUR_TOKEN_HERE
 ### Single Company
 
 ```bash
-python3 scripts/recon.py --domains pump.co
+python3 $HOME/skills/moves/tech-stack-teardown/scripts/recon.py --domains pump.co
 ```
 
 ### Batch of Companies
 
 ```bash
-python3 scripts/recon.py --domains "dili.ai,pump.co,runautomat.com"
+python3 $HOME/skills/moves/tech-stack-teardown/scripts/recon.py --domains "dili.ai,pump.co,runautomat.com"
 ```
 
 ### Free-Only Mode (No Apify)
 
 ```bash
-python3 scripts/recon.py --domains pump.co --no-apify
+python3 $HOME/skills/moves/tech-stack-teardown/scripts/recon.py --domains pump.co --no-apify
 ```
 
 ### Output to File
 
 ```bash
-python3 scripts/recon.py --domains "dili.ai,pump.co" --output /path/to/report.md
+python3 $HOME/skills/moves/tech-stack-teardown/scripts/recon.py --domains "dili.ai,pump.co" --output /path/to/report.md
 ```
 
 ### JSON Output
 
 ```bash
-python3 scripts/recon.py --domains pump.co --json
+python3 $HOME/skills/moves/tech-stack-teardown/scripts/recon.py --domains pump.co --json
 ```
 
 ## What the Script Does

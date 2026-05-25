@@ -42,23 +42,23 @@ Track *how* a domain's organic traffic moves over time and *why*: which pages dr
 
 ```bash
 # Basic traffic analysis (12 months of history by default)
-python3 scripts/analyze_traffic.py --domain "example.com"
+python3 $HOME/skills/moves/seo-traffic-analyzer/scripts/analyze_traffic.py --domain "example.com"
 
 # Compare against named competitors
-python3 scripts/analyze_traffic.py \
+python3 $HOME/skills/moves/seo-traffic-analyzer/scripts/analyze_traffic.py \
   --domain "example.com" \
   --competitors "competitor1.com,competitor2.com,competitor3.com"
 
 # Custom history window
-python3 scripts/analyze_traffic.py --domain "example.com" --months 24
+python3 $HOME/skills/moves/seo-traffic-analyzer/scripts/analyze_traffic.py --domain "example.com" --months 24
 
 # Confirm live rank on high-stakes keywords
-python3 scripts/analyze_traffic.py \
+python3 $HOME/skills/moves/seo-traffic-analyzer/scripts/analyze_traffic.py \
   --domain "example.com" \
   --keywords "cloud cost optimization,reduce aws bill,finops tools"
 
 # Save output
-python3 scripts/analyze_traffic.py --domain "example.com" --output traffic-trends.json
+python3 $HOME/skills/moves/seo-traffic-analyzer/scripts/analyze_traffic.py --domain "example.com" --output traffic-trends.json
 ```
 
 ## Inputs

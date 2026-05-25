@@ -29,13 +29,13 @@ Crawls a website's sitemap and blog to build a full content inventory — every 
 
 ```bash
 # Basic content inventory
-python3 scripts/catalog_content.py --domain "example.com"
+python3 $HOME/skills/moves/site-content-catalog/scripts/catalog_content.py --domain "example.com"
 
 # Inventory plus deep-read of the top 20 pages
-python3 scripts/catalog_content.py --domain "example.com" --deep-analyze 20
+python3 $HOME/skills/moves/site-content-catalog/scripts/catalog_content.py --domain "example.com" --deep-analyze 20
 
 # Write output to a specific file
-python3 scripts/catalog_content.py --domain "example.com" --output content-inventory.json
+python3 $HOME/skills/moves/site-content-catalog/scripts/catalog_content.py --domain "example.com" --output content-inventory.json
 ```
 
 ## Inputs

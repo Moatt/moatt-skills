@@ -25,7 +25,7 @@ This skill ships with an executable recipe — do NOT compose the curls yourself
 2. Run the recipe via `boxExec`:
 
    ```bash
-   bash /workspace/skills/seo-analyzer/scripts/run.sh <domain> [location_code] [language_code]
+   bash $HOME/skills/moves/seo-analyzer/scripts/run.sh <domain> [location_code] [language_code]
    ```
 
    Defaults: `location_code=2840` (US), `language_code=en`.

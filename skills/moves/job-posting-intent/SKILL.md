@@ -95,7 +95,7 @@ Examples:
 ### Step 2: Estimate cost
 
 ```bash
-python3 scripts/search_jobs.py \
+python3 $HOME/skills/moves/job-posting-intent/scripts/search_jobs.py \
   --titles "GTM Engineer,SDR Manager,Head of Demand Gen" \
   --locations "United States" \
   --max-per-title 25 \
@@ -108,32 +108,32 @@ The script queries LinkedIn Jobs, groups results by company, qualifies leads, an
 
 ```bash
 # Standard search (creates Google Sheet)
-python3 scripts/search_jobs.py \
+python3 $HOME/skills/moves/job-posting-intent/scripts/search_jobs.py \
   --titles "GTM Engineer,SDR Manager,RevOps Engineer" \
   --locations "United States" \
   --max-per-title 25
 
 # Deep search with a custom sheet name
-python3 scripts/search_jobs.py \
+python3 $HOME/skills/moves/job-posting-intent/scripts/search_jobs.py \
   --titles "AI Engineer,ML Ops Engineer,Prompt Engineer" \
   --locations "United States" \
   --max-per-title 50 \
   --sheet-name "AI Hiring Signals - Feb 2026"
 
 # Filter results to only truly relevant titles (LinkedIn search is fuzzy)
-python3 scripts/search_jobs.py \
+python3 $HOME/skills/moves/job-posting-intent/scripts/search_jobs.py \
   --titles "GTM Engineer,Growth Marketing Manager,SDR Manager" \
   --locations "United States" \
   --relevance-keywords "gtm,growth,sdr,marketing,demand gen,revops"
 
 # Also save raw JSON alongside the sheet
-python3 scripts/search_jobs.py \
+python3 $HOME/skills/moves/job-posting-intent/scripts/search_jobs.py \
   --titles "GTM Engineer,SDR Manager" \
   --locations "United States" \
   --output results.json
 
 # Skip Google Sheet — console + JSON only
-python3 scripts/search_jobs.py \
+python3 $HOME/skills/moves/job-posting-intent/scripts/search_jobs.py \
   --titles "GTM Engineer" \
   --no-sheet --json
 ```

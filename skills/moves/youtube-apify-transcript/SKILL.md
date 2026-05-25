@@ -61,26 +61,26 @@ echo 'APIFY_API_TOKEN=apify_api_YOUR_TOKEN_HERE' >> .env
 
 ```bash
 # Get transcript as text (cache enabled by default)
-python3 scripts/fetch_transcript.py "https://www.youtube.com/watch?v=VIDEO_ID"
+python3 $HOME/skills/moves/youtube-apify-transcript/scripts/fetch_transcript.py "https://www.youtube.com/watch?v=VIDEO_ID"
 
 # Short URL also works
-python3 scripts/fetch_transcript.py "https://youtu.be/VIDEO_ID"
+python3 $HOME/skills/moves/youtube-apify-transcript/scripts/fetch_transcript.py "https://youtu.be/VIDEO_ID"
 ```
 
 ### Options
 
 ```bash
 # Output to file
-python3 scripts/fetch_transcript.py "URL" --output transcript.txt
+python3 $HOME/skills/moves/youtube-apify-transcript/scripts/fetch_transcript.py "URL" --output transcript.txt
 
 # JSON format (includes timestamps)
-python3 scripts/fetch_transcript.py "URL" --json
+python3 $HOME/skills/moves/youtube-apify-transcript/scripts/fetch_transcript.py "URL" --json
 
 # Both: JSON to file
-python3 scripts/fetch_transcript.py "URL" --json --output transcript.json
+python3 $HOME/skills/moves/youtube-apify-transcript/scripts/fetch_transcript.py "URL" --json --output transcript.json
 
 # Specify language preference
-python3 scripts/fetch_transcript.py "URL" --lang de
+python3 $HOME/skills/moves/youtube-apify-transcript/scripts/fetch_transcript.py "URL" --lang de
 ```
 
 ### Caching (saves money!)
@@ -89,20 +89,20 @@ Transcripts cache to disk by default. Repeated requests for the same video cost 
 
 ```bash
 # First request: fetched from APIFY ($0.007)
-python3 scripts/fetch_transcript.py "URL"
+python3 $HOME/skills/moves/youtube-apify-transcript/scripts/fetch_transcript.py "URL"
 
 # Second request: cache hit (FREE!)
-python3 scripts/fetch_transcript.py "URL"
+python3 $HOME/skills/moves/youtube-apify-transcript/scripts/fetch_transcript.py "URL"
 # Output: [cached] Transcript for: VIDEO_ID
 
 # Bypass cache (force a fresh fetch)
-python3 scripts/fetch_transcript.py "URL" --no-cache
+python3 $HOME/skills/moves/youtube-apify-transcript/scripts/fetch_transcript.py "URL" --no-cache
 
 # View cache stats
-python3 scripts/fetch_transcript.py --cache-stats
+python3 $HOME/skills/moves/youtube-apify-transcript/scripts/fetch_transcript.py --cache-stats
 
 # Clear every cached transcript
-python3 scripts/fetch_transcript.py --clear-cache
+python3 $HOME/skills/moves/youtube-apify-transcript/scripts/fetch_transcript.py --clear-cache
 ```
 
 Cache location: `.cache/` inside the skill directory (override via `YT_TRANSCRIPT_CACHE_DIR`)
@@ -120,10 +120,10 @@ https://youtube.com/watch?v=VIDEO3
 EOF
 
 # Process every URL
-python3 scripts/fetch_transcript.py --batch urls.txt
+python3 $HOME/skills/moves/youtube-apify-transcript/scripts/fetch_transcript.py --batch urls.txt
 
 # Batch run with JSON output to file
-python3 scripts/fetch_transcript.py --batch urls.txt --json --output all_transcripts.json
+python3 $HOME/skills/moves/youtube-apify-transcript/scripts/fetch_transcript.py --batch urls.txt --json --output all_transcripts.json
 ```
 
 ## APIFY Actor Input

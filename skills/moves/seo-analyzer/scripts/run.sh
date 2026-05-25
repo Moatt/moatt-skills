@@ -6,9 +6,9 @@
 # and echoes the path on success.
 #
 # Usage:
-#   bash /workspace/skills/seo-analyzer/scripts/run.sh <domain> [location_code] [language_code]
-#   bash /workspace/skills/seo-analyzer/scripts/run.sh stripe.com
-#   bash /workspace/skills/seo-analyzer/scripts/run.sh stripe.com 2826 en
+#   bash $HOME/skills/moves/seo-analyzer/scripts/run.sh <domain> [location_code] [language_code]
+#   bash $HOME/skills/moves/seo-analyzer/scripts/run.sh stripe.com
+#   bash $HOME/skills/moves/seo-analyzer/scripts/run.sh stripe.com 2826 en
 #
 # Requires (already set by Box env via /tmp/moatt-env.sh):
 #   $MOATT_API_KEY   — Bearer token for the Moatt proxy

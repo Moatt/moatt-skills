@@ -42,23 +42,23 @@ Pulls production-grade SEO performance data for any domain through DataForSEO's 
 
 ```bash
 # Baseline domain analysis
-python3 scripts/analyze_domain.py --domain "example.com"
+python3 $HOME/skills/moves/seo-domain-analyzer/scripts/analyze_domain.py --domain "example.com"
 
 # Specify competitors manually
-python3 scripts/analyze_domain.py \
+python3 $HOME/skills/moves/seo-domain-analyzer/scripts/analyze_domain.py \
   --domain "example.com" \
   --competitors "competitor1.com,competitor2.com,competitor3.com"
 
 # Verify ranks for specific keywords
-python3 scripts/analyze_domain.py \
+python3 $HOME/skills/moves/seo-domain-analyzer/scripts/analyze_domain.py \
   --domain "example.com" \
   --keywords "cloud cost optimization,reduce aws bill,finops tools"
 
 # Skip backlinks to shave ~$0.03 off the run
-python3 scripts/analyze_domain.py --domain "example.com" --skip-backlinks
+python3 $HOME/skills/moves/seo-domain-analyzer/scripts/analyze_domain.py --domain "example.com" --skip-backlinks
 
 # Save the output to a file
-python3 scripts/analyze_domain.py --domain "example.com" --output seo-profile.json
+python3 $HOME/skills/moves/seo-domain-analyzer/scripts/analyze_domain.py --domain "example.com" --output seo-profile.json
 ```
 
 ## Inputs

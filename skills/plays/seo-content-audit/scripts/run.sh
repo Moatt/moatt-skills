@@ -7,7 +7,7 @@
 # then synthesizes report.json.
 #
 # Usage:
-#   bash /workspace/skills/seo-content-audit/scripts/run.sh <domain> [location_code] [language_code]
+#   bash $HOME/skills/plays/seo-content-audit/scripts/run.sh <domain> [location_code] [language_code]
 #
 # Requires (already set by Box env via /tmp/moatt-env.sh):
 #   $MOATT_API_KEY   — Bearer token for the Moatt proxy

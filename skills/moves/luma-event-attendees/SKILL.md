@@ -28,7 +28,7 @@ Pulls speakers, hosts, and registered guest profiles from Luma events to feed ou
 Scrapes Luma event pages directly. Returns event metadata plus hosts. Guest profiles only show up if they're publicly embedded in the page.
 
 ```bash
-python3 scripts/scrape_event.py https://lu.ma/abc123
+python3 $HOME/skills/moves/luma-event-attendees/scripts/scrape_event.py https://lu.ma/abc123
 ```
 
 ### 2. Apify Search (paid, recommended for guest lists)
@@ -36,7 +36,7 @@ python3 scripts/scrape_event.py https://lu.ma/abc123
 Uses the `lexis-solutions/lu-ma-scraper` Apify actor to query Luma and return rich event data including **featured guest profiles** (name, bio, LinkedIn, Twitter, Instagram, website).
 
 ```bash
-python3 scripts/scrape_event.py --search "AI San Francisco"
+python3 $HOME/skills/moves/luma-event-attendees/scripts/scrape_event.py --search "AI San Francisco"
 ```
 
 **Cost:** $29/month flat subscription on Apify.
@@ -68,29 +68,29 @@ pip3 install requests
 
 ```bash
 # Single event
-python3 scripts/scrape_event.py https://lu.ma/pwciozw0
+python3 $HOME/skills/moves/luma-event-attendees/scripts/scrape_event.py https://lu.ma/pwciozw0
 
 # Several events at once
-python3 scripts/scrape_event.py https://lu.ma/abc https://lu.ma/def
+python3 $HOME/skills/moves/luma-event-attendees/scripts/scrape_event.py https://lu.ma/abc https://lu.ma/def
 
 # Export hosts to CSV
-python3 scripts/scrape_event.py https://lu.ma/abc --output hosts.csv
+python3 $HOME/skills/moves/luma-event-attendees/scripts/scrape_event.py https://lu.ma/abc --output hosts.csv
 ```
 
 ### Apify Search (guest profiles)
 
 ```bash
 # Find AI events in SF
-python3 scripts/scrape_event.py --search "AI San Francisco"
+python3 $HOME/skills/moves/luma-event-attendees/scripts/scrape_event.py --search "AI San Francisco"
 
 # Just list the events without extracting people
-python3 scripts/scrape_event.py --search "SaaS NYC" --events-only
+python3 $HOME/skills/moves/luma-event-attendees/scripts/scrape_event.py --search "SaaS NYC" --events-only
 
 # Export every guest to CSV
-python3 scripts/scrape_event.py --search "AI San Francisco" --output guests.csv
+python3 $HOME/skills/moves/luma-event-attendees/scripts/scrape_event.py --search "AI San Francisco" --output guests.csv
 
 # Export as JSON
-python3 scripts/scrape_event.py --search "AI SF" --output guests.json --json
+python3 $HOME/skills/moves/luma-event-attendees/scripts/scrape_event.py --search "AI SF" --output guests.json --json
 ```
 
 ### Caching
@@ -99,10 +99,10 @@ Results are cached for 24 hours by default:
 
 ```bash
 # Force a fresh pull
-python3 scripts/scrape_event.py --search "AI SF" --no-cache
+python3 $HOME/skills/moves/luma-event-attendees/scripts/scrape_event.py --search "AI SF" --no-cache
 
 # Custom cache lifetime
-python3 scripts/scrape_event.py --search "AI SF" --cache-hours 12
+python3 $HOME/skills/moves/luma-event-attendees/scripts/scrape_event.py --search "AI SF" --cache-hours 12
 ```
 
 ### Options Reference
@@ -154,7 +154,7 @@ This skill is built to be called by an AI agent inside a prospecting workflow:
 > "Search Luma for AI and SaaS events in San Francisco"
 
 ```bash
-python3 scripts/scrape_event.py --search "AI San Francisco" --events-only
+python3 $HOME/skills/moves/luma-event-attendees/scripts/scrape_event.py --search "AI San Francisco" --events-only
 ```
 
 ### Step 2: Extract Guest Profiles
@@ -162,7 +162,7 @@ python3 scripts/scrape_event.py --search "AI San Francisco" --events-only
 > "Pull all guest profiles from those events"
 
 ```bash
-python3 scripts/scrape_event.py --search "AI San Francisco" --output guests.csv
+python3 $HOME/skills/moves/luma-event-attendees/scripts/scrape_event.py --search "AI San Francisco" --output guests.csv
 ```
 
 ### Step 3: Qualify Against ICP
