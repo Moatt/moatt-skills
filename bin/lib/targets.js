@@ -5,7 +5,7 @@ const path = require('path');
 
 function parseInstallOptions(args) {
   if (!args[0] || args[0].startsWith('--')) {
-    throw new Error('Usage: npx moatt install <slug> [--claude|--codex|--cursor] [--project-dir <path>] [--force]');
+    throw new Error('Usage: npx moatt install <slug> [--claude|--codex|--openclaw|--cursor] [--project-dir <path>] [--force]');
   }
 
   const slug = args[0];
@@ -17,7 +17,7 @@ function parseInstallOptions(args) {
 
   for (let i = 1; i < args.length; i++) {
     const arg = args[i];
-    if (arg === '--claude' || arg === '--codex' || arg === '--cursor') {
+    if (arg === '--claude' || arg === '--codex' || arg === '--openclaw' || arg === '--cursor') {
       targetFlags.push(arg);
       continue;
     }
@@ -38,7 +38,7 @@ function parseInstallOptions(args) {
   }
 
   if (targetFlags.length > 1) {
-    throw new Error('Pick at most one of --claude, --codex, --cursor.');
+    throw new Error('Pick at most one of --claude, --codex, --openclaw, --cursor.');
   }
 
   if (targetFlags.length === 1) {

@@ -45,17 +45,6 @@ curl -s -X POST $MOATT_API_BASE/v1/proxy/orthogonal/run \
   -d '{"api":"scrapecreators","path":"/v1/linkedin/profile","query":{"url":"https://linkedin.com/in/example-user"}}'
 ```
 
-<details>
-<summary>curl equivalent</summary>
-
-```bash
-curl -X POST "https://api.orth.sh/v1/run" \
-
-  -H "Content-Type: application/json" \
-  -d '{"api":"scrapecreators","path":"/v1/linkedin/profile","query":{"url":"https://linkedin.com/in/example-user"}}'
-```
-</details>
-
 ### Get Company Page
 
 ```bash

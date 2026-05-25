@@ -46,10 +46,7 @@ from tools.apify_guard import (
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
 
-if MOATT_API_KEY:
-    APIFY_BASE_URL = f"{MOATT_API_BASE}/v1/proxy/apify"
-else:
-    APIFY_BASE_URL = "https://api.apify.com/v2"
+APIFY_BASE_URL = f"{MOATT_API_BASE}/v1/proxy/apify"
 
 # ── Constants ─────────────────────────────────────────────────────────────────
 

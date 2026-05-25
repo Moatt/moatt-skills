@@ -49,10 +49,7 @@ from tools.apify_guard import (
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
 
-if MOATT_API_KEY:
-    APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
-else:
-    APIFY_BASE = "https://api.apify.com/v2"
+APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
 
 # ── Apify Actor IDs ──────────────────────────────────────────────────────────
 
@@ -747,9 +744,9 @@ def main():
     extra_companies = [u.strip() for u in args.companies.split(",") if u.strip()] if args.companies else []
 
     env = load_env()
-    token = MOATT_API_KEY or env.get("APIFY_API_TOKEN", "")
+    token = MOATT_API_KEY or env.get("MOATT_API_KEY", "")
     if not token:
-        print("ERROR: Set MOATT_API_KEY or APIFY_API_TOKEN env var.")
+        print("ERROR: Set MOATT_API_KEY or MOATT_API_KEY env var.")
         sys.exit(1)
 
     client_name = config["client_name"]

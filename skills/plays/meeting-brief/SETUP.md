@@ -6,8 +6,8 @@ Quick setup guide for the meeting-brief skill.
 
 If you received a .skill file:
 ```bash
-# The skill should already be installed in your skills directory
-ls ~/.openclaw/workspace/skills/meeting-brief
+# The skill should already be installed in your agent's skills directory
+ls ~/.claude/skills/meeting-brief
 ```
 
 ## 2. Configure Team Members
@@ -53,13 +53,13 @@ gcalcli init
 
 ## 4. Test the Skill Manually
 
-Ask OpenClaw to run the meeting brief:
+Ask your AI agent to run the meeting brief:
 
 ```
 Run the meeting-brief skill for today's meetings
 ```
 
-OpenClaw will:
+The agent will:
 1. Check your calendar
 2. Research external attendees
 3. Generate briefs
@@ -67,7 +67,7 @@ OpenClaw will:
 
 ## 5. Set Up Daily Automation (Optional)
 
-To run automatically every morning, ask OpenClaw to create a cron job:
+To run automatically every morning, ask your agent to create a cron job:
 
 ```
 Create a daily cron job for the meeting-brief skill at 7am Pacific time

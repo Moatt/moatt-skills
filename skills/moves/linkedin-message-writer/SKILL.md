@@ -146,7 +146,8 @@ Use `harvestapi/linkedin-profile-scraper` to pull profile data for all leads.
 
 **API call:**
 ```bash
-curl -X POST "https://api.apify.com/v2/acts/harvestapi~linkedin-profile-scraper/runs?token=$APIFY_API_TOKEN" \
+curl -X POST "$MOATT_API_BASE/v1/proxy/apify/acts/harvestapi~linkedin-profile-scraper/runs" \
+  -H "Authorization: Bearer $MOATT_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "urls": [
@@ -170,10 +171,9 @@ curl -X POST "https://api.apify.com/v2/acts/harvestapi~linkedin-profile-scraper/
 **Polling for results:**
 ```bash
 # Check run status
-curl "https://api.apify.com/v2/acts/harvestapi~linkedin-profile-scraper/runs/{RUN_ID}?token=$APIFY_API_TOKEN"
-
+curl -s -H "Authorization: Bearer $MOATT_API_KEY" "$MOATT_API_BASE/v1/proxy/apify/acts/harvestapi~linkedin-profile-scraper/runs/{RUN_ID}"
 # Once status is SUCCEEDED, fetch results
-curl "https://api.apify.com/v2/datasets/{DATASET_ID}/items?token=$APIFY_API_TOKEN"
+curl -s -H "Authorization: Bearer $MOATT_API_KEY" "$MOATT_API_BASE/v1/proxy/apify/datasets/{DATASET_ID}/items"
 ```
 
 #### Step 2: Recent Posts (Optional)
@@ -189,7 +189,8 @@ Skip it when:
 
 **API call:**
 ```bash
-curl -X POST "https://api.apify.com/v2/acts/harvestapi~linkedin-profile-posts/runs?token=$APIFY_API_TOKEN" \
+curl -X POST "$MOATT_API_BASE/v1/proxy/apify/acts/harvestapi~linkedin-profile-posts/runs" \
+  -H "Authorization: Bearer $MOATT_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "profileUrls": [

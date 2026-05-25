@@ -55,17 +55,6 @@ curl -s -X POST $MOATT_API_BASE/v1/proxy/orthogonal/run \
   -d '{"api":"nyne","path":"/person/search","body":{"query":"Dario Amodei Anthropic"}}'
 ```
 
-<details>
-<summary>curl equivalent</summary>
-
-```bash
-curl -X POST "https://api.orth.sh/v1/run" \
-
-  -H "Content-Type: application/json" \
-  -d '{"api":"nyne","path":"/person/search","body":{"query":"Dario Amodei Anthropic"}}'
-```
-</details>
-
 ## Parameters
 
 - **query** (required) - Search query combining name, company, or other identifiers

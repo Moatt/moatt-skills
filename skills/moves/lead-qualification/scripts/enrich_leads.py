@@ -19,7 +19,7 @@ Usage:
     python3 enrich_leads.py leads.csv --no-cache
 
 Environment:
-    APIFY_API_TOKEN: Required. Get at https://console.apify.com/account/integrations
+    MOATT_API_KEY: Required. Get at https://console.apify.com/account/integrations
 """
 import argparse
 import csv
@@ -43,10 +43,7 @@ ACTOR_ID = "harvestapi~linkedin-profile-scraper"
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
 
-if MOATT_API_KEY:
-    BASE_URL = f"{MOATT_API_BASE}/v1/proxy/apify"
-else:
-    BASE_URL = "https://api.apify.com/v2"
+BASE_URL = f"{MOATT_API_BASE}/v1/proxy/apify"
 COST_PER_1K = 3.00  # $3 per 1,000 profiles
 ACTOR_URL = "https://console.apify.com/actors/harvestapi~linkedin-profile-scraper"
 
@@ -409,7 +406,7 @@ Examples:
     python3 enrich_leads.py leads.csv --no-cache
 
 Environment:
-    APIFY_API_TOKEN: Required. Get at https://console.apify.com/account/integrations
+    MOATT_API_KEY: Required. Get at https://console.apify.com/account/integrations
         """,
     )
 
@@ -473,9 +470,9 @@ Environment:
         sys.exit(0)
 
     # Check API token
-    api_token = MOATT_API_KEY or os.getenv("APIFY_API_TOKEN")
+    api_token = MOATT_API_KEY
     if not api_token:
-        print("Error: Set MOATT_API_KEY or APIFY_API_TOKEN env var.")
+        print("Error: Set MOATT_API_KEY env var (run `npx moatt login`).")
         sys.exit(1)
 
     if need_enrichment == 0 and cached_count > 0:

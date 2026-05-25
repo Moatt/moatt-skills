@@ -26,10 +26,7 @@ from datetime import datetime, timezone
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
 
-if MOATT_API_KEY:
-    APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
-else:
-    APIFY_BASE = "https://api.apify.com/v2"
+APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
 
 # ── Config ──────────────────────────────────────────────────────────────────
 
@@ -539,17 +536,17 @@ def main():
     # Get Apify token
     apify_token = None
     if not args.no_apify:
-        apify_token = MOATT_API_KEY or os.environ.get("APIFY_API_TOKEN")
+        apify_token = MOATT_API_KEY
         if not apify_token:
             try:
                 from dotenv import load_dotenv
                 env_path = os.path.join(os.path.dirname(__file__), "..", "..", "..", ".env")
                 load_dotenv(env_path)
-                apify_token = os.environ.get("APIFY_API_TOKEN")
+                apify_token = os.environ.get("MOATT_API_KEY")
             except ImportError:
                 pass
         if not apify_token:
-            print("  Warning: Set MOATT_API_KEY or APIFY_API_TOKEN. Skipping Apify profiler.")
+            print("  Warning: Set MOATT_API_KEY or MOATT_API_KEY. Skipping Apify profiler.")
             print("  Set it in .env or pass --no-apify for free-only mode.")
 
     # Run DNS + source scans for all domains

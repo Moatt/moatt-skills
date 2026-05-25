@@ -1,0 +1,57 @@
+name: audit-skills
+
+# Runs the content-leak audit on any PR (or push to main) that touches
+# the skill catalog, registry, schemas, or audit script itself. Fails the
+# build on any HIGH or MED severity violation so leaks can't slip back in.
+#
+# The script lives at scripts/audit-skills.js. To run it locally:
+#   node scripts/audit-skills.js          # human-readable report
+#   node scripts/audit-skills.js --strict # exit 1 on HIGH or MED
+
+on:
+  pull_request:
+    paths:
+      - 'skills/**'
+      - 'registry.json'
+      - 'skills-index.json'
+      - 'schemas/**'
+      - 'scripts/audit-skills.js'
+      - '.github/workflows/audit-skills.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'skills/**'
+      - 'registry.json'
+      - 'skills-index.json'
+      - 'schemas/**'
+      - 'scripts/audit-skills.js'
+
+jobs:
+  audit:
+    name: Content-leak audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run audit (strict)
+        run: node scripts/audit-skills.js --strict
+
+      - name: Upload JSON report
+        if: always()
+        run: node scripts/audit-skills.js --json > audit-report.json
+
+      - name: Attach report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-report
+          path: audit-report.json
+          retention-days: 30

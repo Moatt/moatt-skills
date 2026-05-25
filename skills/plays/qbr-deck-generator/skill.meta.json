@@ -13,7 +13,6 @@
     ]
   },
   "requires_skills": [
-    "create-html-slides",
-    "data-charts-tako"
+    "create-html-slides"
   ]
 }

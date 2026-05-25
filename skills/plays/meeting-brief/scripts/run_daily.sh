@@ -1,7 +1,7 @@
 #!/bin/bash
-# Main orchestration script for daily meeting briefs
-# This script is designed to be invoked BY OpenClaw (via cron or manually)
-# It outputs instructions for OpenClaw to execute
+# Main orchestration script for daily meeting briefs.
+# This script is designed to be invoked by an AI agent (via cron or manually).
+# It outputs instructions the agent then executes.
 
 set -e
 
@@ -33,13 +33,13 @@ echo "Configuration loaded: research_depth=$RESEARCH_DEPTH, your_email=$YOUR_EMA
 echo "[$(date)] Fetching today's meetings..." | tee -a "$LOG_FILE"
 MEETINGS_FILE="$DATA_DIR/meetings/$DATE.json"
 
-# Use gcalcli to get meetings (this requires OpenClaw to execute)
+# Use gcalcli to get meetings (the agent runs this step)
 echo "Execute: bash $SKILL_DIR/scripts/check_calendar.sh > $MEETINGS_FILE"
 
 # Step 2: Extract external attendees
 echo "[$(date)] Processing meetings and filtering attendees..." | tee -a "$LOG_FILE"
 
-# Output: Instructions for OpenClaw to follow
+# Output: Instructions for the agent to follow
 cat << 'EOF'
 
 # Daily Meeting Brief Workflow
@@ -50,7 +50,7 @@ Follow these steps to generate and send meeting briefs:
 
 Run the check_calendar.sh script:
 ```bash
-cd /home/ubuntu/.openclaw/workspace/skills/meeting-brief
+cd ~/.claude/skills/meeting-brief
 bash scripts/check_calendar.sh > data/meetings/$(date +%Y-%m-%d).json
 ```
 
@@ -146,7 +146,7 @@ Report:
 
 ---
 
-**Note:** This is an orchestration workflow. Execute each step in order, using OpenClaw's tools (web_search, gh CLI, memory_search, gmail skill, etc.) as needed.
+**Note:** This is an orchestration workflow. Execute each step in order, using your agent's tools (web_search, gh CLI, memory_search, gmail skill, etc.) as needed.
 
 EOF
 

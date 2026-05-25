@@ -38,10 +38,7 @@ APIFY_ACTOR = "jupri~rss-xml-scraper"
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
 
-if MOATT_API_KEY:
-    APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
-else:
-    APIFY_BASE = "https://api.apify.com/v2"
+APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
 
 
 def discover_feed_url(blog_url):
@@ -383,22 +380,22 @@ Examples:
             print(f"[WARN] No feed found for: {', '.join(failed)}", file=sys.stderr)
 
     elif args.mode == "apify":
-        token = args.token or MOATT_API_KEY or os.environ.get("APIFY_API_TOKEN")
+        token = args.token or MOATT_API_KEY or os.environ.get("MOATT_API_KEY")
         if not token:
-            print("Error: Set MOATT_API_KEY or APIFY_API_TOKEN env var.", file=sys.stderr)
+            print("Error: Set MOATT_API_KEY env var (run `npx moatt login`).", file=sys.stderr)
             sys.exit(1)
         posts = scrape_apify(token, blog_urls, max_posts=args.max_posts, timeout=args.timeout)
 
     else:  # auto mode
         posts, failed = scrape_rss(blog_urls, days=args.days, max_posts=args.max_posts)
         if failed:
-            token = args.token or MOATT_API_KEY or os.environ.get("APIFY_API_TOKEN")
+            token = args.token or MOATT_API_KEY or os.environ.get("MOATT_API_KEY")
             if token:
                 print(f"Falling back to Apify for: {', '.join(failed)}", file=sys.stderr)
                 apify_posts = scrape_apify(token, failed, max_posts=args.max_posts, timeout=args.timeout)
                 posts.extend(apify_posts)
             else:
-                print(f"[WARN] No feed found for: {', '.join(failed)} (set APIFY_API_TOKEN for fallback)", file=sys.stderr)
+                print(f"[WARN] No feed found for: {', '.join(failed)} (set MOATT_API_KEY for fallback)", file=sys.stderr)
 
     # Parse keywords
     keywords = None

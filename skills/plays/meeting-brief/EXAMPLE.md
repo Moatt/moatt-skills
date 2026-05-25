@@ -70,7 +70,7 @@ You're meeting with **Sarah Chen**, VP of Engineering at DevTools Inc., today at
    - Memory Search: Past meeting notes
 
 3. **AI Generation**:
-   - OpenClaw session generated personalized brief
+   - The agent generated a personalized brief
    - Structured format based on template
    - Highlighted most relevant insights
 

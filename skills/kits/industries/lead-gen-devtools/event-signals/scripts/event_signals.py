@@ -55,10 +55,7 @@ LISTENNOTES_BASE = "https://listen-api.listennotes.com/api/v2"
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
 
-if MOATT_API_KEY:
-    APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
-else:
-    APIFY_BASE = "https://api.apify.com/v2"
+APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
 APIFY_MEETUP_ACTOR = "qaDijpjO2HlVfLvoE"  # automation-lab/meetup-scraper
 APIFY_LUMA_ACTOR = "matyascimbulka~luma-event-scraper"
 
@@ -89,7 +86,7 @@ def load_apify_key():
             if env_path.exists():
                 load_dotenv(env_path)
                 break
-    return MOATT_API_KEY or os.environ.get("APIFY_API_TOKEN", "")
+    return MOATT_API_KEY or os.environ.get("MOATT_API_KEY", "")
 
 
 def load_listennotes_key():
