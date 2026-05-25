@@ -14,15 +14,27 @@ tags: [seo]
 
 ## Setup
 
-Pull credentials from ~/.moatt/credentials.json:
-```bash
-export MOATT_API_KEY=$(python3 -c "import json;print(json.load(open('$HOME/.moatt/credentials.json'))['api_key'])")
-export MOATT_API_BASE=$(python3 -c "import json;print(json.load(open('$HOME/.moatt/credentials.json')).get('api_base','https://api.moatt.com'))")
+`MOATT_API_KEY` and `MOATT_API_BASE` are already exported in the Box environment — no manual sourcing needed. If you need to read them from a script, they're also available in `~/.moatt/credentials.json`.
+
+**Every Moatt-proxied call uses the same shape**:
+```
+POST $MOATT_API_BASE/v1/proxy/dataforseo/rest
+Authorization: Bearer $MOATT_API_KEY
+Content-Type: application/json
+Body: { "endpoint": "/v3/<dfs-path>", "body": [ { ...task-spec... } ] }
 ```
 
-If ~/.moatt/credentials.json is missing, tell the user to run: `npx moatt login`
+**Never POST directly to `/v3/...` — that path lives at api.dataforseo.com, not on `$MOATT_API_BASE`.** The proxy unwraps `endpoint` + `body` and forwards. If you see your call return 404, check that you're hitting `/v1/proxy/dataforseo/rest`, not `/v3/...`.
 
-Every endpoint uses Bearer auth: `-H "Authorization: Bearer $MOATT_API_KEY"`
+## Upstream skills (auto-installed)
+
+This skill declares `requires_skills: [site-content-catalog, seo-domain-analyzer, seo-traffic-analyzer]` — they install automatically with this one. Their scripts live at:
+
+- `$HOME/skills/moves/site-content-catalog/scripts/catalog_content.py`
+- `$HOME/skills/moves/seo-domain-analyzer/scripts/analyze_domain.py`
+- `$HOME/skills/moves/seo-traffic-analyzer/scripts/analyze_traffic.py`
+
+You execute them via `boxExec` — they handle all DFS wiring themselves and return JSON or a summary.
 
 Identify the highest-leverage content gaps between your site and your competitors. Combines a crawl of your existing content with DataForSEO Labs' keyword-gap analysis (domain_intersection) to surface the prioritised list of posts worth writing — grounded in real search volume and keyword difficulty, not guesses.
 
@@ -52,34 +64,44 @@ Identify the highest-leverage content gaps between your site and your competitor
 
 ## Phase 1: Catalog Your Existing Content
 
-Build the inventory of the target site's current pages and posts using `site-content-catalog`:
+Delegate to the `site-content-catalog` script — it handles sitemap.xml, RSS fallback, and blog-index crawl in one call:
 
-1. Fetch sitemap.xml (`/sitemap.xml`, `/sitemap_index.xml`, `robots.txt` `Sitemap:` directives)
-2. Fall back to RSS feeds (`/feed`, `/blog/feed`) or a blog-index crawl
-3. Extract every URL: title, inferred topic/theme, content age
+```bash
+python3 $HOME/skills/moves/site-content-catalog/scripts/catalog_content.py \
+  --domain <user-domain> \
+  --output json \
+  > /tmp/site-catalog.json
+```
 
-This prevents recommending content you've already written.
+Returns every URL with title, inferred topic, and content age. This prevents recommending content you've already written.
 
 ## Phase 2: Keyword Gap via DFS `domain_intersection`
 
 **This is the killer endpoint for this skill.** DFS Labs' `domain_intersection` returns keywords where one domain ranks but another doesn't (or ranks lower) — the structured answer to "what are competitors ranking for that we're missing?"
 
-```
-POST /v3/dataforseo_labs/google/domain_intersection/live
-{
-  "target1": "competitor.com",
-  "target2": "yourcompany.com",
-  "intersections": false,                # false = gap mode (only target1 ranks)
-  "location_code": 2840,
-  "language_code": "en",
-  "limit": 200,
-  "order_by": ["first_domain_serp_element.rank_group,asc"],
-  "filters": [
-    ["keyword_data.keyword_info.search_volume", ">", 50],
-    "and",
-    ["first_domain_serp_element.rank_group", "<=", 20]
-  ]
-}
+No script wraps this one — call it through the Moatt DFS proxy directly. The full URL is `$MOATT_API_BASE/v1/proxy/dataforseo/rest`. The DFS endpoint path goes in the body's `endpoint` field, NOT in the URL:
+
+```bash
+curl -s -X POST "$MOATT_API_BASE/v1/proxy/dataforseo/rest" \
+  -H "Authorization: Bearer $MOATT_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "endpoint": "/v3/dataforseo_labs/google/domain_intersection/live",
+    "body": [{
+      "target1": "competitor.com",
+      "target2": "yourcompany.com",
+      "intersections": false,
+      "location_code": 2840,
+      "language_code": "en",
+      "limit": 200,
+      "order_by": ["first_domain_serp_element.rank_group,asc"],
+      "filters": [
+        ["keyword_data.keyword_info.search_volume", ">", 50],
+        "and",
+        ["first_domain_serp_element.rank_group", "<=", 20]
+      ]
+    }]
+  }'
 ```
 
 Run this once per competitor. Each call returns:
@@ -96,11 +118,21 @@ For each user-provided competitor, also run with `intersections: true` to surfac
 
 ## Phase 3: Competitor Domain Snapshot
 
-For each competitor, run a quick `seo-domain-analyzer` Phase 1 (domain rank overview only) — gives you organic traffic ETV + total keyword count for the comparison header.
+For each competitor, delegate to `seo-domain-analyzer` — it returns organic traffic ETV + total keyword count + top pages in one call:
 
+```bash
+python3 $HOME/skills/moves/seo-domain-analyzer/scripts/analyze_domain.py \
+  --domain competitor.com \
+  --output summary
 ```
-POST /v3/dataforseo_labs/google/domain_rank_overview/live
-{ "target": "competitor.com", "location_code": 2840, "language_code": "en" }
+
+For multi-month traffic history (only needed when the report asks "is this site growing or losing?"), additionally call `seo-traffic-analyzer`:
+
+```bash
+python3 $HOME/skills/moves/seo-traffic-analyzer/scripts/analyze_traffic.py \
+  --domain competitor.com \
+  --months 12 \
+  --output summary
 ```
 
 ## Phase 4: Identify & Classify Gaps
@@ -126,14 +158,19 @@ For each gap topic, score commercial intent (1–5):
 - **2** — Educational, tangential (e.g., "what is lead scoring")
 - **1** — Generic, low-conversion
 
-Pull DFS `search_intent` to assist the classification:
+Pull DFS `search_intent` to assist the classification — same proxy pattern as Phase 2:
 
-```
-POST /v3/dataforseo_labs/google/search_intent/live
-{
-  "keywords": ["best AI SDR tools", "outbound automation platform", ...],
-  "language_code": "en"
-}
+```bash
+curl -s -X POST "$MOATT_API_BASE/v1/proxy/dataforseo/rest" \
+  -H "Authorization: Bearer $MOATT_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "endpoint": "/v3/dataforseo_labs/google/search_intent/live",
+    "body": [{
+      "keywords": ["best AI SDR tools", "outbound automation platform"],
+      "language_code": "en"
+    }]
+  }'
 ```
 
 Returns `commercial`, `informational`, `navigational`, `transactional` per keyword. Filter to commercial + transactional for the priority list.
