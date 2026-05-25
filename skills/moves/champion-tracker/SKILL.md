@@ -58,24 +58,24 @@ Run `champion_tracker.py` on a recurring schedule.
 **Initialize baseline** (first execution):
 ```bash
 # Dry run — see cost estimate
-python3 skills/champion-tracker/scripts/champion_tracker.py init -i champions.csv --dry-run
+python3 $HOME/skills/moves/champion-tracker/scripts/champion_tracker.py init -i champions.csv --dry-run
 
 # Create baseline
-python3 skills/champion-tracker/scripts/champion_tracker.py init -i champions.csv
+python3 $HOME/skills/moves/champion-tracker/scripts/champion_tracker.py init -i champions.csv
 ```
 
 **Check for job changes** (recurring runs):
 ```bash
 # Dry run
-python3 skills/champion-tracker/scripts/champion_tracker.py check --dry-run
+python3 $HOME/skills/moves/champion-tracker/scripts/champion_tracker.py check --dry-run
 
 # Detect changes and output CSV
-python3 skills/champion-tracker/scripts/champion_tracker.py check -o changes.csv
+python3 $HOME/skills/moves/champion-tracker/scripts/champion_tracker.py check -o changes.csv
 ```
 
 **View status**:
 ```bash
-python3 skills/champion-tracker/scripts/champion_tracker.py status
+python3 $HOME/skills/moves/champion-tracker/scripts/champion_tracker.py status
 ```
 
 ## Output CSV Columns
@@ -132,6 +132,6 @@ skills/champion-tracker/
 
 ## Dependencies
 
-- Reuses `LinkedInEnricher` from `skills/lead-qualification/scripts/enrich_leads.py`
+- Reuses `LinkedInEnricher` from `$HOME/skills/moves/lead-qualification/scripts/enrich_leads.py`
 - Falls back to an inline implementation if the import fails
 - Needs: `requests` (Python package), `APIFY_API_TOKEN` (env var)

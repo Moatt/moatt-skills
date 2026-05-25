@@ -33,7 +33,7 @@ fi
 # Strip any scheme / path / trailing slash from the domain
 DOMAIN="$(echo "$DOMAIN" | sed -E 's#^https?://##; s#/.*$##; s#/$##')"
 
-PROXY="${MOATT_API_BASE%/}/api/v1/proxy/dataforseo/rest"
+PROXY="${MOATT_API_BASE%/}/v1/proxy/dataforseo/rest"
 DATE_STAMP="$(date +%F)"
 OUT_DIR="/workspace/home/projects/seo-analyzer-${DATE_STAMP}/${DOMAIN}"
 mkdir -p "$OUT_DIR"

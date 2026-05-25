@@ -1101,7 +1101,10 @@
       "changelog": {
         "0.1.0": "Initial release."
       },
-      "requires_skills": [],
+      "requires_skills": [
+        "review-site-scraper",
+        "linkedin-post-research"
+      ],
       "kit": null
     },
     {

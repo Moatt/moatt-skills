@@ -219,7 +219,7 @@ if [ -z "${MOATT_API_KEY:-}" ] || [ -z "${MOATT_API_BASE:-}" ]; then
 fi
 
 DOMAIN="$(echo "$DOMAIN" | sed -E 's#^https?://##; s#/.*$##; s#/$##')"
-PROXY="${MOATT_API_BASE%/}/api/v1/proxy/dataforseo/rest"
+PROXY="${MOATT_API_BASE%/}/v1/proxy/dataforseo/rest"
 DATE_STAMP="$(date +%F)"
 OUT_DIR="/workspace/home/projects/seo-content-audit-${DATE_STAMP}/${DOMAIN}"
 mkdir -p "$OUT_DIR"

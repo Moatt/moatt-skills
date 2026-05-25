@@ -62,7 +62,7 @@ Roll up every find into a single running list. For each candidate customer, reco
 
 Run the scrape_website_logos.py script:
 ```bash
-python3 skills/capabilities/customer-discovery/scripts/scrape_website_logos.py \
+python3 $HOME/skills/moves/customer-discovery/scripts/scrape_website_logos.py \
   --url "[company-url]" --output json
 ```
 
@@ -76,7 +76,7 @@ WebFetch the company's case studies landing page (try `/case-studies`, `/custome
 
 If the `review-site-scraper` skill is on hand, use it to extract reviewer companies:
 ```bash
-python3 skills/capabilities/review-site-scraper/scripts/scrape_reviews.py \
+python3 $HOME/skills/moves/review-site-scraper/scripts/scrape_reviews.py \
   --platform g2 --url "[g2-product-url]" --max-reviews 50 --output json
 ```
 
@@ -98,7 +98,7 @@ WebSearch: `site:[company-domain] customer OR "case study" OR partnership OR "cu
 
 Run the scrape_wayback_logos.py script:
 ```bash
-python3 skills/capabilities/customer-discovery/scripts/scrape_wayback_logos.py \
+python3 $HOME/skills/moves/customer-discovery/scripts/scrape_wayback_logos.py \
   --url "[company-url]" --output json
 ```
 
@@ -153,7 +153,7 @@ WebFetch marketplace listings where the company appears as an integration:
 **16. BuiltWith detection**
 
 ```bash
-python3 skills/capabilities/customer-discovery/scripts/search_builtwith.py \
+python3 $HOME/skills/moves/customer-discovery/scripts/search_builtwith.py \
   --technology "[company-slug]" --max-results 50 --output json
 ```
 
@@ -255,8 +255,8 @@ Write the CSV via a code block or a small Python script.
 All scripts depend on `requests`: `pip3 install requests`
 
 External skill scripts (use if available):
-- `skills/capabilities/review-site-scraper/scripts/scrape_reviews.py` — G2/Capterra/Trustpilot reviews (needs Apify token)
-- `skills/capabilities/linkedin-post-research/scripts/search_posts.py` — LinkedIn post search (needs Apify token)
+- `$HOME/skills/moves/review-site-scraper/scripts/scrape_reviews.py` — G2/Capterra/Trustpilot reviews (needs Apify token)
+- `$HOME/skills/moves/linkedin-post-research/scripts/search_posts.py` — LinkedIn post search (needs Apify token)
 
 ## Cost
 
