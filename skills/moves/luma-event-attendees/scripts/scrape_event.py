@@ -280,7 +280,7 @@ Examples:
   python3 scrape_event.py --search "AI SF" --output guests.json --json
 
 Environment:
-  APIFY_API_TOKEN: Required for --search mode.
+  MOATT_API_KEY: Required for --search mode.
                    Get at https://console.apify.com/account/integrations
                    Rent actor at https://console.apify.com/actors/r5gMxLV2rOF3J1fxu
         """,
@@ -306,8 +306,8 @@ Environment:
 
         # Apify search mode
         if args.search:
-            if not os.getenv("APIFY_API_TOKEN"):
-                print("Error: APIFY_API_TOKEN required for --search mode")
+            if not os.getenv("MOATT_API_KEY"):
+                print("Error: MOATT_API_KEY required for --search mode")
                 print("Get token: https://console.apify.com/account/integrations")
                 print("Rent actor: https://console.apify.com/actors/r5gMxLV2rOF3J1fxu")
                 sys.exit(1)

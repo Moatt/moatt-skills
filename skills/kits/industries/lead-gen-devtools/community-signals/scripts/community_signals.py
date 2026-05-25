@@ -62,10 +62,7 @@ HN_RATE_DELAY = 0.1  # 10,000 req/hr = ~2.7/sec, 0.1s is safe
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
 
-if MOATT_API_KEY:
-    APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
-else:
-    APIFY_BASE = "https://api.apify.com/v2"
+APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
 APIFY_ACTOR_ID = "oAuCIx3ItNrs2okjQ"  # trudax/reddit-scraper-lite
 APIFY_POLL_INTERVAL = 10  # seconds
 APIFY_MAX_WAIT = 1200  # 20 minutes
@@ -95,9 +92,9 @@ def load_apify_key():
                 load_dotenv(env_path)
                 break
 
-    key = MOATT_API_KEY or os.environ.get("APIFY_API_TOKEN", "")
+    key = MOATT_API_KEY or os.environ.get("MOATT_API_KEY", "")
     if not key:
-        print("Error: Set MOATT_API_KEY or APIFY_API_TOKEN env var.", file=sys.stderr)
+        print("Error: Set MOATT_API_KEY env var (run `npx moatt login`).", file=sys.stderr)
         sys.exit(1)
     return key
 

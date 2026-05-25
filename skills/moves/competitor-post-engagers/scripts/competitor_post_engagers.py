@@ -141,10 +141,7 @@ def load_env():
 
 def apify_dataset(run_id, token, limit=50000):
     """Fetch dataset items from a completed run."""
-    if MOATT_API_KEY:
-        url = f"{MOATT_API_BASE}/v1/proxy/apify/actor-runs/{run_id}/dataset/items?token={token}&limit={limit}"
-    else:
-        url = f"https://api.apify.com/v2/actor-runs/{run_id}/dataset/items?token={token}&limit={limit}"
+    url = f"{MOATT_API_BASE}/v1/proxy/apify/actor-runs/{run_id}/dataset/items?token={token}&limit={limit}"
     return json.load(urllib.request.urlopen(url, timeout=120))
 
 
@@ -786,9 +783,9 @@ def main():
         sys.exit(1)
 
     env = load_env()
-    token = MOATT_API_KEY or env.get("APIFY_API_TOKEN", "")
+    token = MOATT_API_KEY or env.get("MOATT_API_KEY", "")
     if not token:
-        print("Error: Set MOATT_API_KEY or APIFY_API_TOKEN env var.", file=sys.stderr)
+        print("Error: Set MOATT_API_KEY env var (run `npx moatt login`).", file=sys.stderr)
         sys.exit(1)
 
     run_name = config["name"]

@@ -23,10 +23,7 @@ from datetime import datetime, timedelta, timezone
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
 
-if MOATT_API_KEY:
-    BASE_URL = f"{MOATT_API_BASE}/v1/proxy/apify"
-else:
-    BASE_URL = "https://api.apify.com/v2"
+BASE_URL = f"{MOATT_API_BASE}/v1/proxy/apify"
 
 # Platform-specific actor IDs
 ACTORS = {
@@ -38,9 +35,9 @@ ACTORS = {
 
 def get_token(cli_token=None):
     """Get API token, preferring Moatt proxy key."""
-    token = cli_token or MOATT_API_KEY or os.environ.get("APIFY_API_TOKEN")
+    token = cli_token or MOATT_API_KEY or os.environ.get("MOATT_API_KEY")
     if not token:
-        print("Error: Set MOATT_API_KEY or APIFY_API_TOKEN env var.", file=sys.stderr)
+        print("Error: Set MOATT_API_KEY env var (run `npx moatt login`).", file=sys.stderr)
         sys.exit(1)
     return token
 
@@ -307,7 +304,7 @@ Examples:
     parser.add_argument("--days", type=int, help="Only include reviews from last N days")
     parser.add_argument("--output", choices=["json", "summary"], default="json",
                         help="Output format (default: json)")
-    parser.add_argument("--token", help="Apify API token (or set APIFY_API_TOKEN env var)")
+    parser.add_argument("--token", help="Apify API token (or set MOATT_API_KEY env var)")
     parser.add_argument("--timeout", type=int, default=300,
                         help="Max seconds to wait for Apify run (default: 300)")
 

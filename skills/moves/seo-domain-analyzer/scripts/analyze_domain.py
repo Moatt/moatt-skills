@@ -25,10 +25,7 @@ except ImportError:
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
 
-if MOATT_API_KEY:
-    APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
-else:
-    APIFY_BASE = "https://api.apify.com/v2"
+APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (compatible; SEOAnalyzerBot/1.0)"}
 
@@ -387,11 +384,11 @@ def analyze_domain(domain, competitors=None, keywords=None, token=None, skip_bac
 
     else:
         # Free fallback
-        print("\n[INFO] No APIFY_API_TOKEN found. Running in free probe mode.", file=sys.stderr)
+        print("\n[INFO] No MOATT_API_KEY found. Running in free probe mode.", file=sys.stderr)
         result["data_sources"].append("free-probes")
         probes = free_seo_probes(domain)
         result["domain_metrics"]["free_probes"] = probes
-        result["domain_metrics"]["note"] = "Limited data without Apify. Set APIFY_API_TOKEN for full analysis."
+        result["domain_metrics"]["note"] = "Limited data without Apify. Set MOATT_API_KEY for full analysis."
 
     return result
 
@@ -481,14 +478,14 @@ def main():
     parser.add_argument("--output", help="Path to save JSON output (default: stdout)")
     parser.add_argument("--markdown", help="Path to save Markdown report")
     parser.add_argument("--skip-backlinks", action="store_true", help="Skip Ahrefs backlink analysis")
-    parser.add_argument("--apify-token", help="Apify API token (or set APIFY_API_TOKEN)")
+    parser.add_argument("--apify-token", help="Apify API token (or set MOATT_API_KEY)")
 
     args = parser.parse_args()
 
     domain = args.domain.replace("https://", "").replace("http://", "").rstrip("/")
     competitors = [c.strip() for c in args.competitors.split(",") if c.strip()] if args.competitors else None
     keywords = [k.strip() for k in args.keywords.split(",") if k.strip()] if args.keywords else None
-    token = args.apify_token or MOATT_API_KEY or os.environ.get("APIFY_API_TOKEN")
+    token = args.apify_token or MOATT_API_KEY or os.environ.get("MOATT_API_KEY")
 
     result = analyze_domain(
         domain=domain,

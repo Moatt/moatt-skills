@@ -7,7 +7,7 @@ Two approaches for Luma:
    Gets event metadata + hosts. Guest list only if publicly visible in page.
 2. LumaApifyClient (paid) - Uses lexis-solutions/lu-ma-scraper Apify actor.
    Gets full event data including featured_guests (registered attendee profiles
-   with LinkedIn, Twitter, bio, etc). Requires APIFY_API_TOKEN. $29/month flat.
+   with LinkedIn, Twitter, bio, etc). Requires MOATT_API_KEY. $29/month flat.
 """
 import os
 import re
@@ -139,7 +139,7 @@ class LumaApifyClient:
     Searches Luma's explore page and returns full event data including
     featured_guests with profiles (name, bio, LinkedIn, Twitter, etc).
 
-    Requires: APIFY_API_TOKEN
+    Requires: MOATT_API_KEY
     Pricing: $29/month flat subscription
     Rental: https://console.apify.com/actors/r5gMxLV2rOF3J1fxu
     """
@@ -151,13 +151,13 @@ class LumaApifyClient:
     if _MOATT_API_KEY:
         BASE_URL = f"{_MOATT_API_BASE}/v1/proxy/apify"
     else:
-        BASE_URL = "https://api.apify.com/v2"
+        BASE_URL = f"{MOATT_API_BASE}/v1/proxy/apify"
 
     def __init__(self, api_token: Optional[str] = None):
-        self.api_token = api_token or self._MOATT_API_KEY or os.getenv("APIFY_API_TOKEN")
+        self.api_token = api_token or self._MOATT_API_KEY or os.getenv("MOATT_API_KEY")
         if not self.api_token:
             raise ValueError(
-                "Set MOATT_API_KEY or APIFY_API_TOKEN env var."
+                "Set MOATT_API_KEY or MOATT_API_KEY env var."
             )
 
     def _run_actor(self, run_input: Dict, timeout: int = 180) -> List[Dict]:

@@ -34,7 +34,7 @@ const ROOT = process.env.MOATT_SKILLS_ROOT
 const SKILLS_DIR = path.join(ROOT, 'skills');
 const CATEGORIES = ['moves', 'plays', 'moats', 'kits'];
 const REGISTRY_FILES = ['registry.json', 'skills-index.json'];
-const SCANNABLE_EXTS = new Set(['.md', '.json', '.js', '.ts', '.sh']);
+const SCANNABLE_EXTS = new Set(['.md', '.json', '.js', '.ts', '.sh', '.py']);
 
 // ---------------------------------------------------------------------------
 // Pattern catalogs — extend these as the audit catches new leak shapes.
