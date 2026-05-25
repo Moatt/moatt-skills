@@ -72,7 +72,7 @@ Do not retry by inventing curls or scraping.
 `api.dataforseo.com`. The proxy contract is:
 
 ```
-POST $MOATT_API_BASE/api/v1/proxy/dataforseo/rest
+POST $MOATT_API_BASE/v1/proxy/dataforseo/rest
 Authorization: Bearer $MOATT_API_KEY
 Content-Type: application/json
 

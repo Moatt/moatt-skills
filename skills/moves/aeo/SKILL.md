@@ -17,7 +17,7 @@ directly, read JSON, count mentions, write the report.
 
 ## How it works in one paragraph
 
-`POST {MOATT_API_BASE}/api/v1/proxy/dataforseo/rest` with `Authorization:
+`POST {MOATT_API_BASE}/v1/proxy/dataforseo/rest` with `Authorization:
 Bearer $MOATT_API_KEY` forwards to DataForSEO. Body is
 `{endpoint: "/v3/ai_optimization/<provider>/llm_responses/live", body: [<task>]}`.
 DFS asks the named LLM (with optional `web_search:true`) and returns its
