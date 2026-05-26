@@ -147,12 +147,7 @@ class LumaApifyClient:
     ACTOR_ID = "lexis-solutions~lu-ma-scraper"
     _MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
     _MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
-HEADERS = {"Authorization": f"Bearer {MOATT_API_KEY}"} if MOATT_API_KEY else {}
-
-    if _MOATT_API_KEY:
-        BASE_URL = f"{_MOATT_API_BASE}/v1/proxy/apify"
-    else:
-        BASE_URL = f"{MOATT_API_BASE}/v1/proxy/apify"
+    BASE_URL = f"{_MOATT_API_BASE}/v1/proxy/apify"
 
     def __init__(self, api_token: Optional[str] = None):
         self.api_token = api_token or self._MOATT_API_KEY or os.getenv("MOATT_API_KEY")
