@@ -102,15 +102,17 @@ def main():
         )
 
     if args.output == "summary":
-        ro = (
-            (result.get("rank_overview") or {}).get("tasks") or [{}]
-        )[0].get("result") or [{}]
-        item = ro[0] if ro else {}
+        # DFS shape: tasks[0].result[0].items[0].metrics.organic.{count,etv,...}
+        tasks = (result.get("rank_overview") or {}).get("tasks") or []
+        result_list = (tasks[0].get("result") if tasks else None) or []
+        bucket = result_list[0] if result_list else {}
+        items = bucket.get("items") or []
+        item = items[0] if items else {}
         metrics = item.get("metrics", {}).get("organic", {}) if isinstance(item, dict) else {}
         print(f"Domain: {args.domain}")
         print(f"Organic keywords: {metrics.get('count', '?')}")
         print(f"ETV (estimated traffic value): {metrics.get('etv', '?')}")
-        print(f"Estimated monthly traffic: {metrics.get('estimated_paid_traffic_cost', '?')}")
+        print(f"Estimated monthly traffic value (USD): {metrics.get('estimated_paid_traffic_cost', '?')}")
     else:
         print(json.dumps(result, indent=2))
 
