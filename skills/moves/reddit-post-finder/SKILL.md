@@ -17,7 +17,7 @@ If ~/.moatt/credentials.json doesn't exist, tell the user to run: `npx moatt log
 
 All endpoints use Bearer auth: `-H "Authorization: Bearer $MOATT_API_KEY"`
 
-Scrape Reddit posts and comments using the Apify `trudax/reddit-scraper-lite` actor.
+Scrape Reddit posts and comments using the Apify `harshmaur/reddit-scraper` actor.
 
 ## Quick Start
 
@@ -46,7 +46,7 @@ python3 skills/reddit-post-finder/scripts/search_reddit.py \
 ## How the Script Works
 
 1. Builds full Reddit URLs for each subreddit (e.g. `https://www.reddit.com/r/growthhacking/top/?t=week`)
-2. Calls the Apify `trudax/reddit-scraper-lite` actor via REST
+2. Calls the Apify `harshmaur/reddit-scraper` actor via REST
 3. Polls until the run finishes, then fetches the dataset
 4. Applies client-side keyword and date filtering
 5. Sorts by upvotes (descending) and emits JSON or a summary
@@ -79,7 +79,7 @@ When calling the Apify API directly (e.g. via curl), the **required fields** are
 }
 ```
 
-Key notes for `trudax/reddit-scraper-lite`:
+Key notes for `harshmaur/reddit-scraper`:
 - Uses `startUrls` with **full Reddit URLs** (not a `searches` array for subreddit browsing)
 - Sort/time are controlled via the **URL path** (e.g. `/top/?t=week`), not as separate input fields
 - Only `startUrls` and `maxItems` are confirmed-working input fields

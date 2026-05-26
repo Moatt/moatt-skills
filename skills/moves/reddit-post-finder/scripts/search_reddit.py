@@ -18,7 +18,7 @@ import time as time_mod
 from datetime import datetime, timedelta, timezone
 
 
-ACTOR_ID = "trudax~reddit-scraper-lite"
+ACTOR_ID = "harshmaur~reddit-scraper"
 
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
