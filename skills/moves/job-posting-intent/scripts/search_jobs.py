@@ -33,7 +33,7 @@ except ImportError:
     sys.exit(1)
 
 
-ACTOR_ID = "worldunboxer~rapid-linkedin-scraper"
+ACTOR_ID = "openclawai~linkedin-jobs-scraper-jobspy"
 
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
@@ -154,20 +154,37 @@ def search_jobs(
     for title in titles:
         print(f"\nSearching: '{title}'")
 
-        # worldunboxer/rapid-linkedin-scraper uses {keyword, location, limit}
-        # rather than the older harvestapi shape. We loop per-location to keep
-        # the same fan-out cost-estimate math the caller already computed.
+        # openclawai/linkedin-jobs-scraper-jobspy uses {searchTerm, location,
+        # resultsWanted}. Verified 2026-05-26: 29.4s, 3 items, \$0.0026 — 5×
+        # cheaper than the previous worldunboxer/rapid-linkedin-scraper.
+        # Output keys: id, title, company, location, job_url, description, ...
         loc_iter = locations if locations else [None]
         for loc in loc_iter:
-            input_data: dict = {"keyword": title, "limit": max_per_title}
+            input_data: dict = {"searchTerm": title, "resultsWanted": max_per_title}
             if loc:
                 input_data["location"] = loc
 
             result = run_actor(token, input_data)
             total_cost += result["usage"]
 
-            for job in result["items"]:
-                job["_search_title"] = title
+            for raw in result["items"]:
+                # Map openclawai schema → legacy field names so downstream
+                # group_by_company / scoring code keeps working.
+                location_obj = raw.get("location")
+                if isinstance(location_obj, str):
+                    location_obj = {"linkedinText": location_obj}
+                elif not isinstance(location_obj, dict):
+                    location_obj = {"linkedinText": ""}
+                job = {
+                    **raw,
+                    "title": raw.get("title", ""),
+                    "linkedinUrl": raw.get("job_url") or raw.get("linkedinUrl", ""),
+                    "descriptionText": raw.get("description") or raw.get("descriptionText", ""),
+                    "postedDate": raw.get("date_posted") or raw.get("postedDate", ""),
+                    "location": location_obj,
+                    "company": raw.get("company") if isinstance(raw.get("company"), dict) else {"name": raw.get("company", "")},
+                    "_search_title": title,
+                }
                 if loc:
                     job["_search_location"] = loc
                 all_jobs.append(job)
