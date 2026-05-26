@@ -34,7 +34,7 @@ FEED_PATHS = [
     "/blog/feed.xml",
 ]
 
-APIFY_ACTOR = "jupri~rss-xml-scraper"
+APIFY_ACTOR = "shahidirfan~RSS-XML-Scraper"
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
 HEADERS = {"Authorization": f"Bearer {MOATT_API_KEY}"} if MOATT_API_KEY else {}

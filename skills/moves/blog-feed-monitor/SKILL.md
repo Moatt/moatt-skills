@@ -48,10 +48,10 @@ python3 skills/blog-feed-monitor/scripts/scrape_blogs.py \
    - Inspecting `<link rel="alternate">` tags in the HTML
    - Trying well-known paths: `/feed`, `/rss`, `/atom.xml`, `/feed.xml`, `/rss.xml`, `/blog/feed`, `/index.xml`
 2. Parses any feed it finds (RSS 2.0 and Atom both supported)
-3. If a URL doesn't yield a feed, falls back to Apify `jupri/rss-xml-scraper` when a token is configured
+3. If a URL doesn't yield a feed, falls back to Apify `shahidirfan/RSS-XML-Scraper` when a token is configured
 4. Date and keyword filters are applied locally after retrieval
 
-> **Note:** The Apify fallback actor `jupri/rss-xml-scraper` hasn't been re-validated in a while and may need updating. The pure-RSS path runs reliably on its own.
+> **Note:** Verified 2026-05-26 — `shahidirfan/RSS-XML-Scraper` returns 5 items in ~14s for ~$0.0006/run (replaced `jupri/rss-xml-scraper` which started returning 403 for our token).
 
 ### RSS Mode
 Restricts the script to RSS feeds only — no Apify fallback.
@@ -75,4 +75,4 @@ Runs the Apify actor directly and skips the RSS discovery step entirely.
 ## Cost
 
 - **RSS mode:** No cost — no API, no token required
-- **Apify mode:** Runs `jupri/rss-xml-scraper`, consuming minimal Apify credits
+- **Apify mode:** Runs `shahidirfan/RSS-XML-Scraper`, consuming minimal Apify credits
