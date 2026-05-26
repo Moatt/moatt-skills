@@ -33,7 +33,7 @@ except ImportError:
     sys.exit(1)
 
 
-ACTOR_ID = "harvestapi~linkedin-job-search"
+ACTOR_ID = "worldunboxer~rapid-linkedin-scraper"
 
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
@@ -154,25 +154,23 @@ def search_jobs(
     for title in titles:
         print(f"\nSearching: '{title}'")
 
-        input_data = {
-            "jobTitles": [title],
-            "maxItems": max_per_title,
-            "postedLimit": posted_limit,
-            "sortBy": "date",
-        }
+        # worldunboxer/rapid-linkedin-scraper uses {keyword, location, limit}
+        # rather than the older harvestapi shape. We loop per-location to keep
+        # the same fan-out cost-estimate math the caller already computed.
+        loc_iter = locations if locations else [None]
+        for loc in loc_iter:
+            input_data: dict = {"keyword": title, "limit": max_per_title}
+            if loc:
+                input_data["location"] = loc
 
-        if locations:
-            input_data["locations"] = locations
+            result = run_actor(token, input_data)
+            total_cost += result["usage"]
 
-        if employment_types:
-            input_data["employmentType"] = employment_types
-
-        result = run_actor(token, input_data)
-        total_cost += result["usage"]
-
-        for job in result["items"]:
-            job["_search_title"] = title
-            all_jobs.append(job)
+            for job in result["items"]:
+                job["_search_title"] = title
+                if loc:
+                    job["_search_location"] = loc
+                all_jobs.append(job)
 
         print(f"  Found {len(result['items'])} jobs")
 
