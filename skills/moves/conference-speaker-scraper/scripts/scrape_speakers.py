@@ -26,13 +26,13 @@ except ImportError:
     print("ERROR: 'requests' package required. Install with: pip3 install requests", file=sys.stderr)
     sys.exit(1)
 
-HEADERS = {
-    **({"Authorization": f"Bearer {MOATT_API_KEY}"} if MOATT_API_KEY else {}),
-    "User-Agent": "ConferenceSpeakerScraper/1.0"
-}
-
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
+
+HEADERS = {
+    "User-Agent": "ConferenceSpeakerScraper/1.0",
+    **({"Authorization": f"Bearer {MOATT_API_KEY}"} if MOATT_API_KEY else {}),
+}
 
 APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
 
