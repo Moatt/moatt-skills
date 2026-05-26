@@ -25,10 +25,12 @@ except ImportError:
     print("Error: requests library required. Install with: pip install requests", file=sys.stderr)
     sys.exit(1)
 
-HEADERS = {
-    **({"Authorization": f"Bearer {MOATT_API_KEY}"} if MOATT_API_KEY else {}),"User-Agent": "Mozilla/5.0 (compatible; ContentCatalogBot/1.0)"}
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (compatible; ContentCatalogBot/1.0)",
+    **({"Authorization": f"Bearer {MOATT_API_KEY}"} if MOATT_API_KEY else {}),
+}
 
 APIFY_BASE = f"{MOATT_API_BASE}/v1/proxy/apify"
 SITEMAP_ACTOR = "onescales~sitemap-url-extractor"
