@@ -1,6 +1,6 @@
 {
   "name": "moattai",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "GTM skills for AI coding agents — installable via npx moatt install <slug>",
   "bin": {
     "moatt": "./bin/moatt.js"
