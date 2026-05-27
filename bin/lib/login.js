@@ -7,7 +7,7 @@ const { spawn } = require('node:child_process');
 
 const credentials = require('./credentials');
 
-const DEFAULT_API_BASE = process.env.MOATT_API_BASE || 'https://moatt.com';
+const DEFAULT_API_BASE = process.env.MOATT_API_BASE || 'https://cli.moatt.com';
 const TIMEOUT_MS = 5 * 60 * 1000;
 
 function openBrowser(url) {

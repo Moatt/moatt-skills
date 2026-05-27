@@ -113,7 +113,7 @@ async function credits({ human = false } = {}) {
 function projectsList() {
   const creds = credentials.requireCreds();
   if (!creds.projects || creds.projects.length === 0) {
-    console.log('No projects available. Create one at https://moatt.com first, then re-run "npx moatt login".');
+    console.log('No projects — you are using the CLI standalone. Run "npx moatt credits" to manage your wallet, or visit https://cli.moatt.com.');
     return;
   }
   console.log('');
