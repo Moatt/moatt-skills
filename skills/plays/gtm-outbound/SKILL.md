@@ -49,6 +49,14 @@ the chat. Call the tool directly — do not look for a Python recipe.
 4. **Pricing** — The panel has a Pricing tab showing per-action credit costs;
    no tool call needed, just tell the user to open it.
 
+## Spend smart — fewest calls, most data per dollar
+
+Every find/enrich call costs real credits. Be frugal by default:
+- **Start small.** `findLeads` defaults to ~25 results — DON'T request hundreds up front. Only widen (or paginate via "get more leads") when the user explicitly wants more.
+- **Find is cheap; enrich is expensive.** After `findLeads`, let the user review the panel. **Enrich ONLY the rows they actually want** — pass that subset to `enrichContacts` in ONE batched call. NEVER auto-enrich every row, and never call `enrichContacts` per-row.
+- **Don't re-search the same thing.** Identical queries are cached (free) for 24h — but don't fire near-duplicate searches hoping for different results.
+- **One source per find.** `findLeads` already picks the cheapest capable vendor automatically and stops at the first that returns rows — don't loop it.
+
 ## Hard rules
 
 - **Keep chat replies to one short sentence** — the panel shows the table.
