@@ -75,9 +75,9 @@ def _bare_sub(name):
     return (name or "").strip().strip("/").replace("r/", "")
 
 
-def _start_and_collect(actor_id, run_input, token, timeout):
-    """Start an Apify actor run via the proxy, poll to completion, return the raw
-    dataset items. Shared by the post and comment fetchers."""
+def _run_once(actor_id, run_input, token, timeout):
+    """Start one Apify actor run via the proxy, poll to completion, return the
+    raw dataset items."""
     resp = requests.post(
         f"{BASE_URL}/acts/{actor_id}/runs",
         json=run_input,
@@ -114,6 +114,19 @@ def _start_and_collect(actor_id, run_input, token, timeout):
     )
     dr.raise_for_status()
     return dr.json()
+
+
+def _start_and_collect(actor_id, run_input, token, timeout, retry_on_empty=0):
+    """Run an actor and return its raw dataset items. The live search actors
+    occasionally return a SUCCEEDED run with an empty dataset (transient); when
+    `retry_on_empty` > 0, re-run that many times before accepting empty."""
+    for attempt in range(retry_on_empty + 1):
+        raw = _run_once(actor_id, run_input, token, timeout)
+        if raw or attempt == retry_on_empty:
+            return raw
+        print(f"  ({actor_id} returned 0 items — retry {attempt + 1}/{retry_on_empty})...", file=sys.stderr)
+        time_mod.sleep(3)
+    return raw
 
 
 # ---- POSTS via parseforge/reddit-posts-scraper ------------------------------
@@ -161,7 +174,7 @@ def fetch_posts(token, query, subreddits, sort, time_window, max_posts, timeout)
         label = f"r/{', r/'.join(_bare_sub(s) for s in subreddits)}"
 
     print(f"[posts] parseforge {label} (max={max_posts}, sort={sort}, time={time_window})...", file=sys.stderr)
-    raw = _start_and_collect(POSTS_ACTOR, run_input, token, timeout)
+    raw = _start_and_collect(POSTS_ACTOR, run_input, token, timeout, retry_on_empty=1)
     posts = [_map_parseforge_post(p) for p in raw if (p.get("dataType") in (None, "post"))]
     print(f"[posts] fetched {len(posts)}", file=sys.stderr)
     return posts
