@@ -1,6 +1,6 @@
 ---
 name: reddit-post-finder
-description: Scrape and search Reddit posts via Apify. Use when you need to find Reddit threads, track competitor mentions, monitor product feedback, surface pain points, or analyze subreddit activity. Supports keyword filtering, time windows, and subreddit-specific queries.
+description: Search and scrape live Reddit posts AND comments via Apify. Use to find Reddit threads, track competitor/brand mentions, monitor product feedback, surface pain points, or analyze subreddit activity. GLOBAL keyword search across all of Reddit (use --query; best for "which subreddits mention X most" — one search returns items from many subreddits to group and count) or subreddit scraping (use --subreddit when you know the communities). Fetch posts (with upvotes/comment-counts), comments (global comment search), or both via --content. Supports keyword filtering, time windows, and per-subreddit mention counts.
 ---
 
 # Reddit Post Finder
@@ -15,122 +15,129 @@ export MOATT_API_BASE=$(python3 -c "import json;print(json.load(open('$HOME/.moa
 
 If ~/.moatt/credentials.json doesn't exist, tell the user to run: `npx moatt login`
 
-All endpoints use Bearer auth: `-H "Authorization: Bearer $MOATT_API_KEY"`
+All endpoints use Bearer auth: `-H "Authorization: Bearer $MOATT_API_KEY"`. Apify usage is billed to your org through the Karmable proxy.
 
-Scrape Reddit posts and comments using the Apify `harshmaur/reddit-scraper` actor.
+## Two actors, live data
+
+This skill uses **two live reddit.com actors** (one search returns current data, not a stale dump):
+
+- **Posts** → `parseforge/reddit-posts-scraper` — rich metrics (`upVotes`, `numberOfComments`, upvote ratio).
+- **Comments** → `trudax/reddit-scraper-lite` — global comment search. **No engagement metrics** — comment `upVotes`/`numberOfComments` are `null`.
+
+`--content` chooses which: `posts` (default), `comments`, or `both`.
+
+> Why two actors: no single live actor gives both rich post metrics AND global comment search. (The previous single actor, `openclawai/reddit-scraper`, was PullPush-backed and froze at 2025-05-19 — it silently served ~13-month-old data. These actors are live.)
+
+## Choosing a mode
+
+- **"Which subreddits talk about X?" / "Where is X discussed?" / brand or competitor mentions** → use **`--query`** (global search across all of Reddit). One call returns items from many subreddits, each tagged with its subreddit, so you can group and count. Do **not** guess a list of subreddits and scrape each — slow, costly, and misses communities you didn't think of.
+- **"What's happening in r/foo?" / you already know the communities** → use **`--subreddit`**.
+- **Mentions often live in comments**, not post titles — add `--content both` (or `comments`) for brand monitoring.
+- **For *recent* comments use `--sort new`.** `--sort top` (the default) surfaces all-time popular comments, which can be months/years old; posts honor `--time`, but comment search does not.
 
 ## Quick Start
 
-Requires `MOATT_API_KEY` env var (Karmable proxy auth — Apify usage billed to your org). The script reads it automatically from the environment; no `--token` flag needed.
-
 ```bash
-# Top posts from r/growthhacking in the last week
+# Which subreddits mention "Deel" most (global post search -> ranked counts)
 python3 skills/reddit-post-finder/scripts/search_reddit.py \
-  --subreddit growthhacking --days 7 --sort top --time week
+  --query Deel --max-posts 200 --output subreddit-counts
 
-# Hot posts across multiple subreddits
+# Posts AND comments mentioning a term, full content
 python3 skills/reddit-post-finder/scripts/search_reddit.py \
-  --subreddit "growthhacking,gtmengineering" --days 7 --sort hot
+  --query "Deel payroll" --content both --max-comments 50
 
-# Keyword-filtered competitor tracking
+# Top posts from r/growthhacking this week
 python3 skills/reddit-post-finder/scripts/search_reddit.py \
-  --subreddit LLMDevs \
-  --keywords "Langfuse,Arize,Langsmith" \
-  --days 30
+  --subreddit growthhacking --sort top --time week
 
-# Readable summary table
+# Restrict a global search to one subreddit, posts + comments
 python3 skills/reddit-post-finder/scripts/search_reddit.py \
-  --subreddit growthhacking --days 7 --output summary
+  --query Langfuse --subreddit LLMDevs --content both
 ```
 
 ## How the Script Works
 
-1. Builds full Reddit URLs for each subreddit (e.g. `https://www.reddit.com/r/growthhacking/top/?t=week`)
-2. Calls the Apify `harshmaur/reddit-scraper` actor via REST
-3. Polls until the run finishes, then fetches the dataset
-4. Applies client-side keyword and date filtering
-5. Sorts by upvotes (descending) and emits JSON or a summary
+1. Picks the actor(s) from `--content`: posts → parseforge, comments → trudax, both → both (merged).
+2. Picks the mode: `--query` → global keyword search; `--subreddit` → browse named subreddits (single `--subreddit` is pushed down to the actor; with `--query` it restricts results).
+3. Calls each actor via the Karmable proxy, polls to completion, fetches the dataset, and maps each item to the stable `communityName`/`upVotes`/`numberOfComments`/… schema (tagging `dataType` = `post` or `comment`).
+4. Applies client-side keyword / `--days` / multi-subreddit filtering.
+5. Sorts by upvotes (descending; comments sink below scored posts) and emits JSON, a summary, or per-subreddit counts.
 
 ## CLI Reference
 
 | Flag | Default | Description |
 |------|---------|-------------|
-| `--subreddit` | *required* | Subreddit name(s), comma-separated |
-| `--keywords` | none | Keywords to filter on (comma-separated, OR logic) |
-| `--days` | 30 | Only include posts from the last N days |
-| `--max-posts` | 50 | Max posts to scrape per subreddit |
-| `--sort` | top | Sort: `hot`, `top`, `new`, `rising` |
-| `--time` | week | Time window for `top` sort: `hour`, `day`, `week`, `month`, `year`, `all` |
-| `--output` | json | Output format: `json` or `summary` |
-| `--timeout` | 300 | Max seconds to wait for the Apify run |
+| `--query` | none | **Global** search keyword(s) across all of Reddit. Makes `--subreddit` optional. Best for "which subreddits mention X most". |
+| `--subreddit` | *required unless `--query`* | Subreddit name(s), comma-separated. With `--query`, restricts results to these subreddits. |
+| `--content` | posts | `posts` (parseforge, has upvotes/comment-counts), `comments` (trudax, **no metrics**), or `both`. |
+| `--keywords` | none | Client-side filter on returned items (comma-separated, OR logic). |
+| `--days` | none | Client-side: drop items older than N days. (Use `--time` for the actor's window.) |
+| `--max-posts` | 50 | Max posts to fetch. |
+| `--max-comments` | 50 | Max comments to fetch. |
+| `--sort` | top | `hot`, `new`, `top`, `rising`, `relevance` (accepted by both actors). |
+| `--time` | week | Post time window: `hour`, `day`, `week`, `month`, `year`, `all`. |
+| `--output` | json | `json`, `summary`, or `subreddit-counts`. |
+| `--timeout` | 300 | Max seconds to wait per Apify run. |
+
+> `--keywords` filters *within results already fetched*. To find items mentioning X anywhere, use `--query X` (searches all of Reddit); `--keywords` only narrows what a pull already returned.
+
+## Cost note
+
+These are live, paid actors (~$3/1k results). **Comments inflate volume** — keep `--max-comments` modest (default 50). `--content both` runs two actor calls (posts + comments), so it costs more than either alone.
 
 ## Tips for Small Subreddits
 
-Tiny or low-traffic subreddits (e.g. `r/gtmengineering`) often return zero posts with `--sort hot` because the hot feed is barely populated. Use `--sort top --time week` (or `month`) instead — that pulls the top-ranked posts over the window and reliably returns results.
-
-## Direct API Usage
-
-When calling the Apify API directly (e.g. via curl), the **required fields** are:
-
-```json
-{
-  "startUrls": [{"url": "https://www.reddit.com/r/growthhacking/top/?t=week"}],
-  "maxItems": 50
-}
-```
-
-Key notes for `harshmaur/reddit-scraper`:
-- Uses `startUrls` with **full Reddit URLs** (not a `searches` array for subreddit browsing)
-- Sort/time are controlled via the **URL path** (e.g. `/top/?t=week`), not as separate input fields
-- Only `startUrls` and `maxItems` are confirmed-working input fields
-- Does **not** support `proxyConfiguration`, `scrollTimeout`, or `searchType`
-
-**Output fields:**
-- `dataType` — `"post"` or `"comment"`
-- `title` — Post title
-- `body` — Post body text
-- `communityName` — Subreddit name (no `r/` prefix)
-- `upVotes` — Upvote count
-- `numberOfComments` — Comment count
-- `url` — Full post URL
-- `createdAt` — ISO timestamp of when the post was created
+Tiny subreddits often return zero posts with `--sort hot` (the hot feed is barely populated). Use `--sort top --time week` (or `month`) instead.
 
 ## Common Workflows
 
-### 1. Competitor Tracking
+### 0. Which subreddits mention X most (global search → ranked counts)
+
+```bash
+# Counts (posts only)
+python3 skills/reddit-post-finder/scripts/search_reddit.py \
+  --query Deel --max-posts 200 --output subreddit-counts
+
+# Include comment mentions too (counts span posts + comments)
+python3 skills/reddit-post-finder/scripts/search_reddit.py \
+  --query Deel --content both --max-posts 200 --max-comments 100 --output subreddit-counts
+
+# Then pull the actual items behind the counts (full content + URLs)
+python3 skills/reddit-post-finder/scripts/search_reddit.py \
+  --query Deel --content both --output json
+```
+
+Use `--query` (global search), **not** a guessed `--subreddit` list — one search spans all of Reddit. Bump `--max-posts` (e.g. 200–500) for a more representative ranking, and widen `--time` (`month`/`year`/`all`).
+
+### 1. Competitor / Brand Mentions (posts + comments)
 
 ```bash
 python3 skills/reddit-post-finder/scripts/search_reddit.py \
-  --subreddit "LLMDevs,MachineLearning,LocalLLaMA" \
-  --keywords "Langfuse,Arize,Weights & Biases,Langsmith,Braintrust" \
-  --days 30 --sort top --time month
+  --query "Langfuse" --content both \
+  --max-posts 100 --max-comments 80 --time month
 ```
 
-### 2. Pain Point Discovery
+### 2. Subreddit Pain-Point Discovery
 
 ```bash
 python3 skills/reddit-post-finder/scripts/search_reddit.py \
-  --subreddit LLMDevs \
-  --keywords "frustrating,difficult,hard to,wish there was,better way" \
-  --days 30
+  --subreddit LLMDevs --content both \
+  --keywords "frustrating,difficult,hard to,wish there was,better way"
 ```
 
-### 3. Brand Monitoring
+## Important: Always Include URLs
 
-```bash
-python3 skills/reddit-post-finder/scripts/search_reddit.py \
-  --subreddit "LLMDevs,MachineLearning" \
-  --keywords "YourProductName" \
-  --days 7 --sort new
-```
-
-## Important: Always Include Post URLs
-
-When presenting Reddit results to the user, **always include the original post URL** for every post. This is critical so the user can read the full discussion, comments, and context. Never deliver a summary table without links.
+When presenting Reddit results, **always include the original URL** for every post/comment so the user can read the full discussion. Never deliver a summary table without links.
 
 ## Output Format
 
-Posts return as a JSON array sorted by upvotes. Each post:
+`--output` controls rendering; `--query`/`--subreddit` always fetch full items:
+
+- `--output json` (default) → full items (every field below), JSON array sorted by upvotes.
+- `--output summary` → table: type / upvotes / comments / subreddit / title-or-snippet. Comments show `-` for metrics.
+- `--output subreddit-counts` → aggregate only: each subreddit and its mention count (posts and/or comments per `--content`), ranked. To get the underlying items, re-run with `--output json`.
+
+Item shape (json / summary):
 
 ```json
 {
@@ -140,11 +147,16 @@ Posts return as a JSON array sorted by upvotes. Each post:
   "communityName": "growthhacking",
   "upVotes": 42,
   "numberOfComments": 15,
-  "createdAt": "2026-02-18T12:00:00.000Z",
-  "url": "https://reddit.com/r/..."
+  "upvoteRatio": 0.95,
+  "createdAt": "2026-06-09T12:00:00.000Z",
+  "url": "https://www.reddit.com/r/...",
+  "author": "username",
+  "post_id": "abc123"
 }
 ```
 
+For `dataType: "comment"` items: `title` is empty, `body` holds the comment text, and `upVotes`/`numberOfComments`/`upvoteRatio` are `null` (trudax-lite returns no comment metrics).
+
 ## Configuration
 
-See `references/apify-config.md` for detailed API configuration, token setup, and rate limits.
+See `references/apify-config.md` for actor input shapes, field mappings, and token setup.

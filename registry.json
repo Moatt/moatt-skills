@@ -3209,18 +3209,19 @@
     {
       "slug": "reddit-post-finder",
       "name": "Reddit Post Finder",
-      "description": "Scrape and search Reddit posts via Apify. Use when you need to find Reddit threads, track competitor mentions, monitor product feedback, surface pain points, or analyze subreddit activity. Supports keyword filtering, time windows, and subreddit-specific queries.",
+      "description": "Search and scrape live Reddit posts AND comments via Apify. Find threads, track competitor/brand mentions, monitor feedback, surface pain points, or rank which subreddits mention a term most. Global keyword search (--query) or subreddit scraping (--subreddit); fetch posts, comments, or both (--content).",
       "category": "moves",
       "tags": [
         "monitoring"
       ],
-      "version": "0.1.0",
+      "version": "0.2.0",
       "path": "skills/moves/reddit-post-finder",
       "argumentHint": "",
       "domain": "",
       "appName": "Reddit Post Finder",
       "changelog": {
-        "0.1.0": "Initial release."
+        "0.1.0": "Initial release.",
+        "0.2.0": "Migrate off stale openclawai/PullPush (frozen 2025-05-19) to live actors: parseforge for posts (with metrics), trudax for global comment search. Add --content posts|comments|both and --max-comments; --query is now a true global search."
       },
       "requires_skills": [],
       "kit": null

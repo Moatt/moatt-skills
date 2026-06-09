@@ -1,24 +1,42 @@
 #!/usr/bin/env python3
 """
-Search Reddit posts using Apify Reddit Scraper Lite.
-Supports keyword filtering, subreddit filtering, and time range filtering.
+Search and scrape Reddit POSTS and COMMENTS via two live Apify actors, through
+the Karmable/Moatt proxy (Apify usage billed to your org).
+
+Two actors, because no single live actor gives BOTH rich post metrics AND global
+comment search:
+
+  - POSTS    -> parseforge/reddit-posts-scraper   (live reddit.com; rich metrics:
+               score / num comments / upvote ratio)
+  - COMMENTS -> trudax/reddit-scraper-lite         (live reddit.com; global comment
+               search; NO engagement metrics — comment upvotes/counts are null)
+
+History: the previous single actor (openclawai/reddit-scraper) was PullPush-backed
+and the PullPush archive froze at 2025-05-19, so it silently served ~13-month-old
+data for both posts and subreddit scrapes. These two actors return live data.
 
 Usage:
-  python3 search_reddit.py --subreddit growthhacking --days 7 --max-posts 20
-  python3 search_reddit.py --subreddit "growthhacking,gtmengineering" --days 7 --sort top --time week
-  python3 search_reddit.py --subreddit LLMDevs --keywords "Langfuse,Arize" --days 30
+  # Which subreddits mention "Deel" most (global post search -> ranked counts)
+  search_reddit.py --query Deel --max-posts 200 --output subreddit-counts
+
+  # Posts AND comments mentioning a term, full content
+  search_reddit.py --query "Deel payroll" --content both --max-comments 50
+
+  # Scrape a subreddit's recent posts
+  search_reddit.py --subreddit SaaS --sort top --time week
 """
 
+import argparse
 import json
 import os
 import sys
-import argparse
-import requests
 import time as time_mod
 from datetime import datetime, timedelta, timezone
 
+import requests
 
-ACTOR_ID = "openclawai~reddit-scraper"
+POSTS_ACTOR = "parseforge~reddit-posts-scraper"
+COMMENTS_ACTOR = "trudax~reddit-scraper-lite"
 
 MOATT_API_BASE = os.environ.get("MOATT_API_BASE", "https://api.moatt.com")
 MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
@@ -26,9 +44,16 @@ MOATT_API_KEY = os.environ.get("MOATT_API_KEY")
 BASE_URL = f"{MOATT_API_BASE}/v1/proxy/apify"
 HEADERS = {"Authorization": f"Bearer {MOATT_API_KEY}"} if MOATT_API_KEY else {}
 
+APIFY_PROXY = {"useApifyProxy": True}
+
+# Sorts accepted by BOTH actors (parseforge also has 'controversial', trudax also
+# has 'comments'; we expose only the intersection to keep one flag for both).
+SORT_CHOICES = ["hot", "new", "top", "rising", "relevance"]
+TIME_CHOICES = ["hour", "day", "week", "month", "year", "all"]
+
 
 def get_token(cli_token=None):
-    """Get API token from CLI arg, MOATT_API_KEY, or MOATT_API_KEY env var."""
+    """Get the Moatt proxy token from CLI arg or MOATT_API_KEY env var."""
     token = cli_token or MOATT_API_KEY or os.environ.get("MOATT_API_KEY")
     if not token:
         print("Error: Set MOATT_API_KEY env var (run `npx moatt login`).", file=sys.stderr)
@@ -36,277 +61,316 @@ def get_token(cli_token=None):
     return token
 
 
-def build_subreddit_urls(subreddits, sort="top", time="week"):
-    """
-    Build full Reddit URLs for each subreddit.
-
-    The Apify actor requires startUrls with full URLs, not bare subreddit names.
-    Sort and time are embedded in the URL path/query.
-
-    Args:
-        subreddits: List of subreddit names (without r/ prefix)
-        sort: "hot", "top", "new", or "rising"
-        time: "hour", "day", "week", "month", "year", "all" (only used with "top" sort)
-
-    Returns:
-        List of {"url": "..."} dicts for the actor's startUrls parameter
-    """
-    urls = []
-    for sub in subreddits:
-        sub = sub.strip().strip("/").replace("r/", "").replace("https://www.reddit.com/r/", "")
-        if sort == "top":
-            url = f"https://www.reddit.com/r/{sub}/top/?t={time}"
-        elif sort in ("hot", "new", "rising"):
-            url = f"https://www.reddit.com/r/{sub}/{sort}/"
-        else:
-            url = f"https://www.reddit.com/r/{sub}/top/?t={time}"
-        urls.append({"url": url})
-    return urls
+def _iso(value):
+    """Coerce epoch-seconds or an ISO string to an ISO8601 'Z' string (or '')."""
+    if value is None or value == "":
+        return ""
+    if isinstance(value, (int, float)):
+        return datetime.fromtimestamp(value, tz=timezone.utc).isoformat().replace("+00:00", "Z")
+    return str(value)
 
 
-def run_apify_actor(token, subreddits, max_posts=100, timeout=300, sort="top", time_window="week"):
-    """
-    Run the openclawai/reddit-scraper actor and return results in the original
-    Reddit Scraper Lite output shape (upVotes / numberOfComments / communityName).
+def _bare_sub(name):
+    """Normalize a subreddit name to bare form (no 'r/' prefix, no slashes)."""
+    return (name or "").strip().strip("/").replace("r/", "")
 
-    Verified 2026-05-26: 6.7s for 5 posts at $0.0001 — ~14× faster, 400× cheaper
-    than trudax/reddit-scraper-lite. Output field names differ; we map them
-    inline so callers (build_subreddit_urls, summary table, etc.) keep working.
 
-    Args:
-        token: Moatt API token
-        subreddits: List of subreddit names (without r/ prefix) OR list of URLs
-                    (we extract the subreddit name from URLs for the new actor)
-        max_posts: Total posts wanted across all subreddits
-        timeout: Max seconds per actor run
-        sort: "top" | "hot" | "new" | "rising" (informational — actor sorts by recency)
-        time_window: ignored by openclawai/reddit-scraper
+def _start_and_collect(actor_id, run_input, token, timeout):
+    """Start an Apify actor run via the proxy, poll to completion, return the raw
+    dataset items. Shared by the post and comment fetchers."""
+    resp = requests.post(
+        f"{BASE_URL}/acts/{actor_id}/runs",
+        json=run_input,
+        params={"token": token},
+        headers=HEADERS,
+    )
+    resp.raise_for_status()
+    run_id = resp.json()["data"]["id"]
 
-    Returns:
-        List of post dicts with keys: title, body, upVotes, numberOfComments,
-        communityName, url, createdAt, dataType (matches the original schema).
-    """
-    # The actor takes ONE subreddit per run; loop and aggregate.
-    aggregated = []
-    per_run_limit = max(1, max_posts)
-    for sub in subreddits:
-        # Accept either raw subreddit name or full URL.
-        if isinstance(sub, dict):
-            sub = sub.get("url", "")
-        sub_name = (
-            sub.replace("https://www.reddit.com/r/", "")
-            .replace("https://reddit.com/r/", "")
-            .replace("r/", "")
-            .strip("/")
-            .split("/")[0]
-        )
-        run_input = {
-            "action": "scrape_subreddit",
-            "subreddit": sub_name,
-            "limit": per_run_limit,
-        }
-
-        # Start the actor run
-        print(f"Starting Apify actor run (r/{sub_name}, limit={per_run_limit})...", file=sys.stderr)
-        resp = requests.post(
-            f"{BASE_URL}/acts/{ACTOR_ID}/runs",
-            json=run_input,
+    deadline = time_mod.time() + timeout
+    status_data = None
+    while time_mod.time() < deadline:
+        sr = requests.get(
+            f"{BASE_URL}/actor-runs/{run_id}",
             params={"token": token},
             headers=HEADERS,
         )
-        resp.raise_for_status()
-        run_data = resp.json()
-        run_id = run_data["data"]["id"]
+        sr.raise_for_status()
+        status_data = sr.json()
+        status = status_data["data"]["status"]
+        if status == "SUCCEEDED":
+            break
+        if status in ("FAILED", "ABORTED", "TIMED-OUT"):
+            raise RuntimeError(f"Actor {actor_id} run {status}: {json.dumps(status_data['data'])[:400]}")
+        time_mod.sleep(2)
+    else:
+        raise TimeoutError(f"Actor {actor_id} did not finish within {timeout}s")
 
-        # Poll for completion
-        deadline = time_mod.time() + timeout
-        status_data = None
-        while time_mod.time() < deadline:
-            status_resp = requests.get(
-                f"{BASE_URL}/actor-runs/{run_id}",
-                params={"token": token},
-                headers=HEADERS,
-            )
-            status_resp.raise_for_status()
-            status_data = status_resp.json()
-            status = status_data["data"]["status"]
-
-            if status == "SUCCEEDED":
-                break
-            if status in ("FAILED", "ABORTED", "TIMED-OUT"):
-                raise RuntimeError(f"Actor run {status}: {json.dumps(status_data['data'], indent=2)}")
-            time_mod.sleep(2)
-        else:
-            raise TimeoutError(f"Actor run did not complete within {timeout}s")
-
-        # Fetch dataset items
-        dataset_id = status_data["data"]["defaultDatasetId"]
-        dataset_resp = requests.get(
-            f"{BASE_URL}/datasets/{dataset_id}/items",
-            params={"token": token, "format": "json"},
-            headers=HEADERS,
-        )
-        dataset_resp.raise_for_status()
-        raw_posts = dataset_resp.json()
-        print(f"  r/{sub_name}: fetched {len(raw_posts)} posts.", file=sys.stderr)
-
-        # Map openclawai schema → original schema so existing filters/summary work.
-        for p in raw_posts:
-            permalink = p.get("permalink", "")
-            url = (
-                f"https://www.reddit.com{permalink}"
-                if permalink and permalink.startswith("/")
-                else permalink
-            )
-            aggregated.append({
-                "dataType": "post",
-                "title": p.get("title", ""),
-                "body": p.get("body", ""),
-                "communityName": p.get("subreddit_name", sub_name),
-                "upVotes": p.get("num_upvotes", 0),
-                "numberOfComments": p.get("num_comments", 0),
-                "createdAt": p.get("post_timestamp", ""),
-                "url": url,
-                "author": p.get("author_name", ""),
-                "post_id": p.get("post_id", ""),
-            })
-
-    return aggregated
+    dataset_id = status_data["data"]["defaultDatasetId"]
+    dr = requests.get(
+        f"{BASE_URL}/datasets/{dataset_id}/items",
+        params={"token": token, "format": "json"},
+        headers=HEADERS,
+    )
+    dr.raise_for_status()
+    return dr.json()
 
 
-def filter_posts(posts, keywords=None, days_back=None):
-    """
-    Client-side filtering by keywords and date range.
+# ---- POSTS via parseforge/reddit-posts-scraper ------------------------------
 
-    Args:
-        posts: List of post dicts from Apify
-        keywords: Optional list of keywords (OR logic, case-insensitive)
-        days_back: Optional number of days; posts older than this are dropped
+def _map_parseforge_post(p):
+    """Map a parseforge post -> the stable schema (with real engagement metrics)."""
+    permalink = p.get("permalink") or ""
+    url = (
+        f"https://www.reddit.com{permalink}"
+        if permalink.startswith("/")
+        else (permalink or p.get("url", ""))
+    )
+    return {
+        "dataType": "post",
+        "title": p.get("title", ""),
+        "body": p.get("selfText", ""),
+        "communityName": _bare_sub(p.get("subreddit", "")),
+        "upVotes": p.get("score"),
+        "numberOfComments": p.get("numComments"),
+        "upvoteRatio": p.get("upvoteRatio"),
+        "createdAt": _iso(p.get("createdUtc") or p.get("createdAt")),
+        "url": url,
+        "author": p.get("author", ""),
+        "post_id": p.get("id") or p.get("parsedId", ""),
+    }
 
-    Returns:
-        Filtered list of posts
-    """
-    filtered = posts
 
-    # Date filter
+def fetch_posts(token, query, subreddits, sort, time_window, max_posts, timeout):
+    """Fetch posts via parseforge — global search (--query) or subreddit browse."""
+    run_input = {
+        "sort": sort,
+        "time": time_window,
+        "maxItems": max_posts,
+        "postsPerSource": max_posts,
+        "maxPages": 10,
+        "proxyConfiguration": APIFY_PROXY,
+    }
+    if query:
+        run_input["searchQueries"] = [query]
+        if len(subreddits) == 1:
+            run_input["searchInSubreddit"] = _bare_sub(subreddits[0])
+        label = f"search '{query}'"
+    else:
+        run_input["subreddits"] = [_bare_sub(s) for s in subreddits]
+        label = f"r/{', r/'.join(_bare_sub(s) for s in subreddits)}"
+
+    print(f"[posts] parseforge {label} (max={max_posts}, sort={sort}, time={time_window})...", file=sys.stderr)
+    raw = _start_and_collect(POSTS_ACTOR, run_input, token, timeout)
+    posts = [_map_parseforge_post(p) for p in raw if (p.get("dataType") in (None, "post"))]
+    print(f"[posts] fetched {len(posts)}", file=sys.stderr)
+    return posts
+
+
+# ---- COMMENTS via trudax/reddit-scraper-lite --------------------------------
+
+def _map_trudax_comment(c):
+    """Map a trudax comment -> the stable schema. trudax-lite returns no
+    engagement metrics, so upVotes / numberOfComments are null (honest absence)."""
+    return {
+        "dataType": "comment",
+        "title": "",
+        "body": c.get("body", ""),
+        "communityName": _bare_sub(c.get("parsedCommunityName") or c.get("communityName", "")),
+        "upVotes": None,
+        "numberOfComments": None,
+        "upvoteRatio": None,
+        "createdAt": _iso(c.get("createdAt") or c.get("created")),
+        "url": c.get("url", ""),
+        "author": c.get("username", ""),
+        "post_id": c.get("parsedId") or c.get("id", ""),
+    }
+
+
+def _subreddit_listing_url(sub, sort, time_window):
+    """Full Reddit listing URL for a subreddit (used to browse comments)."""
+    sub = _bare_sub(sub)
+    if sort in ("hot", "new", "rising"):
+        return f"https://www.reddit.com/r/{sub}/{sort}/"
+    return f"https://www.reddit.com/r/{sub}/top/?t={time_window}"
+
+
+def fetch_comments(token, query, subreddits, sort, time_window, max_comments, timeout):
+    """Fetch comments via trudax — global comment search (--query) or subreddit
+    browse. trudax has no 'controversial'; relevance/hot/top/new/rising all valid."""
+    run_input = {
+        "searchPosts": False,
+        "searchComments": True,
+        "searchCommunities": False,
+        "searchUsers": False,
+        "sort": sort,
+        "maxItems": max_comments,
+        "maxComments": max_comments,
+    }
+    if query:
+        run_input["searches"] = [query]
+        if len(subreddits) == 1:
+            run_input["searchCommunityName"] = _bare_sub(subreddits[0])
+        label = f"search '{query}'"
+    else:
+        # No keyword: browse each subreddit's listing; trudax returns the posts'
+        # comments alongside, which we filter to dataType == comment below.
+        run_input["startUrls"] = [
+            {"url": _subreddit_listing_url(s, sort, time_window)} for s in subreddits
+        ]
+        label = f"r/{', r/'.join(_bare_sub(s) for s in subreddits)}"
+
+    print(f"[comments] trudax {label} (max={max_comments}, sort={sort})...", file=sys.stderr)
+    raw = _start_and_collect(COMMENTS_ACTOR, run_input, token, timeout)
+    comments = [_map_trudax_comment(c) for c in raw if c.get("dataType") == "comment"]
+    print(f"[comments] fetched {len(comments)}", file=sys.stderr)
+    return comments
+
+
+# ---- Filtering / formatting --------------------------------------------------
+
+def filter_posts(items, keywords=None, days_back=None, subreddits=None):
+    """Client-side filtering by keywords, date range, and subreddit restriction."""
+    filtered = items
+
     if days_back is not None:
         cutoff = datetime.now(timezone.utc) - timedelta(days=days_back)
-        date_filtered = []
+        kept = []
         for p in filtered:
-            created = p.get("createdAt") or p.get("created_utc")
-            if created is None:
-                date_filtered.append(p)
+            created = p.get("createdAt")
+            if not created:
+                kept.append(p)
                 continue
-            if isinstance(created, str):
-                try:
-                    dt = datetime.fromisoformat(created.replace("Z", "+00:00"))
-                except ValueError:
-                    date_filtered.append(p)
-                    continue
-            elif isinstance(created, (int, float)):
-                dt = datetime.fromtimestamp(created, tz=timezone.utc)
-            else:
-                date_filtered.append(p)
+            try:
+                dt = datetime.fromisoformat(str(created).replace("Z", "+00:00"))
+            except ValueError:
+                kept.append(p)
                 continue
             if dt >= cutoff:
-                date_filtered.append(p)
-        filtered = date_filtered
+                kept.append(p)
+        filtered = kept
 
-    # Keyword filter (OR logic)
     if keywords:
-        kw_lower = [k.lower() for k in keywords]
-        kw_filtered = []
-        for p in filtered:
-            text = f"{p.get('title', '')} {p.get('body', '')}".lower()
-            if any(kw in text for kw in kw_lower):
-                kw_filtered.append(p)
-        filtered = kw_filtered
+        kw = [k.lower() for k in keywords]
+        filtered = [
+            p for p in filtered
+            if any(k in f"{p.get('title', '')} {p.get('body', '')}".lower() for k in kw)
+        ]
+
+    if subreddits:
+        wanted = {_bare_sub(s).lower() for s in subreddits}
+        filtered = [p for p in filtered if _bare_sub(p.get("communityName", "")).lower() in wanted]
 
     return filtered
 
 
-def format_summary(posts):
-    """Format posts as a human-readable summary table."""
-    lines = []
-    lines.append(f"{'#':<4} {'Upvotes':<9} {'Comments':<10} {'Subreddit':<20} {'Title'}")
-    lines.append("-" * 100)
-    for i, p in enumerate(posts, 1):
-        title = p.get("title", "")[:60]
-        upvotes = p.get("upVotes", 0)
-        comments = p.get("numberOfComments", 0)
-        sub = p.get("communityName", "")
-        if sub.startswith("r/"):
-            sub = sub[2:]
-        lines.append(f"{i:<4} {upvotes:<9} {comments:<10} r/{sub:<18} {title}")
+def format_summary(items):
+    """Human-readable table. Posts show upvotes/comments; comments show '-'."""
+    lines = [f"{'#':<4} {'Type':<8} {'Upvotes':<8} {'Comments':<9} {'Subreddit':<20} {'Title / snippet'}"]
+    lines.append("-" * 110)
+    for i, p in enumerate(items, 1):
+        up = p.get("upVotes")
+        nc = p.get("numberOfComments")
+        up_s = str(up) if up is not None else "-"
+        nc_s = str(nc) if nc is not None else "-"
+        sub = _bare_sub(p.get("communityName", ""))
+        text = (p.get("title") or p.get("body") or "")[:55].replace("\n", " ")
+        lines.append(f"{i:<4} {p.get('dataType', ''):<8} {up_s:<8} {nc_s:<9} r/{sub:<18} {text}")
+    return "\n".join(lines)
+
+
+def format_subreddit_counts(items):
+    """Aggregate items by subreddit and render a ranked mention-count table.
+    Counts posts and/or comments depending on --content."""
+    counts = {}
+    for p in items:
+        sub = _bare_sub(p.get("communityName", "")) or "(unknown)"
+        counts[sub] = counts.get(sub, 0) + 1
+
+    ranked = sorted(counts.items(), key=lambda kv: kv[1], reverse=True)
+    lines = [f"{'#':<4} {'Mentions':<10} {'Subreddit'}"]
+    lines.append("-" * 50)
+    for i, (sub, n) in enumerate(ranked, 1):
+        lines.append(f"{i:<4} {n:<10} r/{sub}")
+    lines.append("")
+    lines.append(f"Total: {len(items)} item(s) across {len(counts)} subreddit(s)")
     return "\n".join(lines)
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Search Reddit posts using Apify",
+        description="Search and scrape Reddit posts + comments using Apify (live data)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # Top posts from r/growthhacking in last week
-  %(prog)s --subreddit growthhacking --days 7 --sort top --time week
+  # Which subreddits mention "Deel" most (global post search -> ranked counts)
+  %(prog)s --query Deel --max-posts 200 --output subreddit-counts
 
-  # Hot posts from multiple subreddits
-  %(prog)s --subreddit "growthhacking,gtmengineering" --days 7 --sort hot
+  # Posts AND comments mentioning a term, full content
+  %(prog)s --query "Deel payroll" --content both --max-comments 50
 
-  # Search with keyword filtering
-  %(prog)s --subreddit LLMDevs --keywords "Langfuse,Arize" --days 30
+  # Scrape a subreddit's top posts this week
+  %(prog)s --subreddit growthhacking --sort top --time week
 
-  # Human-readable summary
-  %(prog)s --subreddit growthhacking --days 7 --output summary
+  # Restrict a global search to one subreddit
+  %(prog)s --query Langfuse --subreddit LLMDevs --content both
 """,
     )
 
-    parser.add_argument("--subreddit", required=True,
-                        help="Subreddit name(s), comma-separated (e.g. 'growthhacking,gtmengineering')")
-    parser.add_argument("--keywords", help="Keywords to filter for (comma-separated, OR logic)")
-    parser.add_argument("--days", type=int, default=30, help="How many days back to include (default: 30)")
-    parser.add_argument("--max-posts", type=int, default=50, help="Max posts to scrape per subreddit (default: 50)")
-    parser.add_argument("--sort", choices=["hot", "top", "new", "rising"], default="top",
-                        help="Sort order (default: top)")
-    parser.add_argument("--time", choices=["hour", "day", "week", "month", "year", "all"], default="week",
-                        help="Time window for 'top' sort (default: week)")
-    parser.add_argument("--token", help="Apify API token (or set MOATT_API_KEY env var)")
-    parser.add_argument("--output", choices=["json", "summary"], default="json",
+    parser.add_argument("--query",
+                        help="GLOBAL search keyword(s) across all of Reddit. Best for "
+                             "'which subreddits mention X most'. Makes --subreddit optional.")
+    parser.add_argument("--subreddit",
+                        help="Subreddit name(s), comma-separated. Required unless --query is given. "
+                             "With --query, restricts results to these subreddits.")
+    parser.add_argument("--content", choices=["posts", "comments", "both"], default="posts",
+                        help="What to fetch: posts (parseforge, has upvotes/comment-counts), "
+                             "comments (trudax, NO engagement metrics), or both (default: posts)")
+    parser.add_argument("--keywords", help="Client-side filter on returned items (comma-separated, OR logic)")
+    parser.add_argument("--days", type=int, default=None,
+                        help="Client-side: drop items older than N days (default: no extra filter; "
+                             "use --time for the actor's window)")
+    parser.add_argument("--max-posts", type=int, default=50, help="Max posts to fetch (default: 50)")
+    parser.add_argument("--max-comments", type=int, default=50, help="Max comments to fetch (default: 50)")
+    parser.add_argument("--sort", choices=SORT_CHOICES, default="top", help="Sort order (default: top)")
+    parser.add_argument("--time", choices=TIME_CHOICES, default="week",
+                        help="Actor time window for posts (default: week)")
+    parser.add_argument("--token", help="Moatt API token (or set MOATT_API_KEY env var)")
+    parser.add_argument("--output", choices=["json", "summary", "subreddit-counts"], default="json",
                         help="Output format (default: json)")
     parser.add_argument("--timeout", type=int, default=300,
-                        help="Max seconds to wait for Apify run (default: 300)")
+                        help="Max seconds to wait per Apify run (default: 300)")
 
     args = parser.parse_args()
 
+    if not (args.query or args.subreddit):
+        parser.error("provide --query (global search) or --subreddit (scope to subreddits) — at least one is required")
+
     token = get_token(args.token)
+    subreddits = [s.strip() for s in args.subreddit.split(",") if s.strip()] if args.subreddit else []
 
-    # Parse subreddits
-    subreddits = [s.strip() for s in args.subreddit.split(",") if s.strip()]
+    items = []
+    if args.content in ("posts", "both"):
+        items += fetch_posts(token, args.query, subreddits, args.sort, args.time, args.max_posts, args.timeout)
+    if args.content in ("comments", "both"):
+        items += fetch_comments(token, args.query, subreddits, args.sort, args.time, args.max_comments, args.timeout)
 
-    # openclawai/reddit-scraper takes a bare subreddit name per run (looped
-    # inside run_apify_actor). The build_subreddit_urls helper is kept for
-    # backwards-compat with any external caller that still hands us URLs.
-    print(f"Scraping {len(subreddits)} subreddit(s): {', '.join(f'r/{s}' for s in subreddits)}", file=sys.stderr)
+    # Restrict to named subreddits when more than one was given (single-sub is
+    # already pushed down to the actor natively).
+    restrict = subreddits if len(subreddits) > 1 else None
 
-    # Run actor
-    posts = run_apify_actor(token, subreddits, max_posts=args.max_posts, timeout=args.timeout, sort=args.sort)
+    keywords = [k.strip() for k in args.keywords.split(",")] if args.keywords else None
+    items = filter_posts(items, keywords=keywords, days_back=args.days, subreddits=restrict)
 
-    # Parse keywords
-    keywords = None
-    if args.keywords:
-        keywords = [k.strip() for k in args.keywords.split(",")]
+    # Sort by upvotes desc; comments (null upvotes) sink below scored posts.
+    items.sort(key=lambda p: p.get("upVotes") or 0, reverse=True)
 
-    # Filter
-    posts = filter_posts(posts, keywords=keywords, days_back=args.days)
-
-    # Sort by upvotes descending
-    posts.sort(key=lambda p: p.get("upVotes", 0), reverse=True)
-
-    # Output
     if args.output == "summary":
-        print(format_summary(posts))
+        print(format_summary(items))
+    elif args.output == "subreddit-counts":
+        print(format_subreddit_counts(items))
     else:
-        print(json.dumps(posts, indent=2))
+        print(json.dumps(items, indent=2))
 
 
 if __name__ == "__main__":

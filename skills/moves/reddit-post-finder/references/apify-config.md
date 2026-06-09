@@ -1,111 +1,106 @@
-# Apify Reddit Scraper Configuration
+# Apify Reddit Actor Configuration
 
-## API Token
+This skill drives **two live reddit.com actors** through the Karmable/Moatt proxy:
 
-Set the `APIFY_API_TOKEN` environment variable:
+| Purpose | Actor | Why |
+|---------|-------|-----|
+| Posts (with metrics) | `parseforge/reddit-posts-scraper` | rich fields: `score`, `numComments`, `upvoteRatio` |
+| Comments | `trudax/reddit-scraper-lite` | global comment search; **no engagement metrics** |
 
-```bash
-export APIFY_API_TOKEN="your_token_here"
-```
+Auth: all calls go through `$MOATT_API_BASE/v1/proxy/apify/...` with `Authorization: Bearer $MOATT_API_KEY`. The proxy injects the real Apify token server-side and bills usage to your org. Do **not** set `APIFY_API_TOKEN` in the skill — the proxy owns it.
 
-Get a token at: https://console.apify.com/account/integrations
+---
 
-## Apify Actor: parseforge/reddit-posts-scraper
+## Posts — parseforge/reddit-posts-scraper
 
-### Required Input Parameters
+`proxyConfiguration` is **required**. Pick a mode by which input field you set:
 
 ```json
+// Global keyword search (what --query sends)
 {
-  "startUrls": [{"url": "https://www.reddit.com/r/growthhacking/top/?t=week"}],
-  "maxPostCount": 50,
-  "scrollTimeout": 40,
-  "searchType": "posts",
-  "proxyConfiguration": {"useApifyProxy": true}
+  "searchQueries": ["Deel"],
+  "sort": "top",
+  "time": "month",
+  "maxItems": 200,
+  "postsPerSource": 200,
+  "maxPages": 10,
+  "proxyConfiguration": { "useApifyProxy": true }
+}
+
+// Subreddit browse (what --subreddit sends)
+{
+  "subreddits": ["growthhacking", "SaaS"],
+  "sort": "top",
+  "time": "week",
+  "maxItems": 50,
+  "postsPerSource": 50,
+  "proxyConfiguration": { "useApifyProxy": true }
 }
 ```
 
-**Important notes:**
-- `startUrls` takes **full Reddit URLs** (not bare subreddit names like `r/foo`)
-- `proxyConfiguration` is **required** — the actor will reject input without it
-- Sort and time window are controlled via the **URL path**, not separate fields
+- `searchInSubreddit: "<sub>"` restricts a `searchQueries` run to one subreddit.
+- `sort` ∈ `hot|new|top|rising|controversial|relevance`. `time` ∈ `hour|day|week|month|year|all`.
 
-### URL Patterns for Subreddit Scraping
+**Output fields** (the script maps these → the stable schema): `id`, `title`, `author`, `subreddit`, `score`, `numComments`, `upvoteRatio`, `selfText`, `permalink`, `url`, `createdUtc`, `createdAt`, `postAgeHours`. The script builds the post URL from `permalink` (the `url` field is the external link for link-posts).
 
-| Goal | URL Pattern |
-|------|-------------|
-| Top posts this week | `https://www.reddit.com/r/{sub}/top/?t=week` |
-| Top posts this month | `https://www.reddit.com/r/{sub}/top/?t=month` |
-| Hot posts (right now) | `https://www.reddit.com/r/{sub}/hot/` |
-| Newest posts | `https://www.reddit.com/r/{sub}/new/` |
-| Rising posts | `https://www.reddit.com/r/{sub}/rising/` |
+---
 
-For small/low-traffic subreddits, prefer `top` with a time window — `hot` may return zero posts.
+## Comments — trudax/reddit-scraper-lite
 
-### Output Format
-
-Array of post objects:
+Output is **heterogeneous** — every item has a `dataType` (`post` / `comment` / `community` / `user`); the script keeps only `comment`. trudax-lite returns **no `score` / comment-count** (mapped to `null`).
 
 ```json
+// Global comment search (what --content comments + --query sends)
 {
-  "id": "post_id",
-  "title": "Post title",
-  "author": "username",
-  "subreddit": "growthhacking",
-  "createdAt": "2026-02-18T12:00:00.000Z",
-  "score": 42,
-  "numComments": 15,
-  "selfText": "Post content...",
-  "url": "https://reddit.com/r/..."
+  "searches": ["Deel"],
+  "searchPosts": false,
+  "searchComments": true,
+  "searchCommunities": false,
+  "searchUsers": false,
+  "sort": "new",
+  "maxItems": 50,
+  "maxComments": 50
+}
+
+// Subreddit comment browse (no keyword): startUrls to the subreddit listing
+{
+  "startUrls": [{ "url": "https://www.reddit.com/r/SaaS/top/?t=week" }],
+  "searchPosts": false,
+  "searchComments": true,
+  "maxItems": 50,
+  "maxComments": 50
 }
 ```
 
-## Direct API Usage (curl)
+- `searchCommunityName: "<sub>"` restricts a `searches` run to one subreddit.
+- `sort` ∈ `relevance|hot|top|new|rising|comments` (no `controversial`).
+
+**Comment output fields**: `dataType`, `id`, `parsedId`, `url`, `username`, `communityName` (`r/`-prefixed), `parsedCommunityName` (bare), `body`, `html`, `createdAt`, `scrapedAt`. The script uses `parsedCommunityName` for grouping and `username` → `author`.
+
+---
+
+## Direct API usage (curl, via the proxy)
 
 ```bash
 # Start a run
-curl -X POST "$MOATT_API_BASE/v1/proxy/apify/acts/parseforge~reddit-posts-scraper/runs" \
-  -H "Authorization: Bearer $MOATT_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "startUrls": [{"url": "https://www.reddit.com/r/growthhacking/top/?t=week"}],
-    "maxPostCount": 50,
-    "scrollTimeout": 40,
-    "searchType": "posts",
-    "proxyConfiguration": {"useApifyProxy": true}
-  }'
+curl -s -X POST "$MOATT_API_BASE/v1/proxy/apify/acts/parseforge~reddit-posts-scraper/runs" \
+  -H "Authorization: Bearer $MOATT_API_KEY" -H "Content-Type: application/json" \
+  -d '{"searchQueries":["Deel"],"sort":"top","time":"month","maxItems":50,"proxyConfiguration":{"useApifyProxy":true}}'
 
-# Poll for status (replace RUN_ID)
-curl -s -H "Authorization: Bearer $MOATT_API_KEY" "$MOATT_API_BASE/v1/proxy/apify/acts/parseforge~reddit-posts-scraper/runs/RUN_ID"
-# Fetch results (replace DATASET_ID from the run status response)
-curl -s -H "Authorization: Bearer $MOATT_API_KEY" "$MOATT_API_BASE/v1/proxy/apify/datasets/DATASET_ID/items&format=json"
+# Poll status (RUN_ID from the start response .data.id)
+curl -s -H "Authorization: Bearer $MOATT_API_KEY" \
+  "$MOATT_API_BASE/v1/proxy/apify/actor-runs/RUN_ID"
+
+# Fetch results (DATASET_ID from .data.defaultDatasetId)
+curl -s -H "Authorization: Bearer $MOATT_API_KEY" \
+  "$MOATT_API_BASE/v1/proxy/apify/datasets/DATASET_ID/items?format=json"
 ```
 
-Or use the synchronous endpoint (blocks until done):
+---
 
-```bash
-curl -X POST "$MOATT_API_BASE/v1/proxy/apify/acts/parseforge~reddit-posts-scraper/run-sync-get-dataset-items&timeout=120" \
-  -H "Authorization: Bearer $MOATT_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "startUrls": [{"url": "https://www.reddit.com/r/growthhacking/top/?t=week"}],
-    "maxPostCount": 20,
-    "scrollTimeout": 40,
-    "searchType": "posts",
-    "proxyConfiguration": {"useApifyProxy": true}
-  }'
-```
+## Cost & freshness
 
-## MCP Server Setup (Optional)
-
-```bash
-claude mcp add apify-reddit "https://mcp.apify.com/?tools=actors,docs,parseforge/reddit-posts-scraper" \
-  -t http \
-  -H "Authorization: Bearer $APIFY_API_TOKEN"
-```
-
-## Rate Limits & Costs
-
-- Free tier includes $5/month in Apify credits
-- Reddit rate limiting is handled by the actor internally
-- Cost depends on number of posts scraped and compute time
-- Typical run for 50 posts from one subreddit: ~$0.01-0.05
+- Both actors are **live reddit.com** (data is current at run time), ~$3.00–3.40 / 1,000 results, pay-per-result.
+- **Comments inflate volume** — keep `maxComments`/`--max-comments` modest (default 50).
+- `--content both` = two actor runs (posts + comments), so it costs more than either alone.
+- History: the prior actor `openclawai/reddit-scraper` was PullPush-backed and froze at **2025-05-19** — it silently served ~13-month-old data. Do not reintroduce it for live use.
