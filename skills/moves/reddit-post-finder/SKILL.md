@@ -35,16 +35,32 @@ This skill uses **two live reddit.com actors** (one search returns current data,
 - **Mentions often live in comments**, not post titles — add `--content both` (or `comments`) for brand monitoring.
 - **For *recent* comments use `--sort new`.** `--sort top` (the default) surfaces all-time popular comments, which can be months/years old; posts honor `--time`, but comment search does not.
 
+## Ranking subreddits — use the built-in flag, don't re-implement it
+
+To answer "which subreddits mention X most," pass **`--output subreddit-counts`**. It already groups every result by subreddit and prints a ranked count table. The first line on stdout is `#  Mentions  Subreddit`.
+
+**Do NOT** run `--output json` and pipe it into your own `Counter`/`group by` — that re-does work the flag already does. (`--output json` is only for when you need the full post/comment *content*, not counts.) Progress lines like `[posts] fetched 247` go to **stderr**; the ranked table is on **stdout** — read stdout for the answer.
+
+## Performance & avoiding timeouts
+
+Every call drives a **live actor that polls 30–120s** (longer with bigger `--max-posts` or `--time year`). To avoid box/exec timeouts and pointless retries:
+
+- **Set the `boxExec` `timeoutMs` high — use `300000` (the 5-min max).** The default is only 60s, and these calls legitimately take 30–120s+. Do **not** lower it (a frequent mistake: dropping it to 90s, which then times out). The Box can run long; the timeout is just how long the tool waits.
+- **Keep `--max-posts ≤ 150`** (and `--max-comments ≤ 50`). `--max-posts 300 --time year` routinely runs >2 min.
+- **Split content types into separate calls.** `--content both` runs two actors back-to-back and frequently times out at high caps — prefer one `--content posts` call and, if needed, one `--content comments` call.
+- **Never parallelize** multiple invocations in one shell (`cmd & cmd & wait`). That multiplies wall-time and hits the timeout; run them sequentially instead.
+- **Common-word brands need disambiguation.** A bare `--query Deel` is noisy ("deel" is Dutch for "part"). Use specific phrases (`"Deel payroll"`, `"Deel EOR"`, `"Deel contractor"`), one call each, then merge the count tables.
+
 ## Quick Start
 
 ```bash
-# Which subreddits mention "Deel" most (global post search -> ranked counts)
+# Which subreddits mention "Deel payroll" most (ranked counts — flag does the counting)
 python3 skills/reddit-post-finder/scripts/search_reddit.py \
-  --query Deel --max-posts 200 --output subreddit-counts
+  --query "Deel payroll" --max-posts 150 --time year --output subreddit-counts
 
-# Posts AND comments mentioning a term, full content
+# Posts mentioning a term, full content
 python3 skills/reddit-post-finder/scripts/search_reddit.py \
-  --query "Deel payroll" --content both --max-comments 50
+  --query "Deel payroll" --content posts --max-posts 150 --output json
 
 # Top posts from r/growthhacking this week
 python3 skills/reddit-post-finder/scripts/search_reddit.py \
@@ -94,27 +110,31 @@ Tiny subreddits often return zero posts with `--sort hot` (the hot feed is barel
 ### 0. Which subreddits mention X most (global search → ranked counts)
 
 ```bash
-# Counts (posts only)
+# Post mentions, ranked by subreddit (the flag does the counting)
 python3 skills/reddit-post-finder/scripts/search_reddit.py \
-  --query Deel --max-posts 200 --output subreddit-counts
+  --query "Deel payroll" --content posts --max-posts 150 --time year --output subreddit-counts
 
-# Include comment mentions too (counts span posts + comments)
+# Comment mentions, as a SEPARATE call (don't combine into --content both at high caps)
 python3 skills/reddit-post-finder/scripts/search_reddit.py \
-  --query Deel --content both --max-posts 200 --max-comments 100 --output subreddit-counts
+  --query "Deel payroll" --content comments --max-comments 50 --sort new --output subreddit-counts
 
-# Then pull the actual items behind the counts (full content + URLs)
+# Need the actual posts/comments behind the counts? Re-run with --output json
 python3 skills/reddit-post-finder/scripts/search_reddit.py \
-  --query Deel --content both --output json
+  --query "Deel payroll" --content posts --max-posts 150 --output json
 ```
 
-Use `--query` (global search), **not** a guessed `--subreddit` list — one search spans all of Reddit. Bump `--max-posts` (e.g. 200–500) for a more representative ranking, and widen `--time` (`month`/`year`/`all`).
+Use `--query` (global search), **not** a guessed `--subreddit` list. Read the ranked table off stdout — don't pipe `--output json` into your own counter. For a common-word brand, run a few specific phrases (`"Deel payroll"`, `"Deel EOR"`, `"Deel contractor"`) as separate calls and merge the tables, rather than one heavy `--max-posts 300 --time year` call that times out.
 
-### 1. Competitor / Brand Mentions (posts + comments)
+### 1. Competitor / Brand Mentions (posts + comments, separate calls)
 
 ```bash
+# Posts (with metrics)
 python3 skills/reddit-post-finder/scripts/search_reddit.py \
-  --query "Langfuse" --content both \
-  --max-posts 100 --max-comments 80 --time month
+  --query "Langfuse" --content posts --max-posts 150 --time month --output json
+
+# Comments (recent), as its own call
+python3 skills/reddit-post-finder/scripts/search_reddit.py \
+  --query "Langfuse" --content comments --max-comments 50 --sort new --output json
 ```
 
 ### 2. Subreddit Pain-Point Discovery
