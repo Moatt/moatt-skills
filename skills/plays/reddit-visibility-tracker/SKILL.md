@@ -27,6 +27,21 @@ Stage 6–7 of the `reddit-growth-engine` moat.
 - **Brand + competitors** — for AEO share-of-voice.
 - **Cadence** — periodic re-checks (weekly/monthly); SERP + LLM positions drift.
 
+## Budget your tool calls
+
+A naive run of this play (every sub-skill, every query, one exec per request)
+exhausts the chat step budget before the dashboard exists. Batch aggressively:
+
+- Steps 1–4 collapse into ONE shell script: loop all queries × surfaces ×
+  providers, save raw JSON to `/workspace/home/projects/reddit/visibility/`
+  (dated filenames), print one compact summary line per call. One exec call,
+  high timeout.
+- If the user allows **sample/placeholder data** (or a section has no data
+  yet), do NOT run that section's collectors at all — seed the dashboard's
+  data file directly with clearly-labeled sample rows and move on.
+- Spend your remaining calls on Step 5 (the dashboard build + export) — that
+  is the deliverable; data collection must never starve it.
+
 ## Workflow
 
 ### Step 1 — Google + AI citation per thread
