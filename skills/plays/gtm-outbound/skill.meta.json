@@ -1,0 +1,17 @@
+{
+  "slug": "gtm-outbound",
+  "category": "plays",
+  "tags": [
+    "outbound",
+    "leads",
+    "prospecting"
+  ],
+  "installation": {
+    "base_command": "npx moatt install gtm-outbound",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  }
+}

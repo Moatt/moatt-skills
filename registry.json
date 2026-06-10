@@ -3,6 +3,31 @@
   "updatedAt": "2026-06-09T18:30:11Z",
   "skills": [
     {
+      "slug": "gtm-outbound",
+      "name": "GTM Outbound",
+      "description": "Find leads and companies, enrich contacts with verified emails and phones, and sequence outbound — results stream into a live leads table panel in chat. Use for: find leads, find companies, build a lead list, prospect, source companies, find B2B SaaS / fintech / etc., enrich contacts, find emails, sequence outreach, LinkedIn prospecting and outreach. Routes to native in-chat tools (findLeads, enrichContacts, sequenceLeads, findLinkedInLeads, connectLinkedIn, messageLinkedIn) — not a box script.",
+      "category": "plays",
+      "tags": [
+        "outbound",
+        "leads",
+        "prospecting",
+        "companies",
+        "enrich",
+        "sequence",
+        "linkedin"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/gtm-outbound",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "GTM Outbound",
+      "changelog": {
+        "0.1.0": "Initial release — routes to native leads-panel tools."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
       "slug": "ad-angle-miner",
       "name": "Ad Angle Miner",
       "description": "Mine the highest-converting ad angles from customer reviews, Reddit complaints, support tickets, and competitor ads. Pulls the actual pain language, competitor weaknesses, and outcome phrases that real buyers use. Outputs a ranked angle bank with proof quotes and recommended ad formats per angle.",
