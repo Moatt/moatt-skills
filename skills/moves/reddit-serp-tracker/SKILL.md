@@ -36,11 +36,28 @@ The proxy forwards to DataForSEO with Moatt's credentials, parses the top-level
 ## Inputs
 
 - **Reddit thread URLs** — the threads you want to track (yours, or competitor
-  threads for share-of-voice).
+  threads for share-of-voice). **OR just subreddit names**: if the user gives
+  subs (r/freelance, r/Payroll) instead of thread URLs, do NOT go scraping
+  Reddit to "discover" threads first — that wastes calls and tool steps. The
+  SERP and AI responses themselves tell you which Reddit threads surface:
+  pull them (Parts A–C below) and match any `reddit.com/r/<sub>/…` URL in the
+  results against the user's subs. No reddit-post-finder needed.
 - **Target queries** — the searches you care about ("best EOR for contractors",
   "Deel alternatives"). These are what real users / AI engines ask.
 - (optional) **Location / language** — default `location_code: 2840` (US),
   `language_code: "en"`.
+
+## Budget your tool calls — ONE script, not one call per request
+
+A full run is `queries × (1 organic + 1 AI-mode + 4 AI providers)` proxy hits.
+Issued as separate exec calls that exhausts the chat step budget before you can
+report. Instead, write ONE bash script that loops over all queries and
+providers, saves every raw response to `/workspace/home/projects/reddit/serp/`
+(dated filenames), prints a compact per-call summary line (query, surface,
+status, reddit.com URLs found), then run it as ONE exec call (timeout 300000).
+Read the printed summary + saved files, then go straight to composing the
+output table. Two exec calls total (probe + batch) is the norm; never more
+than three.
 
 ## Part A — Google organic position
 
