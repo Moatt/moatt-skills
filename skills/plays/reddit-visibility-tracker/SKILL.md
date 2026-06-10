@@ -72,9 +72,21 @@ the brand across the monitored subs.
 
 ### Step 5 — Dashboard + export
 
-Feed the dated series into **`create-dashboard`**: Google positions over time, AI
-citations by engine, engagement, mention count + sentiment split. Produce a client
-export alongside the live view.
+Compose the client deliverable from the dated series — two artifacts, always both:
+
+1. **The dashboard**: an in-app report/dashboard artifact with these panels —
+   30-day KPI row, Google positions per thread (+ avg position), AI citations
+   by engine (share vs competitors), engagement on posted content, mention
+   count + sentiment split. Build it with the platform's report tooling
+   (report/dashboard artifact), NOT a bespoke web app.
+2. **The export**: write the underlying tables to dated files the client can
+   take away — one CSV per panel (or a single JSON) under
+   `/workspace/home/projects/reddit/visibility/exports/<YYYY-MM-DD>/` — and tell
+   the user the paths.
+
+Label any sample/placeholder rows clearly in both. (The legacy
+`create-dashboard` box app — `/home/user/dashboard`, port 3847 — is NOT
+available on the current Box platform; don't go looking for it.)
 
 ## What to actually report (open question from the brief)
 
@@ -89,7 +101,8 @@ Don't drown the report; lead with the 3–4 the client will act on.
 - `aeo` (brand AEO share of voice)
 - `reddit-aeo-monitor` (intervention recommendations) — optional
 - `reddit-post-finder` (engagement + mentions)
-- `create-dashboard` (dashboard + export)
+- platform report/dashboard tooling for the compose step (see Step 5; the
+  legacy `create-dashboard` box app is unavailable on the current platform)
 
 ## Output
 
