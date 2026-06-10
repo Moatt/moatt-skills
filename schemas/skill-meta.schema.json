@@ -2,23 +2,74 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://moatt.com/schemas/skill-meta.schema.json",
   "type": "object",
-  "required": ["slug", "category", "tags", "installation"],
+  "required": [
+    "slug",
+    "category",
+    "tags",
+    "installation"
+  ],
   "properties": {
-    "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
-    "category": { "type": "string", "enum": ["moves", "plays", "moats"] },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "moves",
+        "plays",
+        "moats"
+      ]
+    },
     "tags": {
       "type": "array",
-      "items": { "type": "string", "enum": ["All", "ads", "brand", "competitive-intel", "content", "design", "lead-generation", "monitoring", "outreach", "research", "seo", "social"] },
+      "items": {
+        "type": "string",
+        "enum": [
+          "All",
+          "ads",
+          "brand",
+          "competitive-intel",
+          "content",
+          "design",
+          "lead-generation",
+          "monitoring",
+          "outreach",
+          "research",
+          "seo",
+          "social",
+          "outbound",
+          "leads",
+          "prospecting",
+          "companies",
+          "enrich",
+          "sequence",
+          "linkedin"
+        ]
+      },
       "uniqueItems": true
     },
     "installation": {
       "type": "object",
-      "required": ["base_command", "supports"],
+      "required": [
+        "base_command",
+        "supports"
+      ],
       "properties": {
-        "base_command": { "type": "string", "minLength": 1 },
+        "base_command": {
+          "type": "string",
+          "minLength": 1
+        },
         "supports": {
           "type": "array",
-          "items": { "type": "string", "enum": ["claude", "cursor", "codex"] },
+          "items": {
+            "type": "string",
+            "enum": [
+              "claude",
+              "cursor",
+              "codex"
+            ]
+          },
           "minItems": 1,
           "uniqueItems": true
         }
@@ -27,18 +78,29 @@
     },
     "features": {
       "type": "array",
-      "items": { "type": "string", "minLength": 1 }
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
     },
-    "github_url": { "type": "string" },
-    "author": { "type": "string" },
+    "github_url": {
+      "type": "string"
+    },
+    "author": {
+      "type": "string"
+    },
     "requires_skills": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "uniqueItems": true
     },
     "requires_tools": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "uniqueItems": true
     }
   },

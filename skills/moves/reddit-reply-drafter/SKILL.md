@@ -55,8 +55,11 @@ Recommended:
 
 ## Output
 
-**Return only the final reply text.** No headings, no analysis, no "Here's a
-draft:", no surrounding commentary. Just the reply, ready to paste.
+**Return only the final reply text.** Your ENTIRE chat message is the reply,
+ready to paste. Nothing before it, nothing after it. No headings, no analysis,
+no "Here's a draft:", no "Here's the reply:", no separators (`---`), no numbered
+sections, no closing notes about where it was saved. If you feel the urge to add
+context, don't: the user asked for the reply text and the reply text alone.
 
 (If the caller is a play/pipeline that wants metadata too, also write the reply to
 a draft file — but the chat/return payload is the bare reply text.)

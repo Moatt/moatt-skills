@@ -38,15 +38,22 @@ text; a person posts it.
 
 ## Drafting rules
 
+**Before the draft, state in one line the format + tone you're writing to**
+("r/SaaS rewards candid experience reports with hard numbers; writing that") —
+from the format profile if you have one, else from the sub's known conventions.
+This keeps the draft honest to the community and shows the user your reasoning.
+
 Write to the sub's profile, and obey these always:
 
 1. **Community-native, not corporate.** Match the sub's register and length from
    the format profile. If the sub rewards experience reports, write one.
 2. **Lead with substance.** Open with the concrete result, the real question, or
    the specific situation — never a hook that smells like marketing.
-3. **No AI slop.** No "in today's fast-paced world", no em dashes (—) used as
-   AI-style connectors (prefer short sentences, commas, parentheses), no breathless
-   adjectives, no fake enthusiasm.
+3. **No AI slop.** No "in today's fast-paced world", no breathless adjectives,
+   no fake enthusiasm. **Zero em dashes (—) anywhere** — not in the draft, not in
+   the title, not in your chat reply around it. The — character is the #1 AI tell
+   on Reddit. Use short sentences, commas, or parentheses instead. Before
+   delivering, literally scan your text for "—" and rewrite every occurrence.
 4. **No hard CTA / no link-dropping** unless the sub clearly tolerates it. The
    goal on Reddit is authority and genuine help, not clicks.
 5. **Disclose if you name the brand.** "(I work at X)" — honest, in-thread,
@@ -71,16 +78,24 @@ discloses_affiliation: true | false
 Body: the post text only (title line first if the format needs a title, then
 body). No analysis, no surrounding commentary in the file.
 
-Then, in chat, tell the user: where the draft is, why it fits the sub (1 line),
-and that **they** post it manually. Optionally save via the draft store
-(`karmable_create_draft` / the Box `/workspace/outbox` drafts path) so it shows
-in their dashboard.
+Then, in chat, tell the user — explicitly, not implied:
+1. Where the draft is and why it fits the sub (1 line).
+2. **The disclosure decision**: if the brand is named, the draft carries the
+   "(I work at X)" line; if you kept it anonymous, say so and offer the
+   disclosed variant. Never silently skip this.
+3. **"This is a draft. You post it manually."** Verbatim or close. The user
+   must never wonder whether something was auto-published.
+
+Optionally save via the draft store (`karmable_create_draft` / the Box
+`/workspace/outbox` drafts path) so it shows in their dashboard.
 
 ## Self-check before delivering
 
 - Reads like the sub's example posts? (If it could be a press release, rewrite.)
-- Zero em-dash AI phrasing? Concrete specifics present?
-- Disclosure included iff the brand is named?
+- Zero `—` characters in draft AND surrounding chat text? (Scan literally.)
+- Concrete specifics present?
+- Disclosure included iff the brand is named, and the decision stated to the user?
+- "This is a draft. You post it manually." stated explicitly?
 - No invented numbers?
 
 If a draft fails and two rewrites can't fix it, say so rather than ship a weak post.

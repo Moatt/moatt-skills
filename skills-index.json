@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-06-09",
+  "generated": "2026-06-10",
   "skills": [
     {
       "slug": "ad-angle-miner",
@@ -2643,6 +2643,39 @@
         "source": "orthogonal",
         "installation": {
           "base_command": "npx moatt install gtm-enrichment-smart",
+          "supports": [
+            "claude",
+            "cursor",
+            "codex"
+          ]
+        }
+      }
+    },
+    {
+      "slug": "gtm-outbound",
+      "name": "gtm-outbound",
+      "category": "plays",
+      "description": "Find, enrich, and sequence B2B leads through Moatt's native in-chat tools — results stream into a live leads table panel (Find / Enrich / Sequence / Pricing tabs). Use for any \"find leads / build a lead list / prospect / source companies / enrich contacts / sequence outreach / LinkedIn prospecting\" request. This is the GTM operating layer: it does NOT run box scripts or curl — it calls the chat's native tools directly.",
+      "tags": [
+        "outbound",
+        "leads",
+        "prospecting"
+      ],
+      "path": "skills/plays/gtm-outbound",
+      "files": [
+        "skills/plays/gtm-outbound/SKILL.md",
+        "skills/plays/gtm-outbound/skill.meta.json"
+      ],
+      "metadata": {
+        "slug": "gtm-outbound",
+        "category": "plays",
+        "tags": [
+          "outbound",
+          "leads",
+          "prospecting"
+        ],
+        "installation": {
+          "base_command": "npx moatt install gtm-outbound",
           "supports": [
             "claude",
             "cursor",
