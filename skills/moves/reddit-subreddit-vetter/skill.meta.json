@@ -1,0 +1,19 @@
+{
+  "slug": "reddit-subreddit-vetter",
+  "category": "moves",
+  "tags": [
+    "research",
+    "monitoring"
+  ],
+  "installation": {
+    "base_command": "npx moatt install reddit-subreddit-vetter",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "reddit-post-finder"
+  ]
+}

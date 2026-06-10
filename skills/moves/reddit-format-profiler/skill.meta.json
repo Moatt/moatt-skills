@@ -1,0 +1,19 @@
+{
+  "slug": "reddit-format-profiler",
+  "category": "moves",
+  "tags": [
+    "content",
+    "research"
+  ],
+  "installation": {
+    "base_command": "npx moatt install reddit-format-profiler",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "reddit-post-finder"
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "updatedAt": "2026-05-25T10:09:26Z",
+  "updatedAt": "2026-06-09T18:30:11Z",
   "skills": [
     {
       "slug": "ad-angle-miner",
@@ -1101,10 +1101,7 @@
       "changelog": {
         "0.1.0": "Initial release."
       },
-      "requires_skills": [
-        "review-site-scraper",
-        "linkedin-post-research"
-      ],
+      "requires_skills": [],
       "kit": null
     },
     {
@@ -3207,23 +3204,276 @@
       "kit": null
     },
     {
+      "slug": "reddit-content-studio",
+      "name": "Reddit Content Studio",
+      "description": "Turn a target post or a content idea into review-ready Reddit copy — posts and replies that read like a real community member wrote them. Picks the right format and tone for the sub, drafts in the brand's voice when relevant, and always leaves publishing to a human. Chains reddit-format-profiler, reddit-post-drafter, reddit-reply-drafter, and brand-voice-extractor.",
+      "category": "plays",
+      "tags": [
+        "content",
+        "social"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/reddit-content-studio",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Reddit Content Studio",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "reddit-format-profiler",
+        "reddit-post-drafter",
+        "reddit-reply-drafter",
+        "brand-voice-extractor"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "reddit-format-profiler",
+      "name": "Reddit Format Profiler",
+      "description": "Profile a subreddit's recent posts to learn what format and tone actually work there. Clusters posts by type (question, experience report, in-thread reply, list/resource, etc.), reads the room, and returns a recommended post format plus an encoded tone guide for that sub — so anything you draft reads like a native post, not an ad.",
+      "category": "moves",
+      "tags": [
+        "content",
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/reddit-format-profiler",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Reddit Format Profiler",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "reddit-post-finder"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "reddit-growth-engine",
+      "name": "Reddit Growth Engine",
+      "description": "Run a full Reddit growth motion — product to ICP to subreddits, then monitor, draft, engage, and measure search + AI visibility",
+      "category": "moats",
+      "tags": [
+        "monitoring",
+        "content",
+        "seo"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moats/reddit-growth-engine",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Reddit Growth Engine",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "icp-identification",
+        "reddit-subreddit-discovery",
+        "reddit-monitor-loop",
+        "reddit-content-studio",
+        "reddit-visibility-tracker"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "reddit-monitor-loop",
+      "name": "Reddit Monitor Loop",
+      "description": "Monitor a set of subreddits on a schedule: pull the newest posts, rank them by real relevance to the ICP (semantic, not keyword), and surface the handful worth replying to — plus a per-sub format guide. Designed to run as a recurring Box agent (roughly hourly, tuned to each sub's activity). Chains reddit-post-finder, reddit-post-reranker, and reddit-format-profiler.",
+      "category": "plays",
+      "tags": [
+        "monitoring",
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/reddit-monitor-loop",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Reddit Monitor Loop",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "reddit-post-finder",
+        "reddit-post-reranker",
+        "reddit-format-profiler"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "reddit-post-drafter",
+      "name": "Reddit Post Drafter",
+      "description": "Draft a Reddit post that reads like a real member of the community wrote it — in the target sub's format and tone, useful and authentic, never an ad. Takes a subreddit (+ its format profile), a content brief, and optional brand voice, and produces review-ready post drafts. Never auto-publishes; Reddit has no public post API and publishing stays a human decision.",
+      "category": "moves",
+      "tags": [
+        "content",
+        "social"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/reddit-post-drafter",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Reddit Post Drafter",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "reddit-format-profiler"
+      ],
+      "kit": null
+    },
+    {
       "slug": "reddit-post-finder",
       "name": "Reddit Post Finder",
-      "description": "Search and scrape live Reddit posts AND comments via Apify. Find threads, track competitor/brand mentions, monitor feedback, surface pain points, or rank which subreddits mention a term most. Global keyword search (--query) or subreddit scraping (--subreddit); fetch posts, comments, or both (--content).",
+      "description": "Search and scrape live Reddit posts AND comments via Apify. Use to find Reddit threads, track competitor/brand mentions, monitor product feedback, surface pain points, or analyze subreddit activity. GLOBAL keyword search across all of Reddit (use --query; best for \"which subreddits mention X most\" — one search returns items from many subreddits to group and count) or subreddit scraping (use --subreddit when you know the communities). Fetch posts (with upvotes/comment-counts), comments (global comment search), or both via --content. Supports keyword filtering, time windows, and per-subreddit mention counts.",
       "category": "moves",
       "tags": [
         "monitoring"
       ],
-      "version": "0.2.0",
+      "version": "0.1.0",
       "path": "skills/moves/reddit-post-finder",
       "argumentHint": "",
       "domain": "",
       "appName": "Reddit Post Finder",
       "changelog": {
-        "0.1.0": "Initial release.",
-        "0.2.0": "Migrate off stale openclawai/PullPush (frozen 2025-05-19) to live actors: parseforge for posts (with metrics), trudax for global comment search. Add --content posts|comments|both and --max-comments; --query is now a true global search."
+        "0.1.0": "Initial release."
       },
       "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "reddit-post-reranker",
+      "name": "Reddit Post Reranker",
+      "description": "Rank a set of Reddit posts by how relevant they really are to a target ICP or intent — by meaning, not keyword match. Built for monitoring: you pull the `new` feed of a sub, then use this to surface the few posts genuinely worth replying to and drop the noise. Avoids the keyword traps (e.g. the brand \"Wise\" also just means *wise*) by scoring on semantics. Returns posts ranked 0–1 with a one-line reason each.",
+      "category": "moves",
+      "tags": [
+        "monitoring",
+        "research"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/reddit-post-reranker",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Reddit Post Reranker",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "reddit-post-finder"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "reddit-reply-drafter",
+      "name": "Reddit Reply Drafter",
+      "description": "Draft a reply to a Reddit post that sounds like a real community member — not an AI, not a brand. Takes the post body (and optional thread context), an objective (reply / disagree / ask a clarifying question / add a resource), and style constraints, and returns ONLY the final reply text. Enforces a community-native tone, no em dashes, concision, and no invented facts.",
+      "category": "moves",
+      "tags": [
+        "content",
+        "social"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/reddit-reply-drafter",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Reddit Reply Drafter",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [],
+      "kit": null
+    },
+    {
+      "slug": "reddit-serp-tracker",
+      "name": "Reddit Serp Tracker",
+      "description": "Track whether your Reddit threads earn visibility on Google and in AI answers. Uses DataForSEO through the Moatt proxy to (1) check where a Reddit thread ranks in Google organic results for target queries, (2) check Google AI Mode, and (3) detect when an AI assistant (ChatGPT/Claude/Gemini/Perplexity) cites a Reddit URL as a source. No user API keys — billed via Moatt credits.",
+      "category": "moves",
+      "tags": [
+        "seo"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/reddit-serp-tracker",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Reddit Serp Tracker",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "aeo"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "reddit-subreddit-discovery",
+      "name": "Reddit Subreddit Discovery",
+      "description": "Go from a company (name or site) to a vetted shortlist of subreddits worth being active in. Follows the chain Product → ICP → subreddits: confirms which ICP to target now, finds candidate subs via brand, competitor, and keyword search on Reddit, then vets each for activity, topic fit, and whether it's usable for promotion. Chains reddit-post-finder and reddit-subreddit-vetter.",
+      "category": "plays",
+      "tags": [
+        "research",
+        "monitoring"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/reddit-subreddit-discovery",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Reddit Subreddit Discovery",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "icp-identification",
+        "reddit-post-finder",
+        "reddit-subreddit-vetter"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "reddit-subreddit-vetter",
+      "name": "Reddit Subreddit Vetter",
+      "description": "Vet a list of candidate subreddits to decide which are worth being active in. For each sub, pulls the `new` feed (via reddit-post-finder), estimates how active it is, reads recent posts to confirm it's actually on-topic, and judges whether it's usable for promotion (can you plug a brand into an answer, or tell a story?) — not just hiring noise or off-topic chatter. Returns a ranked, vetted shortlist with a per-sub verdict and topic clusters.",
+      "category": "moves",
+      "tags": [
+        "research",
+        "monitoring"
+      ],
+      "version": "0.1.0",
+      "path": "skills/moves/reddit-subreddit-vetter",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Reddit Subreddit Vetter",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "reddit-post-finder"
+      ],
+      "kit": null
+    },
+    {
+      "slug": "reddit-visibility-tracker",
+      "name": "Reddit Visibility Tracker",
+      "description": "Measure and report the payoff of a Reddit motion: where your threads rank on Google, when AI assistants cite them, plus engagement and mention sentiment — pulled together into a client dashboard and export. Chains reddit-serp-tracker, aeo, reddit-aeo-monitor, and create-dashboard.",
+      "category": "plays",
+      "tags": [
+        "seo"
+      ],
+      "version": "0.1.0",
+      "path": "skills/plays/reddit-visibility-tracker",
+      "argumentHint": "",
+      "domain": "",
+      "appName": "Reddit Visibility Tracker",
+      "changelog": {
+        "0.1.0": "Initial release."
+      },
+      "requires_skills": [
+        "reddit-serp-tracker",
+        "aeo",
+        "reddit-aeo-monitor",
+        "reddit-post-finder",
+        "create-dashboard"
+      ],
       "kit": null
     },
     {

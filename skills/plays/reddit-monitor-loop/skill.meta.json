@@ -1,0 +1,21 @@
+{
+  "slug": "reddit-monitor-loop",
+  "category": "plays",
+  "tags": [
+    "monitoring",
+    "research"
+  ],
+  "installation": {
+    "base_command": "npx moatt install reddit-monitor-loop",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "reddit-post-finder",
+    "reddit-post-reranker",
+    "reddit-format-profiler"
+  ]
+}

@@ -145,6 +145,22 @@ python3 skills/reddit-post-finder/scripts/search_reddit.py \
   --keywords "frustrating,difficult,hard to,wish there was,better way"
 ```
 
+## Discovery & vetting (part of the Reddit Growth Engine)
+
+This skill is the **data pull** behind subreddit discovery. To go from raw mention
+counts to a decision about which subs to be active in:
+
+- **Find candidates:** `--query` global search + `--output subreddit-counts` (this
+  skill). For a common-word brand, run specific phrases as separate calls and merge.
+- **Confirm a sub is real:** pull its `new` feed (`--subreddit <sub> --sort new
+  --output json`) and read the posts — a sub can match the ICP but be hiring-only
+  or off-topic. (Subscriber/active counts aren't returned by these actors; use
+  post velocity from the `new` feed as the activity proxy, optionally the public
+  `r/<sub>/about.json` for subscriber count.)
+- **Judge usability + cluster topics:** the `reddit-subreddit-vetter` move does
+  exactly this on top of the pulls above; the `reddit-subreddit-discovery` play
+  wires the whole Product → ICP → subreddits chain together.
+
 ## Important: Always Include URLs
 
 When presenting Reddit results, **always include the original URL** for every post/comment so the user can read the full discussion. Never deliver a summary table without links.
