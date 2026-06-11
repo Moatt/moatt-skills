@@ -46,16 +46,18 @@ one right now.
    (context files / `/workspace/home`). Reuse it: briefly restate what they do so
    they feel understood (you can't help them if you don't know them), but don't
    burn the turn re-researching what's already known.
-2. **Clarify which *product*, not just which audience.** Companies prioritise
-   specific products or test new ones, so ask whether this push is for a **current
-   product or a new one** — then which ICP within it. If the ICP isn't on file
-   (e.g. a brand-new product), run **`icp-identification`** to define it.
-3. **Ask which ICP is the Reddit focus right now**, and why. Reddit is a
+2. **ALWAYS clarify which *product* — this is a separate axis from the ICP, so ask
+   it even when the user already named an audience/ICP.** Use `askUserQuestion`:
+   is this push for a **current product or a new one** (companies prioritise
+   products or test new ones)? Skipping this question fails the play. If the ICP
+   isn't on file (e.g. a brand-new product), run **`icp-identification`** to define it.
+3. **Confirm which ICP is the Reddit focus right now**, and the goal. Reddit is a
    problem-centered platform: established brands here usually pursue **brand
    authority** or **SEO/AEO**, not conversions (better channels exist for
    converting). The exception is very early-stage startups, where Reddit can be the
    best channel for first conversions — surface this so the user picks the right
-   ICP and goal.
+   ICP and goal. (You can fold the product + ICP/goal confirmation into one
+   `askUserQuestion` to avoid extra round-trips.)
 
 Lock: **one product (current or new) + one ICP + a goal (authority / first-conversions / SEO-AEO).**
 
@@ -85,9 +87,11 @@ python3 $HOME/skills/moves/reddit-post-finder/scripts/search_reddit.py \
   --query "Deel contractor" --max-posts 150 --time year --output subreddit-counts
 ```
 
-- **Common-word brands need disambiguation** ("Deel" = Dutch "part"; "Wise" =
-  the adjective). Run specific phrases (`"Deel payroll"`, `"Deel EOR"`,
-  `"Deel contractor"`) as separate calls and merge the count tables.
+- **Common-word brands REQUIRE disambiguation — a single query is not enough.**
+  "Deel" is Dutch for "part"; "Wise" is an adjective. You MUST run at least 2–3
+  specific phrases (`"Deel payroll"`, `"Deel EOR"`, `"Deel contractor"`) as
+  **separate** `--query` calls and merge the count tables. One combined query
+  ("Deel contractor freelancer") does not disambiguate and fails this step.
 - Run brand / competitor / keyword queries as separate calls; merge into one
   candidate list ranked by mention count.
 

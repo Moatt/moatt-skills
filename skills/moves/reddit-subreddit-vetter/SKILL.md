@@ -146,18 +146,23 @@ This feeds post-format selection downstream and tells the user what to expect.
 
 ## Output
 
-A ranked table, best candidates first, plus a one-line verdict each:
+A ranked table, best candidates first. **Every row must carry: the subreddit URL
+(`https://reddit.com/r/<sub>`), members + age (from `published`) reported
+systematically for ALL subs, and a RULES-GROUNDED promotion verdict** (cite the
+actual rule — "rules allow tool mentions" vs "rule 2 bans self-promo → value-only").
+Flag any ICP-matching-but-hiring-only sub explicitly as SKIP.
 
 ```
-| Subreddit | Activity (members, age) | On-topic | Promotion-usable | Verdict | Top topics |
-|-----------|-------------------------|----------|------------------|---------|------------|
-| r/freelance | high · 2.1M · est. 2008 | yes | yes — rules allow tool mentions, members name tools in bodies | KEEP — gold | late payments, client horror stories, rate-setting |
-| r/forhire | high · 380k · est. 2010 | partial | no — hiring board | SKIP | gigs, [Hiring], [For Hire] |
-| r/Payroll | medium · 33k · est. 2008 | yes | risky — rule 2 bans self-promo; value-only + old → good for SEO/AEO | WATCH | invoicing, compliance, tools |
+| Subreddit | URL | Activity (members, age) | On-topic | Promotion-usable (rules-grounded) | Verdict | Top topics |
+|-----------|-----|-------------------------|----------|-----------------------------------|---------|------------|
+| r/freelance | https://reddit.com/r/freelance | high · 2.1M · est. 2008 (old → strong SEO/AEO) | yes | yes — rules allow tool mentions; members name tools in bodies | KEEP — gold | late payments, client horror stories, rate-setting |
+| r/forhire | https://reddit.com/r/forhire | high · 380k · est. 2010 | partial | no — hiring-only board | SKIP (hiring-only) | gigs, [Hiring], [For Hire] |
+| r/Payroll | https://reddit.com/r/Payroll | medium · 33k · est. 2008 (old) | yes | risky — rule 2 bans self-promo → value-only; old → good for SEO/AEO | WATCH | invoicing, compliance, tools |
 ```
 
 Close with a short recommendation: which 2–3 are the likely "gold" subs (the
-brief's note: ~10 subs per client, usually 2–3 are gold), and which to drop.
+brief's note: ~10 subs per client, usually 2–3 are gold), and which to drop. Then
+**ask the user which subs to monitor** (not a vague "what next?").
 
 ## Honesty guardrails
 
