@@ -15,6 +15,15 @@ Reddit threads rank well on Google and get pulled into AI answers. This skill
 measures both for *your* threads. **You — the agent — drive the flow**, calling
 the DataForSEO proxy directly (same pattern as the `aeo` skill). No script.
 
+> **Use the DataForSEO proxy — NOT generic web search.** This task needs real
+> Google *ranking positions* and the structured *source/citation arrays* from AI
+> engines. A generic web-search tool (e.g. `COMPOSIO_SEARCH_WEB`) gives neither —
+> it can't tell you a thread's organic position or whether ChatGPT/Perplexity
+> *cited* a reddit.com URL. If you installed this skill you must actually invoke
+> it: hit the DFS proxy (Parts A–C below). If you catch yourself reaching for web
+> search, stop — that does not satisfy this task and produces a vague,
+> position-less answer.
+
 ## How the proxy works (verified pattern)
 
 `POST {MOATT_API_BASE}/v1/proxy/dataforseo/rest` with header
