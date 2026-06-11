@@ -17,11 +17,13 @@ the chat. Call the tool directly — do not look for a Python recipe.
 
 ## Your native tools (already available in this chat)
 
-- **`findLeads({ query, title?, filters?, limit? })`** — Find companies/leads
-  matching a natural-language query. Auto-discovers the best data source
-  (Apollo / Hunter / PeopleDataLabs / … via the Orthogonal catalog), runs it,
-  and streams the results into the **Find** tab of the leads panel with fit
-  scores, funding, headcount, and buying signals.
+- **`findLeads({ query, icpContext?, title?, filters?, limit? })`** — Find
+  companies/leads matching a natural-language query. Auto-discovers the best
+  data source (Apollo / Hunter / PeopleDataLabs / … via the Orthogonal catalog),
+  runs it, and streams the results into the **Find** tab of the leads panel with
+  fit scores, funding, headcount, and buying signals. **Always pass `icpContext`**
+  (see Step 0) — it grounds the filter in the company's real target industry/size
+  so the search returns rows instead of zero.
 - **`enrichContacts({ contacts:[{name, company, domain?}], title? })`** — Add
   verified email + phone + LinkedIn to a list of contacts (FullEnrich). Updates
   the **Enrich** tab.
@@ -39,9 +41,20 @@ the chat. Call the tool directly — do not look for a Python recipe.
 
 ## Workflow
 
-1. **Find** — Call `findLeads` with the user's intent verbatim. For
-   LinkedIn-specific prospecting (by title/role at companies), use
-   `findLinkedInLeads` instead. The panel opens automatically.
+0. **Ground in context FIRST.** Before any search, read the project's company +
+   ICP context so your filters target the RIGHT buyers:
+   - `boxRead` `/workspace/home/context/ICPs.md` and `.../ProjectContext.md`
+     (or `boxSearch` for "ICP" / "ideal customer"). If those are missing,
+     `karmable_kg_search` for the project's ICP / target-industry facts.
+   - Extract: the TARGET industry (use the BROAD LinkedIn term it gives —
+     "Software Development", "Financial Services" — never coined jargon like
+     "fintech"/"saas"), company size band, geography, buyer roles, buying signals.
+   - This context was generated automatically during onboarding from the
+     company's domain. If it's genuinely absent, proceed with the user's query
+     alone (last resort) — but prefer grounding.
+1. **Find** — Call `findLeads` with the user's intent AND pass what you read in
+   Step 0 as `icpContext`. For LinkedIn-specific prospecting (by title/role at
+   companies), use `findLinkedInLeads` instead. The panel opens automatically.
 2. **Enrich** — When the user wants emails/phones, call `enrichContacts` with
    the rows already shown.
 3. **Sequence** — When the user wants outreach, call `sequenceLeads` (email) or
