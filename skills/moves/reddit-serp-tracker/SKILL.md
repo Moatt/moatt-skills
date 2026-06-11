@@ -157,6 +157,12 @@ big loop.
 - `402` from the proxy → out of Moatt credits; tell the user to top up, don't retry.
 - Non-`20000` `tasks[0].status_code` → DFS rejected the request; log and continue.
 - Wrong model ID on the AI side → see the `aeo` model table.
+- **Transient `502`/timeout from the proxy** → the proxy already retries idempotent
+  DFS `live` reads, so a one-off blip is usually absorbed. If a call STILL fails,
+  re-run the batch `boxExec` once. If it keeps failing (DFS slow/down), don't
+  return an empty answer: emit the table with the rows you DID get and mark the
+  rest **"live data unavailable this run — re-run to fill"** so the output stays
+  coherent. Never silently drop the whole report on one blip.
 
 ## Dependencies
 
