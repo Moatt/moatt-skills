@@ -52,6 +52,12 @@ each with `reddit-subreddit-vetter` (activity, topic fit, usable-for-promotion).
 
 ### 3. Monitor + format (Stage 2–3) — play `reddit-monitor-loop`
 
+> **HARD GATE: do not create, schedule, or start the monitor Box agent until the
+> user has explicitly approved the subreddit shortlist from Step 2.** Even when the
+> user says "build everything", that means build up to each checkpoint and then
+> stop for approval — it does NOT authorize scheduling before the shortlist is
+> approved. Present the vetted shortlist, get the go-ahead, *then* set up monitoring.
+
 Pull each sub's `new` feed on a schedule (~hourly, tuned per activity), rerank by
 semantic relevance to the ICP (`reddit-post-reranker`, not keyword matching), and
 attach a per-sub format guide (`reddit-format-profiler`). Emits a ranked
@@ -75,7 +81,14 @@ it into a dashboard + client export (`create-dashboard`). Re-check periodically.
 
 - **After Step 1:** confirm the chosen ICP + goal.
 - **After Step 2:** approve the subreddit shortlist before scheduling monitoring.
+  Step 2 must have actually produced the vetted shortlist (with subreddit URLs) and
+  presented it — don't jump to agent-building on a promised-but-unbuilt shortlist.
 - **Throughout Step 4:** review every draft before manual posting.
+
+**Always restate the guardrails** when you summarize the plan: posts/replies are
+**published manually by a human** (the engine only drafts), and there is **no
+astroturfing** (transparent, disclosed participation only). State these explicitly
+in your wrap-up, every time — don't assume they're understood.
 
 ## Cadence
 

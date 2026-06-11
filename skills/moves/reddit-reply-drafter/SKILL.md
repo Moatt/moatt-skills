@@ -35,6 +35,21 @@ Recommended:
 - **Style constraints** (optional) — tone, brand to mention. If a brand is named,
   disclosure is required.
 
+## Before you draft — get the missing essentials (don't guess, don't placeholder)
+
+If the brief hasn't already told you, ask the user ONCE (a single `askUserQuestion`)
+for the things that are the user's choice, then draft:
+
+- **The product/brand name** to mention (and whether to name it at all). You must
+  NEVER write a `[your product name]` / `[brand]` / `[Fill in…]` placeholder in a
+  reply — if you'd need one, you're missing an input, so ask for it. A reply with a
+  placeholder is unpublishable and fails.
+- **Persona** — employee / real user / founder.
+- **Length** — default short (2–6 sentences) if they don't care.
+
+One question round is fine. Do NOT draft a placeholdered reply and then explain the
+placeholder in a note — get the name and use it.
+
 ## Style rules (always)
 
 - **Natural, community-native tone.** Not corporate, not salesy. Sound like a
@@ -92,6 +107,9 @@ a draft file — but the chat/return payload is the bare reply text.)
 
 - Contains zero `—` characters.
 - Length matches what the user asked for; if unset, sentence count ≤ 6 (count them).
+- **No bracketed placeholders** (`[your product name]`, `[brand]`, `[Fill in…]`) and
+  **no meta-note / `---` separator** explaining one. If you were about to placeholder
+  the product, you skipped "Before you draft" — go ask for the name.
 - **No dangling share offer** — no "happy to share", "DM me if interested",
   "let me know and I'll send it". The tool is named plainly or not mentioned.
 - If a tool is promoted: it's succinct and matched to the poster's actual problem
