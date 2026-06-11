@@ -54,6 +54,18 @@ without actually producing one does not satisfy this step.
 
 **Human checkpoint:** approve which subs to monitor (~10 subs, usually 2–3 gold).
 
+**Stage-1 wrap-up — your message to the user MUST contain, every time:**
+1. The **actual vetted shortlist** synthesized from the searches you just ran (each
+   sub with its `https://reddit.com/r/<sub>` URL, activity, verdict). Never present a
+   speculative / "likely" list from memory — if the searches ran, use their results.
+2. The **proposed monitor cadence** (~hourly, tuned to sub activity) — *proposed*,
+   not yet scheduled.
+3. The **guardrails, stated explicitly:** posts/replies are **published manually by a
+   human** (the engine only drafts), and **no astroturfing** (transparent, disclosed
+   participation only).
+4. Drafting + visibility named as **deferred next steps**, and the question **"which
+   of these subs should we monitor?"** Then stop and wait — do not schedule.
+
 ### 3. Monitor + format (Stage 2–3) — play `reddit-monitor-loop`
 
 > **HARD GATE: do not create, schedule, or start the monitor Box agent until the
