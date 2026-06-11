@@ -44,9 +44,13 @@ want Reddit for **one** right now — the real signal is the user. Use
 
 ### 2. Find + vet subreddits (Stage 1) — play `reddit-subreddit-discovery`
 
-Find candidates via brand / competitor / keyword search on Reddit
-(`reddit-post-finder`, ranked counts; disambiguate common-word brands), then vet
-each with `reddit-subreddit-vetter` (activity, topic fit, usable-for-promotion).
+**EXECUTE this now — don't just name the engine or describe the plan.** Install and
+run `reddit-subreddit-discovery`: find candidates via brand / competitor / keyword
+search on Reddit (`reddit-post-finder`, ranked counts; disambiguate common-word
+brands), then vet each with `reddit-subreddit-vetter` (activity, topic fit,
+usable-for-promotion). **Present the vetted shortlist with each subreddit's URL
+(`https://reddit.com/r/<sub>`)** before pausing. A summary that promises a shortlist
+without actually producing one does not satisfy this step.
 
 **Human checkpoint:** approve which subs to monitor (~10 subs, usually 2–3 gold).
 

@@ -35,20 +35,20 @@ Recommended:
 - **Style constraints** (optional) — tone, brand to mention. If a brand is named,
   disclosure is required.
 
-## Before you draft — get the missing essentials (don't guess, don't placeholder)
+## This is a drafting task — produce the reply, do NOT stop to ask
 
-If the brief hasn't already told you, ask the user ONCE (a single `askUserQuestion`)
-for the things that are the user's choice, then draft:
+Your output is the reply text. Do **not** end the turn on a clarifying question, and
+do **not** re-ask for things already in the brief (the post body, subreddit, and
+objective are given — use them). Take the persona / length / brand from the brief;
+when the brief is silent, apply sensible **defaults** rather than asking:
 
-- **The product/brand name** to mention (and whether to name it at all). You must
-  NEVER write a `[your product name]` / `[brand]` / `[Fill in…]` placeholder in a
-  reply — if you'd need one, you're missing an input, so ask for it. A reply with a
-  placeholder is unpublishable and fails.
-- **Persona** — employee / real user / founder.
-- **Length** — default short (2–6 sentences) if they don't care.
-
-One question round is fine. Do NOT draft a placeholdered reply and then explain the
-placeholder in a note — get the name and use it.
+- **Persona/length** — default to a peer/founder voice and a **short** reply (2–6
+  sentences) unless the brief says otherwise.
+- **Product name** — if the brief names the product (or you can read it from the
+  project brain/memory), use it plainly. **Never** write a `[your product name]` /
+  `[brand]` / `[Fill in…]` placeholder, and never append a note explaining one — if
+  you truly have no name, write the reply generically ("a tool I built for this")
+  with disclosure, no placeholder.
 
 ## Style rules (always)
 
