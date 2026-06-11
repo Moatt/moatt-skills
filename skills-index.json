@@ -5411,7 +5411,7 @@
       "slug": "reddit-subreddit-vetter",
       "name": "reddit-subreddit-vetter",
       "category": "moves",
-      "description": "Vet a list of candidate subreddits to decide which are worth being active in. For each sub, pulls the `new` feed (via reddit-post-finder), estimates how active it is, reads recent posts to confirm it's actually on-topic, and judges whether it's usable for promotion (can you plug a brand into an answer, or tell a story?) — not just hiring noise or off-topic chatter. Returns a ranked, vetted shortlist with a per-sub verdict and topic clusters.",
+      "description": "Vet a list of candidate subreddits to decide which are worth being active in. For each sub, reads Konbini subreddit-info (members, age, rules), pulls the `new` feed to gauge activity and confirm topic, and judges whether it's usable for promotion (rules + brand mentions in post bodies + sub age) — not just hiring noise or off-topic chatter. Weights toward old / category-leader subs when the goal is SEO/AEO. Returns a ranked, vetted shortlist with a per-sub verdict and topic clusters.",
       "tags": [
         "research",
         "monitoring"

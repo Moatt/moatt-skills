@@ -35,22 +35,29 @@ installOrUpdateSkill({ slug: "icp-identification" })        # if ICP isn't on fi
 - "Where on Reddit is <product / our space> discussed?"
 - As Stage 0–1 of the `reddit-growth-engine` moat.
 
-## Phase 0 — Product → ICP (pick the one that matters now)
+## Phase 0 — Product → ICP (pick what matters now)
 
-There's a function from all available context to the ICPs; the real signal is the
-user. A company may have five ICPs and want Reddit for only one right now.
+There's a function from all available context to the products/ICPs; the real signal
+is the user. A company may have several products and ICPs and want Reddit for only
+one right now.
 
-1. **Read the brain first.** Onboarding usually already wrote the product, ICPs,
-   and competitors to the project (context files / `/workspace/home`). Reuse it —
-   don't re-research what's already known.
-2. If ICP isn't on file, run **`icp-identification`** to define it.
-3. **Ask the user which ICP is the Reddit focus right now**, and why. Reddit is a
-   problem-centered platform: brands here usually pursue **brand authority**, not
-   conversions (better channels exist for converting). The exception is very
-   early-stage startups, where Reddit can be the best channel for first
-   conversions — surface this framing so the user picks the right ICP and goal.
+1. **Read the brain first and show you know their products — fast.** Onboarding
+   usually already wrote the products, ICPs, and competitors to the project
+   (context files / `/workspace/home`). Reuse it: briefly restate what they do so
+   they feel understood (you can't help them if you don't know them), but don't
+   burn the turn re-researching what's already known.
+2. **Clarify which *product*, not just which audience.** Companies prioritise
+   specific products or test new ones, so ask whether this push is for a **current
+   product or a new one** — then which ICP within it. If the ICP isn't on file
+   (e.g. a brand-new product), run **`icp-identification`** to define it.
+3. **Ask which ICP is the Reddit focus right now**, and why. Reddit is a
+   problem-centered platform: established brands here usually pursue **brand
+   authority** or **SEO/AEO**, not conversions (better channels exist for
+   converting). The exception is very early-stage startups, where Reddit can be the
+   best channel for first conversions — surface this so the user picks the right
+   ICP and goal.
 
-Lock: **one ICP + a goal (authority vs. first-conversions).**
+Lock: **one product (current or new) + one ICP + a goal (authority / first-conversions / SEO-AEO).**
 
 ## Phase 1 — Find candidate subreddits
 
@@ -64,12 +71,18 @@ Pick the path(s) that fit the situation (often several at once):
 | Early-stage, absent from Reddit | **Competitor + keyword walk** — start from larger competitors and topic words, work back to the communities. |
 | Early-stage, brand-new space | **Deeper keyword research** — broaden terms, follow related subs. |
 
+> **Early-stage stance:** we don't handle posting — assume the user has one or
+> several accounts to market from, and **don't assume low karma** (early-stage ≠
+> weak accounts). Advise **explicit transparency** (a founder-voice disclosure,
+> "I'm the founder of X and I think this helps your problem"), never covert/volume
+> astroturfing — that breaks Reddit's ToS and we don't push it.
+
 Use **`reddit-post-finder`** with global search and ranked counts — don't guess a
 sub list and scrape each:
 
 ```bash
 python3 skills/reddit-post-finder/scripts/search_reddit.py \
-  --query "Deel contractor" --content posts --max-posts 150 --time year --output subreddit-counts
+  --query "Deel contractor" --max-posts 150 --time year --output subreddit-counts
 ```
 
 - **Common-word brands need disambiguation** ("Deel" = Dutch "part"; "Wise" =
@@ -80,11 +93,13 @@ python3 skills/reddit-post-finder/scripts/search_reddit.py \
 
 ## Phase 2 — Vet the candidates
 
-Run **`reddit-subreddit-vetter`** on the top candidates. It pulls each sub's
-`new` feed, estimates activity (rough guide: ~10k weekly visitors / healthy post
-velocity), confirms the topic by reading recent posts, and judges whether the sub
-is **usable for promotion** (can a brand mention plug into an answer, or can you
-tell a story?) — flagging hiring-only boards, no-promo subs, and dead subs.
+Run **`reddit-subreddit-vetter`** on the top candidates. It reads each sub's
+Konbini **subreddit-info** (members, `published` age, rules) and pulls its `new`
+feed, estimates activity (rough guide: **~5k weekly is enough to try** / healthy
+post velocity), confirms the topic, and judges **usable for promotion** from the
+rules + brand mentions in post bodies + the sub's age — flagging hiring-only
+boards, no-promo subs, and dead subs. For an SEO/AEO goal it weights toward old /
+category-leader subs.
 
 ## Phase 3 — Shortlist + checkpoint
 

@@ -82,7 +82,10 @@ Compose the client deliverable from the dated series — two artifacts, always b
 2. **The export**: write the underlying tables to dated files the client can
    take away — one CSV per panel (or a single JSON) under
    `/workspace/home/projects/reddit/visibility/exports/<YYYY-MM-DD>/` — and tell
-   the user the paths.
+   the user the paths. **Agencies report everything to clients**, so also offer to
+   push the report (and the underlying posts/rows) to **Notion or a Google Sheet
+   via Composio** — that's the client-facing surface. Use the connected Composio
+   toolkit; if none is connected, say so and deliver the workspace files.
 
 Label any sample/placeholder rows clearly in both. (The legacy
 `create-dashboard` box app — `/home/user/dashboard`, port 3847 — is NOT
@@ -103,6 +106,8 @@ Don't drown the report; lead with the 3–4 the client will act on.
 - `reddit-post-finder` (engagement + mentions)
 - platform report/dashboard tooling for the compose step (see Step 5; the
   legacy `create-dashboard` box app is unavailable on the current platform)
+- (optional) a connected **Composio** toolkit (Notion / Google Sheets) to push the
+  client-facing report + rows
 
 ## Output
 

@@ -14,6 +14,7 @@ Upstream base (behind the proxy): `https://api.konbiniapi.com`. Responses are [A
 |------|--------------------|-------|
 | Global keyword search | `GET /v1/reddit/search/posts?q=…` | All of Reddit. `order` ∈ `relevance\|hot\|top\|new\|comments`. |
 | Subreddit browse | `GET /v1/reddit/subreddits/<sub>/posts` | Reliable scoping. `order` ∈ `hot\|new\|top\|rising\|controversial`. |
+| Subreddit info | `GET /v1/reddit/subreddits/<sub>` | A single `Group` object: `memberCount` (size), `published` (creation date → **age**), `description` (full **rules** text), `summary`, `isAdult`, `isSearchable`. Used by `reddit-subreddit-vetter` for activity/age/promotion-usability. Not paginated; one credit. The `search_reddit.py` script does not wrap this — call it with `curl` directly. |
 
 Common query params: `count` (max **100**/page), `cursor` (pagination — the response's `data.nextCursor`), `time` ∈ `hour|day|week|month|year|all` (applies to `top`/`controversial`/`comments` orders).
 

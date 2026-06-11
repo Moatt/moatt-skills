@@ -2,11 +2,12 @@
 name: reddit-subreddit-vetter
 description: >
   Vet a list of candidate subreddits to decide which are worth being active in.
-  For each sub, pulls the `new` feed (via reddit-post-finder), estimates how
-  active it is, reads recent posts to confirm it's actually on-topic, and judges
-  whether it's usable for promotion (can you plug a brand into an answer, or tell
-  a story?) — not just hiring noise or off-topic chatter. Returns a ranked,
-  vetted shortlist with a per-sub verdict and topic clusters.
+  For each sub, reads Konbini subreddit-info (members, age, rules), pulls the
+  `new` feed to gauge activity and confirm topic, and judges whether it's usable
+  for promotion (rules + brand mentions in post bodies + sub age) — not just
+  hiring noise or off-topic chatter. Weights toward old / category-leader subs
+  when the goal is SEO/AEO. Returns a ranked, vetted shortlist with a per-sub
+  verdict and topic clusters.
 tags: [research, monitoring]
 ---
 
@@ -47,8 +48,9 @@ if not, install it.)
 - **ICP / topic** — one or two sentences describing who we're trying to reach and
   what they care about. Used to judge topical fit. If absent, ask, or read the
   project brain (`/workspace/home/.moatt-*` / context files).
-- **Goal** (optional) — brand authority vs. early-stage first-conversions. Shifts
-  how strict you are on "usable for promotion."
+- **Goal** (optional) — brand authority, early-stage first-conversions, or
+  **SEO/AEO** (ranking + AI citations). Shifts how strict you are on "usable for
+  promotion" and whether you weight toward old / category-leader subs (Step 3b).
 
 ## Workflow
 
@@ -58,30 +60,38 @@ For each candidate sub, pull its most recent posts:
 
 ```bash
 python3 skills/reddit-post-finder/scripts/search_reddit.py \
-  --subreddit <sub> --sort new --content posts --max-posts 50 --output json
+  --subreddit <sub> --sort new --max-posts 50 --output json
 ```
 
-Run these **sequentially**, not in parallel (the actor is live and parallel runs
-hit the box timeout). Set the `boxExec` `timeoutMs` to `300000`. Tiny subs return
-little on `--sort new`; if you get <5 items, also try `--sort top --time month`.
+Run these **sequentially**, not in parallel (live data; parallel pulls in one
+shell hit the box timeout). Set the `boxExec` `timeoutMs` to `300000`. Tiny subs
+return little on `--sort new`; if you get <5 items, also try `--sort top --time month`.
 
-### Step 2 — Estimate activity (the "is it big enough?" gate)
+### Step 2 — Read the subreddit's info + estimate activity (the "is it worth it?" gate)
 
-The brief's rough guide is **~10,000 weekly visitors minimum** — below that it
-rarely pays off. We can't read "weekly visitors" directly, so use proxies:
+Konbini exposes a **subreddit-info** endpoint that gives you the three signals the
+brief asks for in one cheap call — **size, age, and the rules**:
 
-- **Post velocity** — from the `new` feed timestamps, compute posts/day. A sub
-  with multiple posts per day clears the bar; one with a post every few days is
-  borderline; one whose newest post is weeks old is effectively dead.
-- **Optional subscriber/active count** — fetch the public about page (free, no
-  actor; may be rate-limited, so do it once per sub and don't retry hard):
-  ```bash
-  curl -sA "moatt-vetter/1.0" "https://www.reddit.com/r/<sub>/about.json" \
-    | head -c 4000
-  ```
-  Read `data.subscribers` and `data.active_user_count`. Treat these as a sanity
-  check on velocity, not a hard threshold (a 2M-subscriber sub with one relevant
-  post a week is still weak for our topic).
+```bash
+curl -s -H "Authorization: Bearer $MOATT_API_KEY" \
+  "$MOATT_API_BASE/v1/proxy/konbini/v1/reddit/subreddits/<sub>"
+```
+
+From `data`, read:
+- **`memberCount`** — subscriber size.
+- **`published`** — the subreddit's **creation date** → its **age** (see Step 3 — age
+  predicts how strict the mods are, and old subs are gold for SEO/AEO).
+- **`description`** — the full **rules text**. The cheapest promotion-usability read
+  there is: rules that ban self-promotion are stated right here.
+
+Then gauge **activity**. The brief's rough guide is **~5,000 weekly is already enough
+to try things** — below that it rarely pays off. Combine:
+
+- **Post velocity** — from the `new` feed timestamps, compute posts/day. Multiple
+  posts/day clears the bar; a post every few days is borderline; a newest post
+  weeks old is effectively dead.
+- **`memberCount`** — a sanity check on velocity, not a hard threshold (a
+  2M-member sub with one relevant post a week is still weak for our topic).
 
 Classify each sub's activity: **high / medium / low / dead**.
 
@@ -92,17 +102,35 @@ Read the recent posts. Answer two questions per sub:
 1. **Is it on our topic?** Does the actual content match the ICP/topic, or did the
    brand just get name-dropped once? A sub can match a keyword and be about
    something else entirely.
-2. **Is it usable for promotion?** This is the real question. Can you imagine
-   either:
-   - plugging the brand naturally into a comment on a question that gets asked
-     here, **or**
-   - telling a genuine story/experience-report that features the brand?
+2. **Is it usable for promotion?** This is the real question, and it's cheap to
+   check from three signals you already have:
+   - **The rules** (`description` from Step 2) — do they explicitly ban
+     self-promotion / product mentions? (e.g. r/Payroll's rule 2 forbids it.)
+   - **Brand mentions in recent post *bodies*** — scan the `new`/`top` post
+     content: if members already name products/tools (or share their GitHub /
+     a tool they built), promotion is clearly tolerated. Dev and vibecoder
+     communities are usually wide open this way.
+   - **Age** (`published` from Step 2) — newer subs generally have laxer mods;
+     long-established subs have stricter mods who protect the community. Weight
+     your verdict accordingly.
+
+   Then judge: can you plug the brand naturally into a comment on a question that
+   gets asked here, **or** tell a genuine story/experience-report that features it?
 
    Flag the common dead-ends:
    - **hiring-only** ("[Hiring]" / "[For Hire]" posts dominate) → skip.
-   - **strict no-promotion / no-self-promo rules** → flag as risky; intervention
-     must be purely helpful with disclosure, or avoid.
+   - **strict no-promotion / no-self-promo rules** (the `description` says so) →
+     flag as risky; intervention must be purely helpful with disclosure, or avoid.
    - **pure memes / off-topic banter** → low value even if "active."
+
+### Step 3b — If the goal is SEO/AEO, weight toward old + category-leader subs
+
+When the user's goal is search/AI visibility (not just engagement), bias the
+shortlist: **Google favours old subreddits** for Reddit links on the SERP, so
+prefer subs with an early `published` date, and go for the **category leaders** —
+sometimes one clear leader (r/payroll for payroll), sometimes several for a broad
+category (developers). An old, on-topic, category-leader sub beats a newer, livelier
+one for ranking and citation goals.
 
 ### Step 4 — Cluster the topics (nice-to-have)
 
@@ -115,11 +143,11 @@ This feeds post-format selection downstream and tells the user what to expect.
 A ranked table, best candidates first, plus a one-line verdict each:
 
 ```
-| Subreddit | Activity | On-topic | Promotion-usable | Verdict | Top topics |
-|-----------|----------|----------|------------------|---------|------------|
-| r/freelance | high (8 posts/day, 2.1M subs) | yes | yes — Q&A about getting paid | KEEP — gold | late payments, client horror stories, rate-setting |
-| r/forhire | high | partial | no — hiring board | SKIP | gigs, [Hiring], [For Hire] |
-| r/smallbiz | medium | yes | risky — no-promo rule | WATCH | invoicing, taxes, tools |
+| Subreddit | Activity (members, age) | On-topic | Promotion-usable | Verdict | Top topics |
+|-----------|-------------------------|----------|------------------|---------|------------|
+| r/freelance | high · 2.1M · est. 2008 | yes | yes — rules allow tool mentions, members name tools in bodies | KEEP — gold | late payments, client horror stories, rate-setting |
+| r/forhire | high · 380k · est. 2010 | partial | no — hiring board | SKIP | gigs, [Hiring], [For Hire] |
+| r/Payroll | medium · 33k · est. 2008 | yes | risky — rule 2 bans self-promo; value-only + old → good for SEO/AEO | WATCH | invoicing, compliance, tools |
 ```
 
 Close with a short recommendation: which 2–3 are the likely "gold" subs (the
@@ -133,11 +161,12 @@ brief's note: ~10 subs per client, usually 2–3 are gold), and which to drop.
 
 ## Cost
 
-- Reddit pulls: one `reddit-post-finder` call per candidate (~$3/1k results;
-  50 posts/sub is cheap). `about.json` is free.
+- Per candidate: one subreddit-info call + one `reddit-post-finder` pull — each is
+  one Konbini credit (~$0.002), up to 100 posts/page. Cheap.
 - All judgment is your reasoning — no extra spend.
 
 ## Dependencies
 
-- `reddit-post-finder` (the data pull).
-- `curl` in the Box (for the optional about.json check).
+- `reddit-post-finder` (the post pulls).
+- `curl` in the Box + `MOATT_API_KEY` / `MOATT_API_BASE` (for the Konbini
+  subreddit-info call — same proxy the post pulls use).

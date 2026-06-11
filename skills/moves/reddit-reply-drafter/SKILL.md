@@ -26,8 +26,14 @@ Recommended:
 - **Objective** — one of: `reply` (add value), `disagree` (respectfully push
   back), `ask` (clarifying question), `add-resource` (point to something useful,
   possibly your brand).
-- **Style constraints** (optional) — length band, tone, brand to mention. If a
-  brand is named, disclosure is required.
+- **Persona** — the voice is the **user's choice**: an *employee*, a *real user*,
+  or the *founder*. The founder disclosure often reads the most legit. Ask if it
+  isn't given; don't assume.
+- **Length** — also the **user's choice**, and it can vary across a set of comments
+  (a one-liner here, a fuller reply there). Default to 2–6 sentences only when the
+  user hasn't said.
+- **Style constraints** (optional) — tone, brand to mention. If a brand is named,
+  disclosure is required.
 
 ## Style rules (always)
 
@@ -40,14 +46,24 @@ Recommended:
   "my clients rarely pay more than X days late", no made-up reminder schedules
   or workflows presented as your own experience. If the input gave you no
   numbers, write the reply without numbers.
-- **Concise. 2–6 sentences, hard cap.** Count the sentences before returning;
-  7 or more means cut, not trim. One idea per sentence, no stacked clauses.
+- **Concise by default (2–6 sentences), or the length the user set.** When no
+  length is given, 2–6 sentences is the cap — count before returning; 7+ means cut,
+  not trim. One idea per sentence, no stacked clauses. If the user asked for a
+  specific length (or different lengths across comments), honor that instead.
+- **When promoting a tool: succinct, and match the user's actual problem.** Don't
+  over-explain. If the tool solves *several* of the poster's problems, say that it
+  does. The plug only earns its place when it genuinely fits.
+- **Never dangle the tool.** No "happy to share if useful", no "DM me if you're
+  interested", no "let me know and I'll send it". On Reddit you either share or you
+  don't — so name the tool plainly (or don't mention it at all). A wishy-washy
+  offer reads as marketing and helps nobody.
+- **Pick the answer type** (it varies, and that's fine): sometimes you just drop
+  the tool's name in passing; sometimes you disclose you're the founder, which
+  reads really legit. Choose what fits the post and the chosen persona.
 - **Disclose affiliation** if you mention the brand: a plain "(I work on one of
-  these)" / "(disclosure: I work at X)". Honest and in-line. When the caller
-  wants the reply to feature their product, NAME the product if you know its
-  name — a nameless "a tool I use" plug helps nobody find it. If you don't know
-  the name, keep it generic but still disclose ("I work on a tool that does
-  exactly this").
+  these)" / "(disclosure: I work at X)" / "I build X". Honest and in-line. NAME the
+  product if you know its name — a nameless "a tool I use" plug helps nobody find
+  it. If you don't know the name, keep it generic but still disclose.
 - **Match the objective.** A `disagree` stays respectful and specific; an `ask`
   is genuinely curious; an `add-resource` leads with help, mentions the brand only
   if it truly fits and then with disclosure.
@@ -75,7 +91,12 @@ a draft file — but the chat/return payload is the bare reply text.)
 ## Self-check before returning
 
 - Contains zero `—` characters.
-- Sentence count ≤ 6 — actually count them (unless long-form was requested).
+- Length matches what the user asked for; if unset, sentence count ≤ 6 (count them).
+- **No dangling share offer** — no "happy to share", "DM me if interested",
+  "let me know and I'll send it". The tool is named plainly or not mentioned.
+- If a tool is promoted: it's succinct and matched to the poster's actual problem
+  (and says so if it solves several).
+- Written in the persona the user chose (employee / real user / founder).
 - No fabricated specifics: no invented stats, no invented personal experience
   data, no invented product behavior.
 - Disclosure present iff a brand/product is referenced; product named when known.

@@ -40,6 +40,12 @@ installOrUpdateSkill({ slug: "reddit-format-profiler" }) # per-sub format/tone
   our ICP has. (The brief's warning: keyword matching is bad. "Wise" also means
   *wise*; monitor against the ICP, e.g. "people about to sit tech interviews".)
 - **Cadence** — default ~hourly; tune per sub activity.
+- **Capacity** — how many accounts the user has + how much time. This sets how many
+  posts to surface: **there is no fixed target number — relevance decides, scaled to
+  capacity.** One account + little time ⇒ surface only the *really, really* relevant
+  ones; more accounts + more time ⇒ also surface the longer tail. Ask if unknown.
+- **Delivery** (optional) — where the queue should land: chat/workspace, or pushed
+  to a **Google Sheet / Notion via Composio** (see Step 4).
 
 ## One monitoring pass
 
@@ -50,10 +56,11 @@ people are still reading them):
 
 ```bash
 python3 skills/reddit-post-finder/scripts/search_reddit.py \
-  --subreddit <sub> --sort new --content posts --max-posts 100 --output json
+  --subreddit <sub> --sort new --max-posts 100 --output json
 ```
 
-- Set `boxExec` `timeoutMs` to `300000`; the actor polls 30–120s.
+- Set `boxExec` `timeoutMs` to `300000` (Konbini is a fast live fetch, but
+  paginating several subs adds up).
 - Run subs **sequentially**, never parallelized in one shell.
 - The goal is to reply to **posts**, not comments — monitor posts. (Comments come
   along for context but aren't the target.)
@@ -63,6 +70,9 @@ python3 skills/reddit-post-finder/scripts/search_reddit.py \
 Run **`reddit-post-reranker`** over the pulled posts against the ICP/intent. It
 scores each 0–1 on semantic relevance and drops keyword false-positives.
 
+- **No fixed count — relevance + capacity decide how many surface.** Tight capacity
+  (one account, little time) ⇒ raise the bar, surface only the top few; more
+  capacity ⇒ extend further down the ranking.
 - **Noisy subs** (a post every few minutes) → keep only high scores (0.8+).
 - **Quiet subs** → lower the threshold and review case by case.
 
@@ -75,6 +85,12 @@ format + tone. Cache it; refresh weekly, not every run.
 
 Output a ranked reply-worthy queue: post title, URL, sub, relevance, one-line
 why, and the sub's tone note. This feeds `reddit-content-studio` (reply drafting).
+
+**Land it somewhere usable.** Beyond chat/workspace, offer to push the queue to a
+**Google Sheet or Notion via Composio** (we have those integrations) — agencies and
+busy operators want the queue in their own tooling, not buried in a chat log. Use
+the connected Composio toolkit (Sheets / Notion) to append the rows; if none is
+connected, say so and fall back to the workspace file.
 
 ## Running it on a schedule (Box agent)
 
@@ -99,8 +115,8 @@ why, and the sub's tone note. This feeds `reddit-content-studio` (reply drafting
 
 ## Cost
 
-- One `reddit-post-finder` call per sub per run (~$3/1k results; 100 posts is
-  cheap). Ranking + profiling are free reasoning. Watch frequency × subs × cost.
+- One `reddit-post-finder` call per sub per run — one Konbini credit (~$0.002) per
+  100-post page. Ranking + profiling are free reasoning. Watch frequency × subs × cost.
 
 ## Trigger Phrases
 

@@ -135,8 +135,9 @@ counts to a decision about which subs to be active in:
   skill). For a common-word brand, run specific phrases as separate calls and merge.
 - **Confirm a sub is real:** browse its `new` feed (`--subreddit <sub> --sort new
   --output json`) and read the posts — a sub can match the ICP but be hiring-only
-  or off-topic. (Use post velocity from the `new` feed as the activity proxy,
-  optionally the public `r/<sub>/about.json` for subscriber count.)
+  or off-topic. (Use post velocity from the `new` feed as the activity proxy, plus
+  the Konbini **subreddit-info** endpoint `GET /v1/reddit/subreddits/<sub>` for
+  `memberCount` / `published` age / rules — see `references/konbini-config.md`.)
 - **Judge usability + cluster topics:** the `reddit-subreddit-vetter` move does
   exactly this on top of the pulls above; the `reddit-subreddit-discovery` play
   wires the whole Product → ICP → subreddits chain together.
