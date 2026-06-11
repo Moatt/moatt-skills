@@ -1,0 +1,24 @@
+{
+  "slug": "reddit-growth-engine",
+  "category": "moats",
+  "tags": [
+    "monitoring",
+    "content",
+    "seo"
+  ],
+  "installation": {
+    "base_command": "npx moatt install reddit-growth-engine",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "icp-identification",
+    "reddit-subreddit-discovery",
+    "reddit-monitor-loop",
+    "reddit-content-studio",
+    "reddit-visibility-tracker"
+  ]
+}

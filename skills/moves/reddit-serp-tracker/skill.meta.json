@@ -1,0 +1,18 @@
+{
+  "slug": "reddit-serp-tracker",
+  "category": "moves",
+  "tags": [
+    "seo"
+  ],
+  "installation": {
+    "base_command": "npx moatt install reddit-serp-tracker",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "aeo"
+  ]
+}

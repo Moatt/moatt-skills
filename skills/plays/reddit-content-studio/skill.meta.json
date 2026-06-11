@@ -1,0 +1,22 @@
+{
+  "slug": "reddit-content-studio",
+  "category": "plays",
+  "tags": [
+    "content",
+    "social"
+  ],
+  "installation": {
+    "base_command": "npx moatt install reddit-content-studio",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "reddit-format-profiler",
+    "reddit-post-drafter",
+    "reddit-reply-drafter",
+    "brand-voice-extractor"
+  ]
+}

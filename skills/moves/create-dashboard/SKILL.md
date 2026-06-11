@@ -8,6 +8,15 @@ description: >
 tags: [content, design]
 ---
 
+> **⚠️ Legacy-platform skill — check before using.** This recipe requires the
+> pre-provisioned dashboard template at `/home/user/dashboard`, the in-app
+> "App" tab, and the agent Turso database. On the current Upstash Box platform
+> NONE of those exist — `/home/user/dashboard` is absent and there is no App
+> tab to view port 3847. If `ls /home/user/dashboard/package.json` says
+> MISSING, STOP immediately (don't go probing the filesystem for it): deliver
+> the dashboard as an in-app report/dashboard artifact plus exported
+> CSV/JSON files in the project workspace instead.
+
 This skill helps the user spin up a custom dashboard built off the Moatt dashboard template.
 The app needs to run on port 3847 from a single Express process — that one process must serve
 both the API routes and the built React UI so it shows up in the Moatt App tab.

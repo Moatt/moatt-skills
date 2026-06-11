@@ -1,0 +1,22 @@
+{
+  "slug": "reddit-visibility-tracker",
+  "category": "plays",
+  "tags": [
+    "seo"
+  ],
+  "installation": {
+    "base_command": "npx moatt install reddit-visibility-tracker",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "reddit-serp-tracker",
+    "aeo",
+    "reddit-aeo-monitor",
+    "reddit-post-finder",
+    "create-dashboard"
+  ]
+}

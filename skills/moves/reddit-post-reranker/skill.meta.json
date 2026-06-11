@@ -1,0 +1,19 @@
+{
+  "slug": "reddit-post-reranker",
+  "category": "moves",
+  "tags": [
+    "monitoring",
+    "research"
+  ],
+  "installation": {
+    "base_command": "npx moatt install reddit-post-reranker",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": [
+    "reddit-post-finder"
+  ]
+}

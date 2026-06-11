@@ -1,0 +1,17 @@
+{
+  "slug": "reddit-reply-drafter",
+  "category": "moves",
+  "tags": [
+    "content",
+    "social"
+  ],
+  "installation": {
+    "base_command": "npx moatt install reddit-reply-drafter",
+    "supports": [
+      "claude",
+      "cursor",
+      "codex"
+    ]
+  },
+  "requires_skills": []
+}

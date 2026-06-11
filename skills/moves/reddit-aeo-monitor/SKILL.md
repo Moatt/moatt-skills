@@ -30,6 +30,8 @@ AI search engines lean heavily on Reddit for retrieval — when ChatGPT, Perplex
 
 **Is not:** A bot that posts on Reddit. Anything posted on Reddit must be a real human contribution; bot detection is aggressive and the credibility hit from being caught is severe.
 
+**vs `reddit-serp-tracker`:** that move is the *raw measurement* layer — exact Google positions and which AI engines cite which Reddit URLs (via DataForSEO). This skill is the *intervention* layer — it scores threads for leverage and recommends what to do. In the `reddit-visibility-tracker` play they run together: serp-tracker measures, this skill decides. Don't duplicate the measurement here.
+
 ## What makes a Reddit thread AI-retrieval-likely
 
 | Signal | Why |
