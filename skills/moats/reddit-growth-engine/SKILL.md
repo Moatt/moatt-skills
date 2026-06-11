@@ -44,13 +44,16 @@ want Reddit for **one** right now — the real signal is the user. Use
 
 ### 2. Find + vet subreddits (Stage 1) — play `reddit-subreddit-discovery`
 
-**EXECUTE this now — don't just name the engine or describe the plan.** Install and
-run `reddit-subreddit-discovery`: find candidates via brand / competitor / keyword
-search on Reddit (`reddit-post-finder`, ranked counts; disambiguate common-word
-brands), then vet each with `reddit-subreddit-vetter` (activity, topic fit,
-usable-for-promotion). **Present the vetted shortlist with each subreddit's URL
-(`https://reddit.com/r/<sub>`)** before pausing. A summary that promises a shortlist
-without actually producing one does not satisfy this step.
+**EXECUTE this now, INLINE, in this conversation — don't just name the engine,
+describe the plan, or spin up a Box agent to do discovery "later".** Discovery runs
+synchronously via `boxExec` right now (Box *agents* are only for the MONITOR stage,
+and only after approval). Install and run `reddit-subreddit-discovery`: find
+candidates via brand / competitor / keyword search on Reddit (`reddit-post-finder`,
+ranked counts; disambiguate common-word brands), then vet each with
+`reddit-subreddit-vetter` (activity, topic fit, usable-for-promotion). **Present the
+vetted shortlist with each subreddit's URL (`https://reddit.com/r/<sub>`)** before
+pausing. A promised, queued, or speculative shortlist does NOT satisfy this step —
+the shortlist must be produced from searches you actually ran this turn.
 
 **Human checkpoint:** approve which subs to monitor (~10 subs, usually 2–3 gold).
 

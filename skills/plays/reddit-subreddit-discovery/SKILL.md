@@ -46,11 +46,12 @@ one right now.
    (context files / `/workspace/home`). Reuse it: briefly restate what they do so
    they feel understood (you can't help them if you don't know them), but don't
    burn the turn re-researching what's already known.
-2. **ALWAYS clarify which *product* — this is a separate axis from the ICP, so ask
-   it even when the user already named an audience/ICP.** Use `askUserQuestion`:
-   is this push for a **current product or a new one** (companies prioritise
-   products or test new ones)? Skipping this question fails the play. If the ICP
-   isn't on file (e.g. a brand-new product), run **`icp-identification`** to define it.
+2. **Clarify which *product* — a separate axis from the ICP.** Is this push for a
+   **current product or a new one** (companies prioritise products or test new ones)?
+   Ask via `askUserQuestion` when the brief hasn't said — but if the brief already
+   states it (e.g. "our current contractor product"), take that answer and move on;
+   do NOT re-ask what's already answered or stall waiting on it. If the ICP isn't on
+   file (e.g. a brand-new product), run **`icp-identification`** to define it.
 3. **Confirm which ICP is the Reddit focus right now**, and the goal. Reddit is a
    problem-centered platform: established brands here usually pursue **brand
    authority** or **SEO/AEO**, not conversions (better channels exist for
