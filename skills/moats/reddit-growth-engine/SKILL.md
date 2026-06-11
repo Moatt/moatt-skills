@@ -31,6 +31,12 @@ answers. Everything follows one chain:
   automated promotion is out of scope. The engine drafts; a human posts. No
   astroturfing, no answering your own questions with alt accounts, no hiding that
   something is promotional. Disclose brand affiliation.
+- **Blips happen — don't let one sink the motion.** Live data flows through
+  external APIs (Konbini, DataForSEO); the proxy and the skill scripts already
+  retry transient failures. If a pull STILL fails after that, **retry the
+  `boxExec` once**, then continue with a clearly-labeled partial result and tell
+  the user which single step to re-run. Never abandon the whole chain — or fall
+  back to a made-up/speculative shortlist — because one call blipped.
 
 ## Steps
 

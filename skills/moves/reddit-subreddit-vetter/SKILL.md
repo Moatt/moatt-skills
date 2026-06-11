@@ -70,7 +70,9 @@ and a recent-posts pull (velocity + topic + brand-mentions-in-body). Ensure
 # edit the list to your shortlist; one boxExec covers every candidate
 for sub in freelance digitalnomad freelanceWriters; do
   echo "===== r/$sub ====="
-  curl -s -H "Authorization: Bearer $MOATT_API_KEY" \
+  # --retry rides out transient blips (proxy/vendor 5xx, dropped connections);
+  # the proxy also retries upstream, so a single hiccup won't drop a sub.
+  curl -s --retry 4 --retry-delay 2 --max-time 60 -H "Authorization: Bearer $MOATT_API_KEY" \
     "$MOATT_API_BASE/v1/proxy/konbini/v1/reddit/subreddits/$sub" \
   | python3 -c "import json,sys; d=json.load(sys.stdin).get('data',{}) or {}; print('members:',d.get('memberCount'),'| published:',d.get('published')); print('RULES:',(d.get('description') or '')[:700])"
   python3 "$HOME/skills/moves/reddit-post-finder/scripts/search_reddit.py" \
