@@ -55,7 +55,7 @@ For each sub, pull the `new` feed (freshness is the point — you want posts whi
 people are still reading them):
 
 ```bash
-python3 skills/reddit-post-finder/scripts/search_reddit.py \
+python3 $HOME/skills/moves/reddit-post-finder/scripts/search_reddit.py \
   --subreddit <sub> --sort new --max-posts 100 --output json
 ```
 

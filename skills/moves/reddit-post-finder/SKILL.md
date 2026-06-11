@@ -45,19 +45,19 @@ KonbiniAPI is fast — each request is a live fetch (~1–3s), not an actor poll
 
 ```bash
 # Which subreddits mention "Deel payroll" most (ranked counts — flag does the counting)
-python3 skills/reddit-post-finder/scripts/search_reddit.py \
+python3 $HOME/skills/moves/reddit-post-finder/scripts/search_reddit.py \
   --query "Deel payroll" --max-posts 150 --time year --output subreddit-counts
 
 # Posts mentioning a term, full content
-python3 skills/reddit-post-finder/scripts/search_reddit.py \
+python3 $HOME/skills/moves/reddit-post-finder/scripts/search_reddit.py \
   --query "Deel payroll" --max-posts 150 --output json
 
 # Top posts from r/growthhacking this week
-python3 skills/reddit-post-finder/scripts/search_reddit.py \
+python3 $HOME/skills/moves/reddit-post-finder/scripts/search_reddit.py \
   --subreddit growthhacking --sort top --time week
 
 # Posts in r/LLMDevs mentioning a term
-python3 skills/reddit-post-finder/scripts/search_reddit.py \
+python3 $HOME/skills/moves/reddit-post-finder/scripts/search_reddit.py \
   --query Langfuse --subreddit LLMDevs --max-posts 100
 ```
 
@@ -101,11 +101,11 @@ Tiny subreddits often return little with `--sort hot` (the hot feed is barely po
 
 ```bash
 # Post mentions, ranked by subreddit (the flag does the counting)
-python3 skills/reddit-post-finder/scripts/search_reddit.py \
+python3 $HOME/skills/moves/reddit-post-finder/scripts/search_reddit.py \
   --query "Deel payroll" --max-posts 150 --time year --output subreddit-counts
 
 # Need the actual posts behind the counts? Re-run with --output json
-python3 skills/reddit-post-finder/scripts/search_reddit.py \
+python3 $HOME/skills/moves/reddit-post-finder/scripts/search_reddit.py \
   --query "Deel payroll" --max-posts 150 --output json
 ```
 
@@ -114,14 +114,14 @@ Use `--query` (global search), **not** a guessed `--subreddit` list. Read the ra
 ### 1. Competitor / Brand Mentions
 
 ```bash
-python3 skills/reddit-post-finder/scripts/search_reddit.py \
+python3 $HOME/skills/moves/reddit-post-finder/scripts/search_reddit.py \
   --query "Langfuse" --max-posts 150 --time month --output json
 ```
 
 ### 2. Subreddit Pain-Point Discovery
 
 ```bash
-python3 skills/reddit-post-finder/scripts/search_reddit.py \
+python3 $HOME/skills/moves/reddit-post-finder/scripts/search_reddit.py \
   --subreddit LLMDevs --max-posts 100 \
   --keywords "frustrating,difficult,hard to,wish there was,better way"
 ```

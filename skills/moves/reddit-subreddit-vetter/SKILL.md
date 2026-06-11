@@ -33,7 +33,7 @@ auto-install it. Before running any pull below, ensure it's installed:
 installOrUpdateSkill({ slug: "reddit-post-finder" })   # idempotent; no-op if present
 ```
 
-(Confirm the script exists at `skills/reddit-post-finder/scripts/search_reddit.py`;
+(Confirm the script exists at `$HOME/skills/moves/reddit-post-finder/scripts/search_reddit.py`;
 if not, install it.)
 
 ## When to use
@@ -54,35 +54,41 @@ if not, install it.)
 
 ## Workflow
 
-### Step 1 — Pull the `new` feed per candidate
+> **This skill has NO script of its own** (there is no `vet_subreddits.py`). Vetting
+> is YOU running one batched shell loop and then reasoning over its output. Do NOT
+> guess a script path, and do NOT write a script to `.skills-cache/`.
 
-For each candidate sub, pull its most recent posts:
+### Step 1 — Vet ALL candidates in ONE batched boxExec (budget discipline)
 
-```bash
-python3 skills/reddit-post-finder/scripts/search_reddit.py \
-  --subreddit <sub> --sort new --max-posts 50 --output json
-```
-
-Run these **sequentially**, not in parallel (live data; parallel pulls in one
-shell hit the box timeout). Set the `boxExec` `timeoutMs` to `300000`. Tiny subs
-return little on `--sort new`; if you get <5 items, also try `--sort top --time month`.
-
-### Step 2 — Read the subreddit's info + estimate activity (the "is it worth it?" gate)
-
-Konbini exposes a **subreddit-info** endpoint that gives you the three signals the
-brief asks for in one cheap call — **size, age, and the rules**:
+Vetting ~10 subs one tool-call at a time exhausts the step budget before you finish
+— so loop over the whole shortlist in a SINGLE `boxExec`. For each sub it pulls the
+Konbini **subreddit-info** (size + age + rules, the three signals the brief wants)
+and a recent-posts pull (velocity + topic + brand-mentions-in-body). Ensure
+`reddit-post-finder` is installed first (it owns the pull script).
 
 ```bash
-curl -s -H "Authorization: Bearer $MOATT_API_KEY" \
-  "$MOATT_API_BASE/v1/proxy/konbini/v1/reddit/subreddits/<sub>"
+# edit the list to your shortlist; one boxExec covers every candidate
+for sub in freelance digitalnomad freelanceWriters; do
+  echo "===== r/$sub ====="
+  curl -s -H "Authorization: Bearer $MOATT_API_KEY" \
+    "$MOATT_API_BASE/v1/proxy/konbini/v1/reddit/subreddits/$sub" \
+  | python3 -c "import json,sys; d=json.load(sys.stdin).get('data',{}) or {}; print('members:',d.get('memberCount'),'| published:',d.get('published')); print('RULES:',(d.get('description') or '')[:700])"
+  python3 "$HOME/skills/moves/reddit-post-finder/scripts/search_reddit.py" \
+    --subreddit "$sub" --sort new --max-posts 25 --output summary
+done
 ```
 
-From `data`, read:
+Set the `boxExec` `timeoutMs` to `300000`. Tiny subs return little on `--sort new`;
+re-pull those with `--sort top --time month`.
+
+### Step 2 — Estimate activity from the batch output (the "is it worth it?" gate)
+
+For each sub, read from the block above:
 - **`memberCount`** — subscriber size.
-- **`published`** — the subreddit's **creation date** → its **age** (see Step 3 — age
-  predicts how strict the mods are, and old subs are gold for SEO/AEO).
-- **`description`** — the full **rules text**. The cheapest promotion-usability read
-  there is: rules that ban self-promotion are stated right here.
+- **`published`** — the **creation date** → **age** (see Step 3 — age predicts how
+  strict the mods are, and old subs are gold for SEO/AEO).
+- **`RULES`** (the `description`) — the cheapest promotion-usability read: rules that
+  ban self-promotion are stated right here.
 
 Then gauge **activity**. The brief's rough guide is **~5,000 weekly is already enough
 to try things** — below that it rarely pays off. Combine:

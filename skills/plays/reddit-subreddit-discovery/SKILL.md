@@ -81,7 +81,7 @@ Use **`reddit-post-finder`** with global search and ranked counts — don't gues
 sub list and scrape each:
 
 ```bash
-python3 skills/reddit-post-finder/scripts/search_reddit.py \
+python3 $HOME/skills/moves/reddit-post-finder/scripts/search_reddit.py \
   --query "Deel contractor" --max-posts 150 --time year --output subreddit-counts
 ```
 

@@ -45,13 +45,13 @@ Use the endpoints that actually teach you the sub (per the brief):
 
 ```bash
 # Best ever — what has worked in this sub of all time
-python3 skills/reddit-post-finder/scripts/search_reddit.py \
+python3 $HOME/skills/moves/reddit-post-finder/scripts/search_reddit.py \
   --subreddit <sub> --sort top --time all --max-posts 50 --output json
 # Recent winners — what's landing NOW; this is what really sets the current tone
-python3 skills/reddit-post-finder/scripts/search_reddit.py \
+python3 $HOME/skills/moves/reddit-post-finder/scripts/search_reddit.py \
   --subreddit <sub> --sort top --time week --max-posts 50 --output json
 # What's normal right now (baseline volume/format)
-python3 skills/reddit-post-finder/scripts/search_reddit.py \
+python3 $HOME/skills/moves/reddit-post-finder/scripts/search_reddit.py \
   --subreddit <sub> --sort new --max-posts 30 --output json
 ```
 
