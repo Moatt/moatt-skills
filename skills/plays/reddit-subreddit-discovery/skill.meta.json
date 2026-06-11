@@ -17,5 +17,6 @@
     "icp-identification",
     "reddit-post-finder",
     "reddit-subreddit-vetter"
-  ]
+  ],
+  "domain": "reddit.com"
 }

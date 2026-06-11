@@ -18,5 +18,6 @@
     "reddit-aeo-monitor",
     "reddit-post-finder",
     "create-dashboard"
-  ]
+  ],
+  "domain": "reddit.com"
 }

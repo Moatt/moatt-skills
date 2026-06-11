@@ -17,5 +17,6 @@
     "reddit-post-finder",
     "reddit-post-reranker",
     "reddit-format-profiler"
-  ]
+  ],
+  "domain": "reddit.com"
 }

@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "updatedAt": "2026-06-11T09:52:32Z",
+  "updatedAt": "2026-06-11T22:33:01Z",
   "skills": [
     {
       "slug": "ad-angle-miner",
@@ -3216,7 +3216,7 @@
       "version": "0.1.0",
       "path": "skills/moves/reddit-aeo-monitor",
       "argumentHint": "",
-      "domain": "",
+      "domain": "reddit.com",
       "appName": "Reddit Aeo Monitor",
       "changelog": {
         "0.1.0": "Initial release."
@@ -3236,7 +3236,7 @@
       "version": "0.1.0",
       "path": "skills/plays/reddit-content-studio",
       "argumentHint": "",
-      "domain": "",
+      "domain": "reddit.com",
       "appName": "Reddit Content Studio",
       "changelog": {
         "0.1.0": "Initial release."
@@ -3261,7 +3261,7 @@
       "version": "0.1.0",
       "path": "skills/moves/reddit-format-profiler",
       "argumentHint": "",
-      "domain": "",
+      "domain": "reddit.com",
       "appName": "Reddit Format Profiler",
       "changelog": {
         "0.1.0": "Initial release."
@@ -3284,7 +3284,7 @@
       "version": "0.1.0",
       "path": "skills/moats/reddit-growth-engine",
       "argumentHint": "",
-      "domain": "",
+      "domain": "reddit.com",
       "appName": "Reddit Growth Engine",
       "changelog": {
         "0.1.0": "Initial release."
@@ -3310,7 +3310,7 @@
       "version": "0.1.0",
       "path": "skills/plays/reddit-monitor-loop",
       "argumentHint": "",
-      "domain": "",
+      "domain": "reddit.com",
       "appName": "Reddit Monitor Loop",
       "changelog": {
         "0.1.0": "Initial release."
@@ -3334,7 +3334,7 @@
       "version": "0.1.0",
       "path": "skills/moves/reddit-post-drafter",
       "argumentHint": "",
-      "domain": "",
+      "domain": "reddit.com",
       "appName": "Reddit Post Drafter",
       "changelog": {
         "0.1.0": "Initial release."
@@ -3355,7 +3355,7 @@
       "version": "0.1.0",
       "path": "skills/moves/reddit-post-finder",
       "argumentHint": "",
-      "domain": "",
+      "domain": "reddit.com",
       "appName": "Reddit Post Finder",
       "changelog": {
         "0.1.0": "Initial release."
@@ -3375,7 +3375,7 @@
       "version": "0.1.0",
       "path": "skills/moves/reddit-post-reranker",
       "argumentHint": "",
-      "domain": "",
+      "domain": "reddit.com",
       "appName": "Reddit Post Reranker",
       "changelog": {
         "0.1.0": "Initial release."
@@ -3397,7 +3397,7 @@
       "version": "0.1.0",
       "path": "skills/moves/reddit-reply-drafter",
       "argumentHint": "",
-      "domain": "",
+      "domain": "reddit.com",
       "appName": "Reddit Reply Drafter",
       "changelog": {
         "0.1.0": "Initial release."
@@ -3416,7 +3416,7 @@
       "version": "0.1.0",
       "path": "skills/moves/reddit-serp-tracker",
       "argumentHint": "",
-      "domain": "",
+      "domain": "reddit.com",
       "appName": "Reddit Serp Tracker",
       "changelog": {
         "0.1.0": "Initial release."
@@ -3438,7 +3438,7 @@
       "version": "0.1.0",
       "path": "skills/plays/reddit-subreddit-discovery",
       "argumentHint": "",
-      "domain": "",
+      "domain": "reddit.com",
       "appName": "Reddit Subreddit Discovery",
       "changelog": {
         "0.1.0": "Initial release."
@@ -3462,7 +3462,7 @@
       "version": "0.1.0",
       "path": "skills/moves/reddit-subreddit-vetter",
       "argumentHint": "",
-      "domain": "",
+      "domain": "reddit.com",
       "appName": "Reddit Subreddit Vetter",
       "changelog": {
         "0.1.0": "Initial release."
@@ -3483,7 +3483,7 @@
       "version": "0.1.0",
       "path": "skills/plays/reddit-visibility-tracker",
       "argumentHint": "",
-      "domain": "",
+      "domain": "reddit.com",
       "appName": "Reddit Visibility Tracker",
       "changelog": {
         "0.1.0": "Initial release."

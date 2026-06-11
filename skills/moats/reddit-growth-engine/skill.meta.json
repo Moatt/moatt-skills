@@ -20,5 +20,6 @@
     "reddit-monitor-loop",
     "reddit-content-studio",
     "reddit-visibility-tracker"
-  ]
+  ],
+  "domain": "reddit.com"
 }

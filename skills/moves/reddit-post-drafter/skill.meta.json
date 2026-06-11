@@ -15,5 +15,6 @@
   },
   "requires_skills": [
     "reddit-format-profiler"
-  ]
+  ],
+  "domain": "reddit.com"
 }

@@ -14,5 +14,6 @@
   },
   "requires_skills": [
     "aeo"
-  ]
+  ],
+  "domain": "reddit.com"
 }

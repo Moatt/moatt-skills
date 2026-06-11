@@ -5058,7 +5058,8 @@
             "cursor",
             "codex"
           ]
-        }
+        },
+        "domain": "reddit.com"
       }
     },
     {
@@ -5095,7 +5096,8 @@
           "reddit-post-drafter",
           "reddit-reply-drafter",
           "brand-voice-extractor"
-        ]
+        ],
+        "domain": "reddit.com"
       }
     },
     {
@@ -5129,7 +5131,8 @@
         },
         "requires_skills": [
           "reddit-post-finder"
-        ]
+        ],
+        "domain": "reddit.com"
       }
     },
     {
@@ -5169,7 +5172,8 @@
           "reddit-monitor-loop",
           "reddit-content-studio",
           "reddit-visibility-tracker"
-        ]
+        ],
+        "domain": "reddit.com"
       }
     },
     {
@@ -5205,7 +5209,8 @@
           "reddit-post-finder",
           "reddit-post-reranker",
           "reddit-format-profiler"
-        ]
+        ],
+        "domain": "reddit.com"
       }
     },
     {
@@ -5239,7 +5244,8 @@
         },
         "requires_skills": [
           "reddit-format-profiler"
-        ]
+        ],
+        "domain": "reddit.com"
       }
     },
     {
@@ -5270,7 +5276,8 @@
             "cursor",
             "codex"
           ]
-        }
+        },
+        "domain": "reddit.com"
       }
     },
     {
@@ -5304,7 +5311,8 @@
         },
         "requires_skills": [
           "reddit-post-finder"
-        ]
+        ],
+        "domain": "reddit.com"
       }
     },
     {
@@ -5336,7 +5344,8 @@
             "codex"
           ]
         },
-        "requires_skills": []
+        "requires_skills": [],
+        "domain": "reddit.com"
       }
     },
     {
@@ -5368,7 +5377,8 @@
         },
         "requires_skills": [
           "aeo"
-        ]
+        ],
+        "domain": "reddit.com"
       }
     },
     {
@@ -5404,7 +5414,8 @@
           "icp-identification",
           "reddit-post-finder",
           "reddit-subreddit-vetter"
-        ]
+        ],
+        "domain": "reddit.com"
       }
     },
     {
@@ -5438,7 +5449,8 @@
         },
         "requires_skills": [
           "reddit-post-finder"
-        ]
+        ],
+        "domain": "reddit.com"
       }
     },
     {
@@ -5474,7 +5486,8 @@
           "reddit-aeo-monitor",
           "reddit-post-finder",
           "create-dashboard"
-        ]
+        ],
+        "domain": "reddit.com"
       }
     },
     {

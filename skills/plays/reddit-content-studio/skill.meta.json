@@ -18,5 +18,6 @@
     "reddit-post-drafter",
     "reddit-reply-drafter",
     "brand-voice-extractor"
-  ]
+  ],
+  "domain": "reddit.com"
 }

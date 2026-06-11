@@ -13,5 +13,6 @@
       "codex"
     ]
   },
-  "requires_skills": []
+  "requires_skills": [],
+  "domain": "reddit.com"
 }
