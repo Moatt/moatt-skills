@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "updatedAt": "2026-06-10T17:55:43Z",
+  "updatedAt": "2026-06-11T08:56:02Z",
   "skills": [
     {
       "slug": "ad-angle-miner",
@@ -3347,7 +3347,7 @@
     {
       "slug": "reddit-post-finder",
       "name": "Reddit Post Finder",
-      "description": "Search and scrape live Reddit posts AND comments via Apify. Use to find Reddit threads, track competitor/brand mentions, monitor product feedback, surface pain points, or analyze subreddit activity. GLOBAL keyword search across all of Reddit (use --query; best for \"which subreddits mention X most\" — one search returns items from many subreddits to group and count) or subreddit scraping (use --subreddit when you know the communities). Fetch posts (with upvotes/comment-counts), comments (global comment search), or both via --content. Supports keyword filtering, time windows, and per-subreddit mention counts.",
+      "description": "Search live Reddit posts via KonbiniAPI. Use to find Reddit threads, track competitor/brand mentions, monitor product feedback, surface pain points, or analyze subreddit activity. GLOBAL keyword search across all of Reddit (use --query; best for \"which subreddits mention X most\" — one search returns posts from many subreddits to group and count) or subreddit browsing (use --subreddit when you know the communities). Posts come with upvotes and comment counts. Supports keyword filtering, time windows, and per-subreddit mention counts.",
       "category": "moves",
       "tags": [
         "monitoring"

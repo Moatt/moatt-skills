@@ -84,7 +84,7 @@ why, and the sub's tone note. This feeds `reddit-content-studio` (reply drafting
 - Each run writes the queue to the workspace (e.g.
   `/workspace/home/projects/reddit/queue/<date-hour>.json`) and/or the drafts
   store, so the user reviews a rolling queue rather than re-running manually.
-- Keep `--max-posts` modest to control Apify cost and avoid timeouts.
+- Keep `--max-posts` modest to control KonbiniAPI cost (one credit per 100-post page).
 
 ## Human Checkpoints
 
