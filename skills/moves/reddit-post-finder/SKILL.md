@@ -27,7 +27,7 @@ This skill searches **live reddit.com** through KonbiniAPI — every request fet
 
 - **"Which subreddits talk about X?" / "Where is X discussed?" / brand or competitor mentions** → use **`--query`** (global search across all of Reddit). One call returns posts from many subreddits, each tagged with its subreddit, so you can group and count. Do **not** guess a list of subreddits and browse each — slow and misses communities you didn't think of.
 - **"What's happening in r/foo?" / you already know the communities** → use **`--subreddit`**.
-- **Posts in a specific subreddit mentioning a term** → combine `--query X --subreddit foo`. This browses r/foo and keeps posts whose title/body match the query terms (raise `--max-posts` for a niche subreddit so enough recent posts are scanned).
+- **Posts in a specific subreddit mentioning a term** → combine `--query X --subreddit foo`. The keyword search runs server-side inside r/foo (Konbini's scoped search endpoint), so every result is genuinely from that community.
 
 ## Ranking subreddits — use the built-in flag, don't re-implement it
 
@@ -63,24 +63,24 @@ python3 $HOME/skills/moves/reddit-post-finder/scripts/search_reddit.py \
 
 ## How the Script Works
 
-1. Picks the mode: `--query` alone → global keyword search (`/v1/reddit/search/posts`); `--subreddit` → browse each subreddit's listing (`/v1/reddit/subreddits/<sub>/posts`); `--query` + `--subreddit` → browse the subreddit(s) and filter by the query terms client-side.
+1. Picks the mode: `--query` alone → global keyword search (`/v1/reddit/search/posts`); `--subreddit` alone → browse each subreddit's listing (`/v1/reddit/subreddits/<sub>/posts`); `--query` + `--subreddit` → server-side scoped search inside each subreddit (`/v1/reddit/subreddits/<sub>/search`).
 2. Calls KonbiniAPI via the Karmable proxy, paginating with the returned cursor up to `--max-posts` (100 posts/page).
 3. Maps each post to the stable `communityName`/`upVotes`/`numberOfComments`/… schema.
 4. Applies client-side keyword / `--days` filtering.
 5. Sorts by upvotes (descending) and emits JSON, a summary, or per-subreddit counts.
 
-> **Why browse-then-filter for scoped search:** KonbiniAPI's per-subreddit *search* endpoint does not reliably scope to the named subreddit (it leaks global results), so the skill never uses it. Browsing the subreddit and filtering by keyword keeps every result genuinely inside the target community.
+> Scoped search (`--query` + `--subreddit`) is a real server-side search since Konbini fixed its scoping bug (the endpoint used to leak global results, which forced a browse-then-filter workaround). The fix is verified — see `references/konbini-config.md`.
 
 ## CLI Reference
 
 | Flag | Default | Description |
 |------|---------|-------------|
-| `--query` | none | **Global** keyword search across all of Reddit. Makes `--subreddit` optional. Best for "which subreddits mention X most". With `--subreddit`, filters that subreddit's posts. |
-| `--subreddit` | *required unless `--query`* | Subreddit name(s), comma-separated. With `--query`, browses these subreddits and keeps posts matching the query. |
+| `--query` | none | Keyword search. Alone: **global** across all of Reddit (best for "which subreddits mention X most"; makes `--subreddit` optional). With `--subreddit`: searches inside that subreddit, server-side. |
+| `--subreddit` | *required unless `--query`* | Subreddit name(s), comma-separated. Alone: browses each subreddit's listing. With `--query`: server-side search inside each subreddit. |
 | `--keywords` | none | Client-side filter on returned posts (comma-separated, OR logic). |
 | `--days` | none | Client-side: drop posts older than N days. (Use `--time` for the search window.) |
 | `--max-posts` | 50 | Max posts to fetch (paginated, 100/page). |
-| `--sort` | top | `hot`, `new`, `top`, `rising`, `relevance`. Clamped per endpoint: `rising` applies to subreddit browse, `relevance` to global search; unsupported values map to `hot`. |
+| `--sort` | top | `hot`, `new`, `top`, `rising`, `relevance`. Clamped per endpoint: `rising` applies to subreddit browse, `relevance` to search (global and scoped); unsupported values map to `hot`. |
 | `--time` | week | Time window: `hour`, `day`, `week`, `month`, `year`, `all`. Applies to `top`/`controversial`/`comments` sorts. |
 | `--output` | json | `json`, `summary`, or `subreddit-counts`. |
 | `--timeout` | 60 | Max seconds per HTTP request. |

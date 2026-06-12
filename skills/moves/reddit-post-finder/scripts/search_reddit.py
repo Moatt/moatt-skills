@@ -10,8 +10,8 @@ which were slow (30–120s actor-run polling) and expensive.
 
 Modes (pick by which flag you set):
   - GLOBAL keyword search   -> --query "term"            (all of Reddit)
-  - SCOPED keyword search   -> --query "term" --subreddit s  (global search,
-                               restricted to the named subreddit(s) client-side)
+  - SCOPED keyword search   -> --query "term" --subreddit s  (server-side
+                               search inside the named subreddit(s))
   - SUBREDDIT browse        -> --subreddit sub1,sub2     (no --query)
 
 Posts only. (Konbini has no global comment search; comment monitoring is out of
@@ -168,15 +168,13 @@ def fetch_posts(token, query, subreddits, sort, time_window, max_posts, timeout)
 
     - No --subreddit: GLOBAL keyword search (`/search/posts`). This is the moat
       mode ("which subreddits mention X most").
-    - With --subreddit: BROWSE each named subreddit (`/subreddits/{sub}/posts`),
-      which scopes reliably. When --query is also given it is applied as a
-      client-side keyword filter over the browsed posts (see `main`).
-
-    Why browse-then-filter for scoped search instead of a server-side
-    per-subreddit search: Konbini's `/subreddits/{sub}/search` endpoint does NOT
-    reliably scope (verified — it returns global hits from other subreddits), so
-    we never use it. Browsing the subreddit and filtering by keyword keeps every
-    result genuinely inside the target community.
+    - --subreddit without --query: BROWSE each named subreddit
+      (`/subreddits/{sub}/posts`).
+    - --query + --subreddit: SCOPED search (`/subreddits/{sub}/search`) — the
+      keyword match runs server-side inside the named subreddit. Earlier
+      Konbini versions leaked global hits from this endpoint, which forced a
+      browse-then-filter workaround; the fix is verified (see
+      references/konbini-config.md), so the workaround is gone.
     """
     if not subreddits:
         # Global keyword search.
@@ -189,18 +187,29 @@ def fetch_posts(token, query, subreddits, sort, time_window, max_posts, timeout)
             f"search '{query}'",
         )
 
-    # Browse each named subreddit's listing, merge the results.
+    # Per-subreddit: scoped search when a query is given, else browse the
+    # listing. Merge results across subreddits.
     posts = []
     for s in subreddits:
         sub = _bare_sub(s)
-        posts += _paginate(
-            token,
-            f"/v1/reddit/subreddits/{sub}/posts",
-            {"order": _clamp_sort(sort, BROWSE_ORDERS), "time": time_window},
-            max_posts,
-            timeout,
-            f"r/{sub}",
-        )
+        if query:
+            posts += _paginate(
+                token,
+                f"/v1/reddit/subreddits/{sub}/search",
+                {"q": query, "order": _clamp_sort(sort, SEARCH_ORDERS), "time": time_window},
+                max_posts,
+                timeout,
+                f"r/{sub} search '{query}'",
+            )
+        else:
+            posts += _paginate(
+                token,
+                f"/v1/reddit/subreddits/{sub}/posts",
+                {"order": _clamp_sort(sort, BROWSE_ORDERS), "time": time_window},
+                max_posts,
+                timeout,
+                f"r/{sub}",
+            )
     return posts
 
 
@@ -284,18 +293,19 @@ Examples:
   # Top posts from r/growthhacking this week
   %(prog)s --subreddit growthhacking --sort top --time week
 
-  # Restrict a global search to one subreddit
+  # Search inside one subreddit (server-side scoped search)
   %(prog)s --query Langfuse --subreddit LLMDevs
 """,
     )
 
     parser.add_argument("--query",
-                        help="GLOBAL search keyword(s) across all of Reddit. Best for "
-                             "'which subreddits mention X most'. Makes --subreddit optional.")
+                        help="Search keyword(s). Alone: GLOBAL search across all of Reddit — best for "
+                             "'which subreddits mention X most'. With --subreddit: server-side search "
+                             "inside each named subreddit.")
     parser.add_argument("--subreddit",
                         help="Subreddit name(s), comma-separated. Required unless --query is given. "
-                             "With --query, restricts the global-search results to these subreddits "
-                             "(client-side) — raise --max-posts for a niche subreddit.")
+                             "Alone: browse each subreddit's listing. With --query: search inside "
+                             "each subreddit (server-side).")
     parser.add_argument("--keywords", help="Client-side filter on returned posts (comma-separated, OR logic)")
     parser.add_argument("--days", type=int, default=None,
                         help="Client-side: drop posts older than N days (default: no extra filter; "
@@ -323,11 +333,6 @@ Examples:
     items = fetch_posts(token, args.query, subreddits, args.sort, args.time, args.max_posts, args.timeout)
 
     keywords = [k.strip() for k in args.keywords.split(",")] if args.keywords else []
-    # Scoped search: --query + --subreddit browses the sub(s), then filters by
-    # the query terms client-side (OR logic, like --keywords). Splitting the
-    # query on whitespace keeps recall high inside the target community.
-    if args.query and subreddits:
-        keywords = keywords + args.query.split()
     items = filter_posts(items, keywords=keywords or None, days_back=args.days)
 
     # Sort by upvotes desc.
