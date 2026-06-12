@@ -5,8 +5,7 @@ Search live Reddit POSTS via KonbiniAPI, through the Karmable/Moatt proxy
 
 One vendor, live data: KonbiniAPI fetches current reddit.com data on every
 request (nothing cached, nothing stale) and returns rich post metrics — score
-(`upVotes`), comment count, author, subreddit. Replaced the old Apify actors,
-which were slow (30–120s actor-run polling) and expensive.
+(`upVotes`), comment count, author, subreddit.
 
 Modes (pick by which flag you set):
   - GLOBAL keyword search   -> --query "term"            (all of Reddit)
@@ -171,10 +170,7 @@ def fetch_posts(token, query, subreddits, sort, time_window, max_posts, timeout)
     - --subreddit without --query: BROWSE each named subreddit
       (`/subreddits/{sub}/posts`).
     - --query + --subreddit: SCOPED search (`/subreddits/{sub}/search`) — the
-      keyword match runs server-side inside the named subreddit. Earlier
-      Konbini versions leaked global hits from this endpoint, which forced a
-      browse-then-filter workaround; the fix is verified (see
-      references/konbini-config.md), so the workaround is gone.
+      keyword match runs server-side inside the named subreddit.
     """
     if not subreddits:
         # Global keyword search.

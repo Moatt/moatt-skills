@@ -19,7 +19,7 @@ All endpoints use Bearer auth: `-H "Authorization: Bearer $MOATT_API_KEY"`. Konb
 
 ## Live data via KonbiniAPI
 
-This skill searches **live reddit.com** through KonbiniAPI — every request fetches current data (nothing cached, nothing stale) and returns rich post metrics (`upVotes`, `numberOfComments`). It replaced the old Apify actors, which were slow (30–120s of actor-run polling per call) and expensive.
+This skill searches **live reddit.com** through KonbiniAPI — every request fetches current data (nothing cached, nothing stale) and returns rich post metrics (`upVotes`, `numberOfComments`).
 
 **Posts only.** KonbiniAPI has no reliable global comment search, so this skill does not fetch comments; for brand/competitor monitoring, search post titles and bodies.
 
@@ -37,7 +37,7 @@ To answer "which subreddits mention X most," pass **`--output subreddit-counts`*
 
 ## Performance
 
-KonbiniAPI is fast — each request is a live fetch (~1–3s), not an actor poll. Larger `--max-posts` simply fetches more pages (100 posts per page). Transient upstream `502`s are retried automatically (Konbini refunds failed requests, so retries are free).
+KonbiniAPI is fast — each request is a live fetch (~1–3s). Larger `--max-posts` simply fetches more pages (100 posts per page). Transient upstream `502`s are retried automatically (Konbini refunds failed requests, so retries are free).
 
 - **Common-word brands need disambiguation.** A bare `--query Deel` is noisy ("deel" is Dutch for "part"). Use specific phrases (`"Deel payroll"`, `"Deel EOR"`, `"Deel contractor"`), one call each, then merge the count tables.
 
@@ -69,8 +69,6 @@ python3 $HOME/skills/moves/reddit-post-finder/scripts/search_reddit.py \
 4. Applies client-side keyword / `--days` filtering.
 5. Sorts by upvotes (descending) and emits JSON, a summary, or per-subreddit counts.
 
-> Scoped search (`--query` + `--subreddit`) is a real server-side search since Konbini fixed its scoping bug (the endpoint used to leak global results, which forced a browse-then-filter workaround). The fix is verified — see `references/konbini-config.md`.
-
 ## CLI Reference
 
 | Flag | Default | Description |
@@ -89,7 +87,7 @@ python3 $HOME/skills/moves/reddit-post-finder/scripts/search_reddit.py \
 
 ## Cost note
 
-KonbiniAPI bills **one credit per request** (~$0.002/credit), and one request returns up to 100 posts. So `--max-posts 150` is ~2 credits (~$0.004) — far cheaper than the old per-result Apify actors.
+KonbiniAPI bills **one credit per request** (~$0.002/credit), and one request returns up to 100 posts. So `--max-posts 150` is ~2 credits (~$0.004).
 
 ## Tips for Small Subreddits
 

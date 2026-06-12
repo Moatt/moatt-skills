@@ -19,7 +19,7 @@ Upstream base (behind the proxy): `https://api.konbiniapi.com`. Responses are [A
 
 Common query params: `count` (max **100**/page), `cursor` (pagination — the response's `data.nextCursor`), `time` ∈ `hour|day|week|month|year|all` (applies to `top`/`controversial`/`comments` orders).
 
-> History: `GET /v1/reddit/subreddits/<sub>/search` used to leak global hits from other subreddits, so the skill browsed `/subreddits/X/posts` and filtered client-side instead. Konbini fixed the scoping bug and we verified it (2026-06-12: 25/25 results in-sub for a broad query; a globally-common keyword in a niche sub returns 0 leaks; cursor pagination stays in-sub when `order`/`time` are held constant across pages — changing them mid-pagination returns empty pages). The skill now uses the scoped search endpoint directly.
+> Pagination gotcha: keep `order`/`time` identical across pages of a cursor walk — changing them mid-pagination returns empty pages.
 
 > ⛔ **No global comment search.** KonbiniAPI exposes comments only per-post (`/posts/<id>/comments`) or per-subreddit (`/subreddits/<sub>/comments`), not a global keyword comment search. This skill is **posts-only**.
 
@@ -86,5 +86,3 @@ curl -s -H "Authorization: Bearer $MOATT_API_KEY" \
 curl -s -H "Authorization: Bearer $MOATT_API_KEY" \
   "$MOATT_API_BASE/v1/proxy/konbini/v1/reddit/subreddits/SaaS/posts?order=top&time=week&count=50"
 ```
-
-History: the prior Apify actors (`parseforge/reddit-posts-scraper`, `trudax/reddit-scraper-lite`) were slow (30–120s actor-run polling) and billed per-result (~$3/1k). KonbiniAPI is a fast live fetch billed per-request. Do not reintroduce the actors for this skill.
