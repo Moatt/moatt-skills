@@ -62,11 +62,49 @@ A full run is `queries × (1 organic + 1 AI-mode + 4 AI providers)` proxy hits.
 Issued as separate exec calls that exhausts the chat step budget before you can
 report. Instead, write ONE bash script that loops over all queries and
 providers, saves every raw response to `/workspace/home/projects/reddit/serp/`
-(dated filenames), prints a compact per-call summary line (query, surface,
-status, reddit.com URLs found), then run it as ONE exec call (timeout 300000).
-Read the printed summary + saved files, then go straight to composing the
-output table. Two exec calls total (probe + batch) is the norm; never more
-than three.
+(dated filenames), and — this part is load-bearing — **extracts the
+answer-bearing field from each saved response inside the script (`jq` / `python3`)
+and prints a machine-readable GROUNDED EVIDENCE block** (format below). Run it as
+ONE exec call (timeout 300000). Two exec calls total (probe + batch) is the norm;
+never more than three.
+
+### The script MUST emit a GROUNDED EVIDENCE block
+
+Your final table is built ONLY from this block (see **Output**). Have the
+*script* — not your memory — pull the real values out of each saved JSON, so the
+numbers you report are the numbers DFS actually returned. Print it exactly like
+this, one row per (query × surface), between the fences:
+
+```
+=== GROUNDED EVIDENCE (built from saved responses — transcribe verbatim) ===
+query	surface	dfs_status	value	reddit_urls
+best EOR for contractors	google_organic	20000	rank_absolute=6	reddit.com/r/digitalnomad/comments/abc
+best EOR for contractors	google_ai_mode	20000	referenced	reddit.com/r/digitalnomad/comments/abc
+best EOR for contractors	chat_gpt	20000	cited	reddit.com/r/digitalnomad/comments/abc
+best EOR for contractors	claude	20000	no_reddit_citation	-
+best EOR for contractors	gemini	40501	ERROR_bad_model	-
+Deel alternatives	google_organic	20000	not_in_top_20	-
+=== END EVIDENCE ===
+```
+
+Rules the script enforces so the block can't lie:
+
+- `dfs_status` = the literal `tasks[0].status_code` (`20000`, `40501`, `402`, …).
+  If the proxy returned non-JSON or a non-2xx HTTP, print `HTTP_<code>` and set
+  `value=ERROR` — that's how you'll know a call hit ngrok/login HTML instead of
+  real data.
+- `value`: for `google_organic` = `rank_absolute=<n>` of the first matching
+  `reddit.com` URL, else `not_in_top_<depth>`. For AI surfaces =
+  `cited` / `referenced` / `no_reddit_citation`, decided by whether a `reddit.com`
+  URL is *actually present* in `annotations[].url` (AI) / `items[].url` (organic).
+  Read the field — never guess.
+- `reddit_urls` = the actual matched `reddit.com/...` URLs copied from the
+  response (comma-separated), or `-`.
+- Emit one row per surface **even on error** — a missing row means a script bug,
+  not a silent drop.
+
+Read the EVIDENCE block back (it's in the exec output) and compose the table
+straight from it.
 
 ## Part A — Google organic position
 
@@ -121,6 +159,21 @@ skill — don't re-derive them.)
 
 ## Output
 
+**Build the table ONLY by transcribing the GROUNDED EVIDENCE block. This is the
+rule that keeps the report honest — the single most common failure here is the
+agent writing a plausible-looking table from memory instead of from the data:**
+
+- Every cell maps to exactly one evidence row. Copy its `value` and `reddit_urls`
+  verbatim — do NOT restate them "from memory", round a position, or smooth them
+  into prose. **If you're about to write a position number, a ✅, or a cited URL
+  that does not appear in the EVIDENCE block, STOP — that is a fabrication.**
+- A surface whose `dfs_status` ≠ `20000` → write **"live data unavailable this
+  run"** for that cell. Never backfill an errored surface with a guess.
+- **Share of voice is COUNTED, not estimated:** `our threads cited by X/N engines`
+  where N = engines that returned `20000` and X = those whose `reddit_urls` match
+  one of the user's subs. Same for competitor reddit URLs. If you can't count it
+  from the evidence, don't print a percentage.
+
 Date every row (`createdAt`). One table per query:
 
 ```markdown
@@ -137,6 +190,10 @@ Date every row (`createdAt`). One table per query:
 
 **Share of voice:** our threads cited by 1/4 engines; competitor Reddit threads by 1/4.
 ```
+
+**Self-check before you send:** every position, ✅, and URL in your tables
+appears somewhere in the EVIDENCE block. If one doesn't, delete it or mark the
+cell unavailable. A short, honest table beats a complete-looking invented one.
 
 Persist rows to a dated store (e.g. `/workspace/home/projects/reddit/serp/<date>.json`)
 so `reddit-visibility-tracker` and the dashboard can build trends over time.
