@@ -13,12 +13,13 @@ Upstream base (behind the proxy): `https://api.konbiniapi.com`. Responses are [A
 | Mode | Endpoint (proxied) | Notes |
 |------|--------------------|-------|
 | Global keyword search | `GET /v1/reddit/search/posts?q=…` | All of Reddit. `order` ∈ `relevance\|hot\|top\|new\|comments`. |
-| Subreddit browse | `GET /v1/reddit/subreddits/<sub>/posts` | Reliable scoping. `order` ∈ `hot\|new\|top\|rising\|controversial`. |
+| Scoped keyword search | `GET /v1/reddit/subreddits/<sub>/search?q=…` | Server-side search inside one subreddit. Same `order` vocabulary as global search (`rising` returns nothing). |
+| Subreddit browse | `GET /v1/reddit/subreddits/<sub>/posts` | Listing, no keyword. `order` ∈ `hot\|new\|top\|rising\|controversial`. |
 | Subreddit info | `GET /v1/reddit/subreddits/<sub>` | A single `Group` object: `memberCount` (size), `published` (creation date → **age**), `description` (full **rules** text), `summary`, `isAdult`, `isSearchable`. Used by `reddit-subreddit-vetter` for activity/age/promotion-usability. Not paginated; one credit. The `search_reddit.py` script does not wrap this — call it with `curl` directly. |
 
 Common query params: `count` (max **100**/page), `cursor` (pagination — the response's `data.nextCursor`), `time` ∈ `hour|day|week|month|year|all` (applies to `top`/`controversial`/`comments` orders).
 
-> ⛔ **Do NOT use** `GET /v1/reddit/subreddits/<sub>/search` — it does **not** reliably scope to the named subreddit (it returns global hits from other subreddits). For "posts in r/X mentioning Y", the skill browses `/subreddits/X/posts` and filters by the query terms client-side instead.
+> Pagination gotcha: keep `order`/`time` identical across pages of a cursor walk — changing them mid-pagination returns empty pages.
 
 > ⛔ **No global comment search.** KonbiniAPI exposes comments only per-post (`/posts/<id>/comments`) or per-subreddit (`/subreddits/<sub>/comments`), not a global keyword comment search. This skill is **posts-only**.
 
@@ -77,9 +78,11 @@ The script maps each `RedditPost` → the stable skill schema:
 curl -s -H "Authorization: Bearer $MOATT_API_KEY" \
   "$MOATT_API_BASE/v1/proxy/konbini/v1/reddit/search/posts?q=Deel&order=top&time=year&count=50"
 
+# Scoped keyword search (inside one subreddit)
+curl -s -H "Authorization: Bearer $MOATT_API_KEY" \
+  "$MOATT_API_BASE/v1/proxy/konbini/v1/reddit/subreddits/SaaS/search?q=pricing&order=top&time=month&count=50"
+
 # Subreddit browse
 curl -s -H "Authorization: Bearer $MOATT_API_KEY" \
   "$MOATT_API_BASE/v1/proxy/konbini/v1/reddit/subreddits/SaaS/posts?order=top&time=week&count=50"
 ```
-
-History: the prior Apify actors (`parseforge/reddit-posts-scraper`, `trudax/reddit-scraper-lite`) were slow (30–120s actor-run polling) and billed per-result (~$3/1k). KonbiniAPI is a fast live fetch billed per-request. Do not reintroduce the actors for this skill.
